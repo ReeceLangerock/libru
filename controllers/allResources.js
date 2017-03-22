@@ -17,7 +17,7 @@ router.use(bodyParser.json());
 router.get('/', function(req, res) {
     getAllResources().then((response, error) => {
         if (req.isAuthenticated()) {
-            var resources = filterOutCurrentUserMetadata(response, req.user.mongoID);
+            var resources = updateRating.filterOutCurrentUserRating(response, req.user.mongoID);
             getUser(req.user.mongoID).then((response, error) => {
                 for (let i = 0; i < resources.length; i++) {
                     resources[i].status = findResourceStatus(response, resources[i]['_id'])
@@ -49,11 +49,10 @@ router.post('/', (req, res) => {
 
     var resources, category, categoryQuery, resourceQueryPromise;
 
-    if(req.body.category == "All"){
+    if (req.body.category == "All") {
 
-      resourceQueryPromise = getAllResources();
-    }
-    else if (req.body.category === req.body.subcategory) {
+        resourceQueryPromise = getAllResources();
+    } else if (req.body.category === req.body.subcategory) {
         category = req.body.category;
         categoryQuery = "resourceCategory";
         resourceQueryPromise = getResourceCategory(category, categoryQuery);
@@ -66,7 +65,7 @@ router.post('/', (req, res) => {
     resourceQueryPromise.then((response, error) => {
 
         if (req.isAuthenticated()) {
-            resources = filterOutCurrentUserMetadata(response, req.user.mongoID);
+            resources = updateRating.filterOutCurrentUserRating(response, req.user.mongoID);
             console.log(resources.length);
             getUser(req.user.mongoID).then((response, error) => {
                 for (let i = 0; i < resources.length; i++) {
@@ -96,7 +95,7 @@ router.post('/', (req, res) => {
 
 router.post('/rate', function(req, res) {
     updateRating.updateResourceRating(req.body.resourceID, req.user.mongoID, req.body.resourceRating).then((response, error) => {
-      res.end();
+        res.end();
     });
 
 })
@@ -107,18 +106,18 @@ router.post('/status', function(req, res) {
 
     getUserWithStatus(req.body.resourceID, req.user.mongoID).then((response, error) => {
 
-      var resourceStatus, dateField;
+        var resourceStatus, dateField;
 
-      if (newResourceStatus == "Completed") {
-          resourceStatus = "resourcesCompleted";
-          dateField = "dateCompleted";
-      } else if (newResourceStatus == "toDo") {
-          resourceStatus = "resourcesToDo";
-          dateField = "dateAdded";
-      } else if (newResourceStatus == "inProgress") {
-          resourceStatus = "resourcesInProgress";
-          dateField = "dateStarted";
-      }
+        if (newResourceStatus == "Completed") {
+            resourceStatus = "resourcesCompleted";
+            dateField = "dateCompleted";
+        } else if (newResourceStatus == "toDo") {
+            resourceStatus = "resourcesToDo";
+            dateField = "dateAdded";
+        } else if (newResourceStatus == "inProgress") {
+            resourceStatus = "resourcesInProgress";
+            dateField = "dateStarted";
+        }
 
         if (response == "Not_Found") {
             updateStatus.pushResource(req.user.mongoID, resourceStatus, dateField, req.body.resourceID).then((response, error) => {
@@ -137,7 +136,7 @@ router.post('/status', function(req, res) {
                 } else if (oldResourceStatus == "Want To Do") {
                     oldResourceStatus = "resourcesToDo";
                 } else if (oldResourceStatus == "In Progress") {
-                  oldResourceStatus = "resourcesInProgress";
+                    oldResourceStatus = "resourcesInProgress";
                 }
                 updateStatus.updateResourceStatus(req.user.mongoID, resourceStatus, oldResourceStatus, dateField, req.body.resourceID).then((response, error) => {
 
@@ -148,21 +147,7 @@ router.post('/status', function(req, res) {
     });
 })
 
-function filterOutCurrentUserMetadata(resources, userID) {
-
-    for (let i = 0; i < resources.length; i++) {
-        for (let j = 0; j < resources[i].resourceRatings.length; j++) {
-            if (resources[i].resourceRatings[j].ratedBy == userID) {
-                resources[i].rating = resources[i].resourceRatings[j].rating;
-
-            }
-        }
-    }
-    return resources;
-}
-
 function findResourceStatus(data, id) {
-
 
     for (let i = 0; i < data.resourcesCompleted.length; i++) {
         if (data.resourcesCompleted[i].resourceID == id) {

@@ -44,7 +44,7 @@
       <div class="form-group">
         <label for="resource-description">Rate It!</label>
         <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
-        <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resourceRatingForUser%>" min=1 max=5 step=1 data-size="md" data-rtl="false" data-show-clear="false" data-show-caption="false">
+        <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resourceRatingForUser%>" min=0 max=5 step=1 data-size="md" data-rtl="false" data-show-clear="false" data-show-caption="false">
       </div>
 
       </form>

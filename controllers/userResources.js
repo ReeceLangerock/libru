@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var user = require('../models/userModel');
 var resource = require('../models/resourceModel');
+var updateRating = require('./update-resource-rating');
 router.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -49,6 +50,9 @@ router.get('/', function(req, res) {
               responses[2][i].secondStatus = "Completed";
               responses[2][i].thirdStatus = "Want To Do";
             }
+            responses[0] = updateRating.filterOutCurrentUserRating(responses[0], req.user.mongoID);
+            responses[1] = updateRating.filterOutCurrentUserRating(responses[1], req.user.mongoID);
+            responses[2] = updateRating.filterOutCurrentUserRating(responses[2], req.user.mongoID);
             res.render('user-resources', {
                 isUserAuthenticated: req.isAuthenticated(),
                 completedResources: responses[0],

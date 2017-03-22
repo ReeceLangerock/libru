@@ -24,22 +24,25 @@
     <%  } else { %>
     <%- include ./partials/navigation.ejs %>
     <%  } %>
+
+    <div class="jumbotron" style = "margin-top:-20px;">
+<div class="container">
+  <h1>Libru</h1>
+  <p>Welcome to the Chingu Resource Library</p>
+  <p>TEST.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="/about" role="button">Learn more</a>
+  </p>
+</div>
+</div>
     <div class="container">
+
 
   <div class="row row-offcanvas row-offcanvas-right">
 
     <div class="col-xs-12 col-sm-10">
-      <p class="pull-right visible-xs">
-        <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-      </p>
-      <div class="jumbotron">
-        <h1>Libru</h1>
-        <p>Welcome to the Chingu Resource Library</p>
-        <p>TEST.</p>
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="/about" role="button">Learn more</a>
-        </p>
-      </div>
+
+
       <div class="row">
         <h2>Popular Resources</h2>
         <% for(let i = 0; i < popularResources.length; i++) { %>
@@ -78,10 +81,7 @@
 
     </div><!--/.col-xs-12.col-sm-9-->
 
-    <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar">
-      <div><h1>Placeholder</h1>
-      </div>
-    </div><!--/.sidebar-offcanvas-->
+
   </div><!--/row-->
 
   <hr>

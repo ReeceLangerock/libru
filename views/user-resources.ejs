@@ -43,11 +43,12 @@
           <tr>
             <th>Cover</th>
             <th>Title</th>
+            <th>Category</th>
+            <th>Sub Category</th>
             <th>Difficulty</th>
             <th>Avg. Rating</th>
-            <th>Rating</th>
+            <th>Your Rating</th>
             <th>Status</th>
-            <th>Category</th>
           </tr>
         </thead>
         <tbody>
@@ -60,14 +61,16 @@
             <% avg = isNaN(avg) ? "No Ratings" : avg %>
           <tr>
             <td class = "col-md-1"><img class="img-responsive" src = "<%=allResources[i].resourceImageURL %>"</td>
-            <td class = "col-md-1"><%=allResources[i].title %></td>
+            <td class = "col-md-1"><a href ="../resource/<%=allResources[i]['_id'] %>"><%=allResources[i].title %></a></td>
+            <td class = "col-md-1"><%=allResources[i].resourceCategory %></td>
+            <td class = "col-md-1"><%=allResources[i].resourceSubCategory %></td>
             <td class = "col-md-1"><%=allResources[i].resourceDifficulty %></td>
             <td class = "col-md-1"><%=avg %></td>
             <td class = "col-md-1">
               <form method="POST" action="/resource/rate">
               <div class="form-group">
                 <input type = "hidden" name = "resourceID" value = "<%=allResources[i]['_id']%>">
-                <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = 0 min=1 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="true" data-show-caption="false">
+                <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=allResources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
               </div>
               </form>
             </td>
@@ -84,7 +87,7 @@
               </div>
             </form>
           </td>
-            <td class = "col-md-1"><%=allResources[i].resourceCategory %></td>
+            
           </tr>
           <%  } %>
         </tbody>

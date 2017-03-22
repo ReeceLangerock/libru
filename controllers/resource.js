@@ -4,6 +4,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var user = require('../models/userModel');
+var updateRating = require('./update-resource-rating');
+var updateStatus = require('./update-resource-status');
 var resource = require('../models/resourceModel');
 var ObjectID = require('mongodb').ObjectID;
 router.use(bodyParser.urlencoded({
@@ -12,8 +14,6 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json());
 
 router.get('/:id', function(req, res) {
-
-
 
     if (req.isAuthenticated()) {
         var resourceProm = getResource(req.params.id);
@@ -50,8 +50,8 @@ router.get('/:id', function(req, res) {
 })
 
 router.post('/rate', function(req, res) {
-    updateResourceRating(req.body.resourceID, req.user.mongoID, req.body.resourceRating).then((response, error) => {
-      req.end();
+    updateRating.updateResourceRating(req.body.resourceID, req.user.mongoID, req.body.resourceRating).then((response, error) => {
+      res.end();
     });
 
 })
@@ -75,7 +75,7 @@ router.post('/change', function(req, res) {
         }
 
         if (response == "Not_Found") {
-            pushResource(req.user.mongoID, resourceStatus, dateField, req.body.resourceID).then((response, error) => {
+            updateStatus.pushResource(req.user.mongoID, resourceStatus, dateField, req.body.resourceID).then((response, error) => {
                 console.log("Added");
                 res.end();
             })
@@ -94,7 +94,7 @@ router.post('/change', function(req, res) {
                 } else if (oldResourceStatus == "In Progress") {
                   oldResourceStatus = "resourcesInProgress";
                 }
-                updateResourceStatus(req.user.mongoID, resourceStatus, oldResourceStatus, dateField, req.body.resourceID).then((response, error) => {
+                updateStatus.updateResourceStatus(req.user.mongoID, resourceStatus, oldResourceStatus, dateField, req.body.resourceID).then((response, error) => {
 
                     res.end();
                 });
@@ -125,85 +125,6 @@ function findResourceStatus(data, id) {
             return "In Progress";
         }
     }
-}
-
-function updateResourceRating(id, userID, rating){
-  return new Promise(function(resolve, reject) {
-      resource.findOneAndUpdate({
-          _id: id
-      }, {
-        $push: {
-          resourceRatings: {
-            ratedBy: userID,
-            rating: rating
-          }
-        }
-      }, {upsert: 'true' }, function(err, doc) {
-          if (err) {
-              reject(err);
-          } else {
-              resolve(doc);
-          }
-      });
-
-  });
-}
-
-function pushResource(userID, statusToPushTo, dateField, resourceID) {
-    return new Promise(function(resolve, reject) {
-        var tempDate = new Date();
-        user.findOneAndUpdate({
-                _id: userID
-            }, {
-                $push: {
-                    [statusToPushTo]: {
-                        'resourceID': resourceID,
-                        [dateField]: tempDate
-                    }
-                }
-            },
-            function(err, doc) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(doc);
-                }
-            });
-
-    });
-}
-
-function updateResourceStatus(userID, statusToPushTo, statusToPullFrom, dateField, resourceID) {
-
-    return new Promise(function(resolve, reject) {
-        var tempDate = new Date();
-        user.findOneAndUpdate({
-                _id: userID
-            }, {
-                $push: {
-                    [statusToPushTo]: {
-                        resourceID: resourceID,
-                        [dateField]: tempDate
-                    }
-                },
-
-                $pull: {
-                    [statusToPullFrom]: {
-                        resourceID: resourceID
-                    }
-                }
-            },
-            function(err, doc) {
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                } else if(doc) {
-                    console.log(doc);
-                    resolve(doc);
-                }
-            });
-
-    });
 }
 
 function getUser(id, userID) {

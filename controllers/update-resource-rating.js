@@ -53,4 +53,17 @@ update.updateResourceRating = function(id, userID, rating) {
     });
 }
 
+update.filterOutCurrentUserRating = function(resources, userID) {
+
+    for (let i = 0; i < resources.length; i++) {
+        for (let j = 0; j < resources[i].resourceRatings.length; j++) {
+            if (resources[i].resourceRatings[j].ratedBy == userID) {
+                resources[i].rating = resources[i].resourceRatings[j].rating;
+
+            }
+        }
+    }
+    return resources;
+}
+
 module.exports = update;
