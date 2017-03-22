@@ -1,0 +1,33 @@
+[{
+        "category": "HTML",
+        "subcategories": ["HTML"]
+    },
+    {
+        "category": "CSS",
+        "subcategories": ["CSS", "SCSS", "LESS"]
+    },
+    {
+        "category": "JavaScript",
+        "subcategories": ["JavaScript","TypeScript", "CoffeeScript"]
+    },
+    {
+        "category": "Framework",
+        "subcategories": ["Framework","Angular", "React", "Vue"]
+    },
+    {
+        "category": "Node",
+        "subcategories": ["Node","Express"]
+    },
+    {
+        "category": "Database",
+        "subcategories": ["Database", "MongoDB", "Redis","Firebase", "MySQL"]
+    },
+    {
+        "category": "Data Visualization",
+        "subcategories": ["Data Visualization", "D3", "ChartJS"]
+    },
+    {
+        "category": "General Programming",
+        "subcategories": ["General Programming"]
+    }
+]

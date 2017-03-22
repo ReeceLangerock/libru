@@ -1,0 +1,24 @@
+{
+  "name": "libru",
+  "version": "1.0.0",
+  "description": "Libru Programming Resource Library",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReeceLangerock/libru.git"
+  },
+  "author": "Reece Langerock",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ReeceLangerock/libru/issues"
+  },
+  "homepage": "https://github.com/ReeceLangerock/libru#readme",
+  "dependencies": {
+    "connect-ensure-login": "^0.1.1",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.6.0"
+  }
+}

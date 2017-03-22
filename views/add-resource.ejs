@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <title>Libru</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <!--import navbar -->
+    <% if (isUserAuthenticated) { %>
+    <%- include ./partials/authenticated-navigation.ejs %>
+    <%  } else { %>
+    <%- include ./partials/navigation.ejs %>
+    <%  } %>
+
+    <div class="container">
+
+
+
+
+    <form method="POST" action="add-resource/submit">
+  <div class="form-group">
+    <label for="resource-title">Resource Title</label>
+    <input type="text" class="form-control" name = "resourceTitle" id="resource-title" required>
+  </div>
+  <div class="form-group">
+    <label for="resource-url">Resource URL</label>
+    <input type="url" class="form-control" name = "resourceUrl" id="resource-url" required>
+  </div>
+  <div class="form-group">
+    <label for="resource-image-url">Resource Image Url</label>
+    <input type="url" class="form-control"  name = "resourceImageUrl" id="resource-image-url">
+  </div>
+  <div class="form-group">
+    <label for="resource-description">Resouce Description</label>
+    <input type="text" class="form-control" name = "resourceDescription" id="resource-description">
+  </div>
+  <label for="cost">Cost</label>
+  <div class="form-inline form-group">
+    <div class="input-group">
+    <span class="input-group-addon">$</span>
+    <input type="number" class="form-control" name = "resourceCost" id="Cost">
+</div>
+    <div class="checkbox">
+      <label><input type="checkbox" name = "resourceGoesOnSale">Goes On Sale</label>
+    </div>
+    </div>
+
+<div class="form-inline form-group">
+  <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
+    <option selected>Difficulty</option>
+    <option value="Beginner">Beginner</option>
+    <option value="Intermediate">Intermediate</option>
+    <option value="Advanced">Advanced</option>
+    <option value="Master">Master</option>
+  </select>
+
+  <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
+    <option selected disabled>Category</option>
+    <% for(let i =0; i < categoryList.length; i++) { %>
+
+    <option id = "<%=i%>" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
+    <% } %>
+  </select>
+
+  <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
+    <option selected disabled>Sub Category</option>
+    <option value="1">?</option>
+    <option value="2">?</option>
+    <option value="3">?</option>
+  </select>
+</div>
+
+
+  <input type="submit" class="btn btn-default"></input>
+</form>
+
+</div><!--/.container-->
+
+    </body>
+
+    <script>
+    var categoryList = <%-JSON.stringify(categoryList) %>
+
+    $("#category-select").change(function () {
+        var id = $(this).children(":selected").attr("id");
+
+        if(categoryList[id].subcategories.length > 1){
+          $("#sub-category-select").empty();
+          $("#sub-category-select").append( $("<option>")
+            .val("Sub Category")
+            .html("Sub Category")
+            .prop('disabled', true)
+            .prop('selected', true)
+          );
+          for(let i =0; i < categoryList[id].subcategories.length; i++){
+        $("#sub-category-select").append( $("<option>")
+          .val(categoryList[id].subcategories[i])
+          .html(categoryList[id].subcategories[i])
+        );
+      }
+              }
+        console.log(categoryList[id].subcategories.length);
+    });
+    </script>
+    </html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <title>Libru</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link href="../bower_components/bootstrap-star-rating/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="../bower_components/bootstrap-star-rating/js/star-rating.min.js" type="text/javascript"></script>
+
+
+</head>
+
+<body>
+    <!--import navbar -->
+    <% if (isUserAuthenticated) { %>
+    <%- include ./partials/authenticated-navigation.ejs %>
+    <%  } else { %>
+    <%- include ./partials/navigation.ejs %>
+    <%  } %>
+
+    <div class="container">
+      <div class = "row">
+        <div class = "col-md-2 sidebar-offcanvas">
+        <h3>Resources</h3>
+
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <form method="POST" action="/resources">
+            <input type = "hidden" value = "All" name = "category">
+
+          <li class="list-group-item"><button type="button" onclick="form.submit();"class="btn-link">All</button></li>
+        </form>
+
+        <% for(let catIndex = 0; catIndex < categoryList.length; catIndex++) { %>
+
+          <% var collapseID = "collapse" + catIndex %>
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" href="#<%=collapseID%>"><%=categoryList[catIndex].category%></a>
+            </h4>
+          </div>
+
+          <div id="<%=collapseID%>" class="panel-collapse collapse">
+            <ul class="list-group">
+              <% for(let subCatIndex = 0; subCatIndex < categoryList[catIndex].subcategories.length; subCatIndex++) { %>
+                <form method="POST" action="/resources">
+                <input type = "hidden" value = "<%=categoryList[catIndex].category%>" name = "category">
+                <input type = "hidden" value = "<%=categoryList[catIndex].subcategories[subCatIndex]%>" name = "subcategory">
+                <li class="list-group-item"><button type="button" onclick="form.submit();"class="btn-link"><%=categoryList[catIndex].subcategories[subCatIndex]%></button></li>
+                </form>
+              <% } %>
+            </ul>
+          </div>
+
+
+      <% } %>
+        </div>
+      </div>
+
+        </div>
+<div class = "col-md-10">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Sub Category</th>
+            <th>Difficulty</th>
+            <th>Avg. Rating</th>
+            <% if(isUserAuthenticated) {%>
+            <th>Your Rating</th>
+            <th>Status</th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i =0; i < resources.length; i++) { %>
+            <% var sum = 0; %>
+            <% for(let j =0; j <resources[i].resourceRatings.length; j++) { %>
+            <%  sum += resources[i].resourceRatings[j].rating; %>
+            <% } %>
+            <% var avg = sum / resources[i].resourceRatings.length; %>
+            <% avg = isNaN(avg) ? "No Ratings" : avg %>
+          <tr>
+            <td class = "col-md-1"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"</td>
+            <td class = "col-md-1"><%=resources[i].title %></td>
+            <td class = "col-md-1"><%=resources[i].resourceCategory %></td>
+            <td class = "col-md-1"><%=resources[i].resourceSubCategory %></td>
+            <td class = "col-md-1"><%=resources[i].resourceDifficulty %></td>
+            <td class = "col-md-1"><%=avg %></td>
+            <% if(isUserAuthenticated) {%>
+            <td class = "col-md-1">
+              <form method="POST" action="/resources/rate">
+              <div class="form-group">
+                <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
+                <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resources[i].rating%>" min=1 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
+              </div>
+              </form>
+            </td>
+            <td class = "col-md-1">
+              <form method="POST" action="/resources/status">
+              <div class="form-group">
+                <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
+                <select onchange="this.form.submit()" class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
+                  <% if(resources[i].status.length === 4){ %>
+                    <option value = "<%=resources[i].status[2]%>" selected disabled><%=resources[i].status[0]%></option>
+                    <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
+                    <option value="<%=resources[i].status[2]%>"><%=resources[i].status[2]%></option>
+                    <option value="<%=resources[i].status[3]%>"><%=resources[i].status[3]%></option>
+
+                  <% } else { %>
+                  <option value = "<%=resources[i].status[0]%>"selected><%=resources[i].status[0]%></option>
+                  <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
+                  <option value="<%=resources[i].status[2]%>"><%=resources[i].status[2]%></option>
+                  <% } %>
+                </select>
+              </div>
+            </form>
+          </td>
+          <%  } %>
+
+          </tr>
+          <%  } %>
+        </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    </div>
+  </body>
