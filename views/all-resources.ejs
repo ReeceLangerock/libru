@@ -70,18 +70,71 @@
 
         </div>
 <div class = "col-md-10">
-      <table data-toggle="table">
+      <!--
+      <table class="table" id="table">
+        <thead>
+        <tr>
+          <th data-field="resourceImageURL" data-formatter="imageFormatter">Cover</th>
+          <th data-field="title">Title</th>
+          <th data-field="resourceCategory">Category</th>
+          <th data-field="resourceSubCategory">Sub Category</th>
+          <th data-field="resourceDifficulty">Difficulty</th>
+          <th data-field="avg">Avg. Rating</th>
+          <% if(isUserAuthenticated) {%>
+          <th data-field ="rating" data-formatter="ratingFormatter">Your Rating</th>
+          <th data-sortable="true">Status</th>
+          <% } %>
+
+        </tr>
+        </thead>
+      </table>
+
+      <script>
+
+        $(document).ready(function() {
+            $('#table').bootstrapTable({});
+            var data = <%-JSON.stringify(resources) %>
+
+
+            console.log(data[0]);
+
+            $('#table').bootstrapTable("load", data);
+        });
+
+        function imageFormatter(value, row) {
+            return '<img class="img-responsive" src="' + value + '" />';
+
+        }
+
+        function ratingFormatter(value, row, index) {
+
+          var id = row['_id'];
+          var rating = row.rating
+          return `<form method="POST" action="/resources/rate">
+          <div class="form-group">
+            <input type = "hidden" name = "resourceID" value = ${id}>
+            <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = ${rating} min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
+          </div>
+          </form>`
+        }
+        </script>
+      -->
+      <table data-toggle="table"
+      data-page-list="[10, 25, 50, 100, ALL]"
+        data-search="true"
+          data-pagination="true"
+             data-classes="table">
         <thead>
           <tr>
             <th>Cover</th>
-            <th data-field = "Title" data-sortable="true">Title</th>
-            <th data-field = "Category" data-sortable="true">Category</th>
+            <th data-sortable="true" 	data-searchable = "true">Title</th>
+            <th data-sortable="true">Category</th>
             <th>Sub Category</th>
-            <th data-field = "Difficulty" data-sortable="true">Difficulty</th>
-            <th data-field = "Avg. Rating" data-sortable="true">Avg. Rating</th>
+            <th data-sortable="true">Difficulty</th>
+            <th data-sortable="true">Avg. Rating</th>
             <% if(isUserAuthenticated) {%>
-            <th data-field = "Your Rating" data-sortable="true">Your Rating</th>
-            <th data-field = "Status" data-sortable="true">Status</th>
+            <th data-sortable="true">Your Rating</th>
+            <th data-sortable="true">Status</th>
             <% } %>
           </tr>
         </thead>
@@ -104,15 +157,15 @@
             <td class = "col-md-1">
               <form method="POST" action="/resources/rate">
               <div class="form-group">
+                <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating"  value = "<%-resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
                 <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
-                <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
               </div>
               </form>
             </td>
             <td class = "col-md-1">
               <form method="POST" action="/resources/status">
               <div class="form-group">
-                <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
+
                 <select onchange="this.form.submit()" class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
                   <% if(resources[i].status.length === 4){ %>
                     <option value = "<%=resources[i].status[2]%>" selected disabled><%=resources[i].status[0]%></option>
@@ -126,6 +179,7 @@
                   <option value="<%=resources[i].status[2]%>"><%=resources[i].status[2]%></option>
                   <% } %>
                 </select>
+                <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
               </div>
             </form>
           </td>
@@ -134,7 +188,7 @@
           </tr>
           <%  } %>
         </tbody>
-        </table>
+      </table>
 
         <nav aria-label="Page navigation example">
           <ul class="pagination">

@@ -18,9 +18,12 @@ router.get('/', function(req, res) {
     getAllResources().then((response, error) => {
         if (req.isAuthenticated()) {
             var resources = updateRating.filterOutCurrentUserRating(response, req.user.mongoID);
+
             getUser(req.user.mongoID).then((response, error) => {
+
                 for (let i = 0; i < resources.length; i++) {
                     resources[i].status = findResourceStatus(response, resources[i]['_id'])
+
                 }
 
 
@@ -66,7 +69,7 @@ router.post('/', (req, res) => {
 
         if (req.isAuthenticated()) {
             resources = updateRating.filterOutCurrentUserRating(response, req.user.mongoID);
-            console.log(resources.length);
+
             getUser(req.user.mongoID).then((response, error) => {
                 for (let i = 0; i < resources.length; i++) {
                     resources[i].status = findResourceStatus(response, resources[i]['_id'])
@@ -101,7 +104,7 @@ router.post('/rate', function(req, res) {
 })
 
 router.post('/status', function(req, res) {
-    console.log(req.body);
+
     var newResourceStatus = req.body.resourceStatus;
 
     getUserWithStatus(req.body.resourceID, req.user.mongoID).then((response, error) => {
@@ -111,10 +114,10 @@ router.post('/status', function(req, res) {
         if (newResourceStatus == "Completed") {
             resourceStatus = "resourcesCompleted";
             dateField = "dateCompleted";
-        } else if (newResourceStatus == "toDo") {
+        } else if (newResourceStatus == "Want To Do") {
             resourceStatus = "resourcesToDo";
             dateField = "dateAdded";
-        } else if (newResourceStatus == "inProgress") {
+        } else if (newResourceStatus == "In Progress") {
             resourceStatus = "resourcesInProgress";
             dateField = "dateStarted";
         }
@@ -125,7 +128,7 @@ router.post('/status', function(req, res) {
                 res.end();
             })
         } else {
-            var oldResourceStatus = findResourceStatus(response, req.body.resourceID);
+            var oldResourceStatus = findResourceStatusForPost(response, req.body.resourceID);
             if (newResourceStatus == oldResourceStatus) {
                 console.log("NO CHANGE");
                 res.end();
@@ -146,6 +149,28 @@ router.post('/status', function(req, res) {
         }
     });
 })
+
+function findResourceStatusForPost(data, id) {
+  for (let i = 0; i < data.resourcesCompleted.length; i++) {
+      if (data.resourcesCompleted[i].resourceID == id) {
+          return "Completed"
+      }
+  }
+
+  for (let i = 0; i < data.resourcesToDo.length; i++) {
+      if (data.resourcesToDo[i].resourceID == id) {
+          return "Want To Do"
+      }
+  }
+
+  for (let i = 0; i < data.resourcesInProgress.length; i++) {
+      if (data.resourcesInProgress[i].resourceID == id) {
+          return "In Progress"
+      }
+  }
+
+}
+
 
 function findResourceStatus(data, id) {
 

@@ -68,6 +68,13 @@ router.get('/', function(req, res) {
 
 });
 
+router.post('/rate', function(req, res) {
+    updateRating.updateResourceRating(req.body.resourceID, req.user.mongoID, req.body.resourceRating).then((response, error) => {
+        res.end();
+    });
+
+})
+
 function getUser(userID) {
     return new Promise(function(resolve, reject) {
         user.findOne({

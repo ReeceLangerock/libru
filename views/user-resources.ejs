@@ -67,7 +67,7 @@
             <td class = "col-md-1"><%=allResources[i].resourceDifficulty %></td>
             <td class = "col-md-1"><%=avg %></td>
             <td class = "col-md-1">
-              <form method="POST" action="/resource/rate">
+              <form method="POST" action="./user/resources/rate">
               <div class="form-group">
                 <input type = "hidden" name = "resourceID" value = "<%=allResources[i]['_id']%>">
                 <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=allResources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
@@ -75,7 +75,7 @@
               </form>
             </td>
             <td class = "col-md-1">
-              <form method="POST" action="/resource/change">
+              <form method="POST" action="../user/resources/change">
               <div class="form-group">
                 <input type = "hidden" name = "resourceID" value = "<%=allResources[i]['_id']%>">
                 <select onchange="this.form.submit()" class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
@@ -87,7 +87,7 @@
               </div>
             </form>
           </td>
-            
+
           </tr>
           <%  } %>
         </tbody>
