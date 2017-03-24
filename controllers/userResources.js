@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var user = require('../models/userModel');
 var resource = require('../models/resourceModel');
 var updateRating = require('./update-resource-rating');
+var updateStatus = require('./update-resource-status');
 router.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -19,11 +20,11 @@ router.get('/', function(req, res) {
         var resourcesCompletedToGet = [];
         var resourcesToDoToGet = [];
         var resourcesInProgressToGet = [];
-        for (let i = 0; i < response.resourcesToDo.length; i++) {
-            resourcesCompletedToGet.push(response.resourcesToDo[i].resourceID);
-        }
         for (let i = 0; i < response.resourcesCompleted.length; i++) {
-            resourcesToDoToGet.push(response.resourcesCompleted[i].resourceID);
+            resourcesCompletedToGet.push(response.resourcesCompleted[i].resourceID);
+        }
+        for (let i = 0; i < response.resourcesToDo.length; i++) {
+            resourcesToDoToGet.push(response.resourcesToDo[i].resourceID);
         }
         for (let i = 0; i < response.resourcesInProgress.length; i++) {
             resourcesInProgressToGet.push(response.resourcesInProgress[i].resourceID);
@@ -41,7 +42,7 @@ router.get('/', function(req, res) {
               responses[0][i].thirdStatus = "In Progress";
             }
             for(let i = 0; i < responses[1].length; i++){
-              responses[1][i].status = "To Do";
+              responses[1][i].status = "Want To Do";
               responses[1][i].secondStatus = "Completed";
               responses[1][i].thirdStatus = "In Progress";
             }
@@ -75,6 +76,79 @@ router.post('/rate', function(req, res) {
 
 })
 
+router.post('/status', function(req, res) {
+
+    var newResourceStatus = req.body.resourceStatus;
+
+    getUserWithStatus(req.body.resourceID, req.user.mongoID).then((response, error) => {
+
+        var resourceStatus, dateField;
+
+        if (newResourceStatus == "Completed") {
+            resourceStatus = "resourcesCompleted";
+            dateField = "dateCompleted";
+        } else if (newResourceStatus == "Want To Do") {
+            resourceStatus = "resourcesToDo";
+            dateField = "dateAdded";
+        } else if (newResourceStatus == "In Progress") {
+            resourceStatus = "resourcesInProgress";
+            dateField = "dateStarted";
+        }
+        console.log(resourceStatus);
+        console.log(newResourceStatus);
+
+        if (response == "Not_Found") {
+            updateStatus.pushResource(req.user.mongoID, resourceStatus, dateField, req.body.resourceID).then((response, error) => {
+                console.log("Added");
+                res.end();
+            })
+        } else {
+            var oldResourceStatus = findResourceStatusForPost(response, req.body.resourceID);
+            console.log(oldResourceStatus);
+            console.log(newResourceStatus);
+            if (newResourceStatus == oldResourceStatus) {
+                console.log("NO CHANGE");
+                res.end();
+            } else {
+
+                if (oldResourceStatus == "Completed") {
+                    oldResourceStatus = "resourcesCompleted";
+                } else if (oldResourceStatus == "Want To Do") {
+                    oldResourceStatus = "resourcesToDo";
+                } else if (oldResourceStatus == "In Progress") {
+                    oldResourceStatus = "resourcesInProgress";
+                }
+
+                updateStatus.updateResourceStatus(req.user.mongoID, resourceStatus, oldResourceStatus, dateField, req.body.resourceID).then((response, error) => {
+
+                    res.end();
+                });
+            }
+        }
+    });
+})
+
+function findResourceStatusForPost(data, id) {
+  for (let i = 0; i < data.resourcesCompleted.length; i++) {
+      if (data.resourcesCompleted[i].resourceID == id) {
+          return "Completed"
+      }
+  }
+
+  for (let i = 0; i < data.resourcesToDo.length; i++) {
+      if (data.resourcesToDo[i].resourceID == id) {
+          return "Want To Do"
+      }
+  }
+
+  for (let i = 0; i < data.resourcesInProgress.length; i++) {
+      if (data.resourcesInProgress[i].resourceID == id) {
+          return "In Progress"
+      }
+  }
+
+}
+
 function getUser(userID) {
     return new Promise(function(resolve, reject) {
         user.findOne({
@@ -85,6 +159,35 @@ function getUser(userID) {
             } else {
 
                 resolve(doc);
+            }
+        });
+
+    });
+}
+
+function getUserWithStatus(id, userID) {
+    return new Promise(function(resolve, reject) {
+        user.findOne({
+            _id: userID,
+            $or: [{
+                    "resourcesToDo.resourceID": id
+                },
+                {
+                    "resourcesInProgress.resourceID": id
+                },
+                {
+                    "resourcesCompleted.resourceID": id
+                }
+            ]
+
+        }, function(err, doc) {
+            if (err) {
+                reject(err);
+            } else if (doc) {
+                resolve(doc);
+            } else {
+                console.log("Not_Found");
+                resolve("Not_Found");
             }
         });
 
