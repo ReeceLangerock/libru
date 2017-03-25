@@ -57,11 +57,12 @@
 
 <div class="form-inline form-group">
   <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
-    <option selected>Difficulty</option>
+    <option selected disabled >Difficulty</option>
     <option value="Beginner">Beginner</option>
     <option value="Intermediate">Intermediate</option>
     <option value="Advanced">Advanced</option>
     <option value="Master">Master</option>
+    <option value="Master">Not Applicable</option>
   </select>
 
   <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
@@ -95,6 +96,7 @@
         var id = $(this).children(":selected").attr("id");
 
         if(categoryList[id].subcategories.length > 1){
+          
           $("#sub-category-select").empty();
           $("#sub-category-select").append( $("<option>")
             .val("Sub Category")
@@ -109,7 +111,7 @@
         );
       }
               }
-        console.log(categoryList[id].subcategories.length);
+
     });
     </script>
     </html>

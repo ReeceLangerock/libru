@@ -8,7 +8,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="./style.css">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
@@ -29,7 +29,7 @@
 <div class="container">
   <h1>Libru</h1>
   <p>Welcome to the Chingu Resource Library</p>
-  <p>TEST.</p>
+  <p>The Libru archives contain <%=numbers.resources%> resources across <%=numbers.categories%> categories, posted by <%=numbers.users%> different users.</p>
   <p class="lead">
     <a class="btn btn-primary btn-lg" href="/about" role="button">Learn more</a>
   </p>
@@ -38,9 +38,9 @@
     <div class="container">
 
 
-  <div class="row row-offcanvas row-offcanvas-right">
+  <div class="row">
 
-    <div class="col-xs-12 col-sm-10">
+    <div class="col-xs-12   col-sm-9 col-md-9">
 
 
       <div class="row">
@@ -80,6 +80,17 @@
       </div><!--/row-->
 
     </div><!--/.col-xs-12.col-sm-9-->
+
+    <div class="col-md-3 portfolioContainer">
+      <h2>Trending Portfolios</h2>
+      <% for(let i=0;i < portfolios.length; i++){ %>
+        <h4><%=portfolios[i].title %></h4>
+        <img class="img-responsive" src = "<%=portfolios[i].resourceImageURL%>">
+        <hr>
+        <br>
+      <% }%>
+
+    </div>
 
 
   </div><!--/row-->

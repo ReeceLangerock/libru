@@ -3,7 +3,10 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var resource = require('../models/resourceModel');
+var user = require('../models/userModel');
 var bodyParser = require('body-parser');
+var categoryList = require('../models/categoryList.json')
+
 router.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -14,17 +17,74 @@ router.get('/', function(req, res) {
 
     var recentResourcesProm = getRecentResources();
     var popularResourcesProm = getPopularResources();
+    var portfolioProm = getPortfolios();
+    var userCountProm = getUserCount();
+    var resurceCountProm = getResourceCount();
 
-    Promise.all([popularResourcesProm, recentResourcesProm]).then((responses, error) => {
-
+    Promise.all([popularResourcesProm, recentResourcesProm, portfolioProm, userCountProm, resurceCountProm]).then((responses, error) => {
+        var numbers = {
+          resources: responses[4],
+          categories: categoryList.length,
+          users: responses[3]
+        }
         res.render('index', {
             test: "TEST",
             isUserAuthenticated: req.isAuthenticated(),
             popularResources : responses[0],
-            recentResources: responses[1]
+            recentResources: responses[1],
+            portfolios: responses[2],
+            numbers: numbers
         });
     })
 });
+
+function getPortfolios(){
+  return new Promise(function(resolve, reject) {
+      resource.find({
+        'resourceCategory': "Portfolios"
+      }).sort({
+          dateAdded: -1
+      }).limit(5).exec(
+          function(err, doc) {
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve(doc);
+              }
+          });
+  });
+
+}
+
+function getUserCount(){
+  return new Promise(function(resolve, reject) {
+      user.count({},
+          function(err, doc) {
+              if (err) {
+                  reject(err);
+              } else {
+                  console.log(doc);
+                  resolve(doc);
+              }
+          });
+  });
+
+}
+
+function getResourceCount(){
+  return new Promise(function(resolve, reject) {
+      resource.count({},
+          function(err, doc) {
+              if (err) {
+                  reject(err);
+              } else {
+                  console.log(doc);
+                  resolve(doc);
+              }
+          });
+  });
+
+}
 
 function getPopularResources() {
     return new Promise(function(resolve, reject) {
@@ -45,7 +105,7 @@ function getPopularResources() {
                 if (err) {
                     reject(err);
                 } else {
-                    
+
                     resolve(doc);
                 }
             });

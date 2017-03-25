@@ -17,27 +17,77 @@
     <!--import navbar -->
     <% if (isUserAuthenticated) { %>
         <%- include ./partials/authenticated-navigation.ejs %>
-            <%  } else { %>
-                <%- include ./partials/navigation.ejs %>
-                    <%  } %>
-                        <div class="container">
-                            <div class="row">
+        <%  } else { %>
+        <%- include ./partials/navigation.ejs %>
+        <%  } %>
+                      <div class="container">
+    <div class="row">
 
 
-                                <div class="col-md-10">
-                                    <h1>Hiya <%=userData.firstName%>
-                                </div>
+        <div class="col-md-10">
 
+            <div>
+                <h1>Account Settings</h1>
 
+            </div>
 
+            <div>
+                <form method = "POST" action = "/">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" class="form-control" id="firstName">
+                    </div>
+                    <div class="form-group">
+                      <label for="lastName">Last Name:</label>
+                      <input type="text" class="form-control" id="lastName">
+                    </div>
+                    <div class="form-group">
+                      <label for="location">Location:</label>
+                      <input type="text" class="form-control" id="location">
+                    </div>
+                    <div>
+                      <label for="cohortDropdown">Select Your Cohort:</label>
+                      <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
+                        <option selected disabled>Cohort</option>
+                        <option value="1">Alpaca</option>
+                        <option value="1">Artic Fox</option>
+                        <option value="1">Beluga</option>
+                        <option value="1">Cheetah</option>
+                        <option value="3">Flamingo</option>
+                        <option value="1">Giraffe</option>
+                        <option value="2">Iguana</option>
+                        <option value="3">Kangaroo</option>                        
+                        <option value="3">Koala</option>
+                        <option value="3">Lion</option>
+                        <option value="3">Meerkat</option>
+                        <option value="3">Moose</option>
+                        <option value="3">Penguin</option>
+                        <option value="3">Racoon</option>
+                        <option value="3">Red Panda</option>
+                        <option value="3">Rhino</option>
+                        <option value="3">Turtle</option>
+                        <option value="3">Wombat</option>
+                      </select>
+                    </div>
 
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
 
-                                <div class="col-md-2">
-                                    Placeholder Sidebar
-                                </div>
+            </div>
 
-                            </div>
-                        </div>
+            <hr>
+
+            <div>
+              <h1>Link Social Media Accounts</h1>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            Placeholder Sidebar
+        </div>
+
+    </div>
+</div>
 
 
 </body>
