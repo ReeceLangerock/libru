@@ -21,7 +21,8 @@ var resourceSchema = mongoose.Schema({
     'resourceComments': [{
         'comment': String,
         'commentID': String,
-        'commentBy': Number,
+        'commentBy': String,
+        'commenterCohort': String,
         'dateWritten': Date,
         '_id' : false
     }],
@@ -53,6 +54,7 @@ resourceSchema.methods.newResource = function(data, userID) {
         'comment': "",
         'commentID': "",
         'commentBy': "",
+        'commenterCohort': "",
         'dateWritten': "",
         '_id' : false
       }],

@@ -9,6 +9,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../style.css">
 
     <link href="../bower_components/bootstrap-star-rating/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css" />
     <script src="../bower_components/bootstrap-star-rating/js/star-rating.min.js" type="text/javascript"></script>
@@ -88,15 +89,28 @@
         </dl>
 
         <hr>
-        <form>
+        <% if(isUserAuthenticated) {%>
+        <form method = "POST" action = '/resource/'>
         <div class="form-group">
           <label for="comment">Leave a comment</label>
-          <input type="text" class="form-control" name = "comment" id="comment">
+          <div class="input-group">
+            <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
+           <input type="text" class="form-control" name = "comment" id="comment">
+           <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Submit!</button>
+           </span>
+</div>
         </div>
       </form>
+
+      <% } %>
         <h3>Recent Comments</h3>
-        <% for(let i = 0; i < resource.resourceComments.length; i++ ){ %>
-          <p><%=resource.resourceComments[i].comment%></p>
+        <% for(let i = resource.resourceComments.length-1; i >= 0 ; i-- ){ %>
+          <span class = "commentSpan">
+          <% var imgSrc = 'https://raw.githubusercontent.com/Kornil/Chingu-Animal-Icons/master/animals/'+ resource.resourceComments[i].commenterCohort + '/apple-touch-icon-60x60.png' %>
+          <img src = "<%-imgSrc%>">
+          <p><%=resource.resourceComments[i].comment%> - "<%=resource.resourceComments[i].commentBy%>"</p>
+        </span>
         <% } %>
 
 

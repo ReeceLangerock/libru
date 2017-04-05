@@ -43,7 +43,7 @@
     <div class="col-xs-12   col-sm-9 col-md-9">
 
 
-      <div class="row">
+      <div class="row popularResourceContainer">
         <h2>Popular Resources</h2>
         <% for(let i = 0; i < popularResources.length; i++) { %>
         <div class="col-xs-6 col-lg-4">
@@ -61,10 +61,10 @@
 
       </div><!--/row-->
       <hr>
-      <div class="row">
+      <div class="row recentResourceContainer">
         <h2>Recent Resources</h2>
         <% for(let i = 0; i < recentResources.length; i++) { %>
-        <div class="col-xs-6 col-lg-4">
+        <div class="col-xs-6 col-lg-4 ">
           <h3><%=recentResources[i].title%></h3>
           <img class="img-responsive" src = "<%=recentResources[i].resourceImageURL%>">
           <% if(recentResources[i].resourceDescription.length > 250) { %>

@@ -17,17 +17,17 @@ router.get('/:id', function(req, res) {
 
     if (req.isAuthenticated()) {
         var resourceProm = getResource(req.params.id);
-        var userProm = getUser(req.params.id, req.user.mongoID);
+        var userProm = getUserDataForResource(req.params.id, req.user.mongoID);
         Promise.all([resourceProm, userProm]).then((responses, error) => {
             var resourseStatusForUser = "..."
             if (responses[1] != "Not_Found") {
                 var resourseStatusForUser = findResourceStatus(responses[1], req.params.id);
             }
             var usersResourceRating;
-            for(let i =0; i < responses[0].resourceRatings.length; i++){
-              if(responses[0].resourceRatings[i].ratedBy == req.user.mongoID){
-                usersResourceRating = responses[0].resourceRatings[i].rating;
-              }
+            for (let i = 0; i < responses[0].resourceRatings.length; i++) {
+                if (responses[0].resourceRatings[i].ratedBy == req.user.mongoID) {
+                    usersResourceRating = responses[0].resourceRatings[i].rating;
+                }
             }
             res.render('resource', {
                 isUserAuthenticated: req.isAuthenticated(),
@@ -49,9 +49,23 @@ router.get('/:id', function(req, res) {
     }
 })
 
+router.post('/', function(req, res) {
+    var comment = req.body.comment;
+    if (comment.length <= 1) {
+        req.end();
+    } else {
+        getUser(req.user.mongoID).then((response, error) => {
+            pushCommentToResource(req.body.resourceID, comment, response.firstName, response.cohort)
+
+        })
+    }
+
+})
+
+
 router.post('/rate', function(req, res) {
     updateRating.updateResourceRating(req.body.resourceID, req.user.mongoID, req.body.resourceRating).then((response, error) => {
-      res.end();
+        res.end();
     });
 
 })
@@ -59,7 +73,7 @@ router.post('/rate', function(req, res) {
 router.post('/change', function(req, res) {
     var newResourceStatus = req.body.resourceStatus;
 
-    getUser(req.body.resourceID, req.user.mongoID).then((response, error) => {
+    getUserDataForResource(req.body.resourceID, req.user.mongoID).then((response, error) => {
 
         var resourceStatus, dateField;
 
@@ -92,7 +106,7 @@ router.post('/change', function(req, res) {
                 } else if (oldResourceStatus == "Want To Do") {
                     oldResourceStatus = "resourcesToDo";
                 } else if (oldResourceStatus == "In Progress") {
-                  oldResourceStatus = "resourcesInProgress";
+                    oldResourceStatus = "resourcesInProgress";
                 }
                 updateStatus.updateResourceStatus(req.user.mongoID, resourceStatus, oldResourceStatus, dateField, req.body.resourceID).then((response, error) => {
 
@@ -127,7 +141,23 @@ function findResourceStatus(data, id) {
     }
 }
 
-function getUser(id, userID) {
+function getUser(userID) {
+    return new Promise(function(resolve, reject) {
+        user.findOne({
+            _id: userID
+        }, function(err, doc) {
+            if (err) {
+                reject(err);
+            } else {
+
+                resolve(doc);
+            }
+        });
+
+    });
+}
+
+function getUserDataForResource(id, userID) {
     return new Promise(function(resolve, reject) {
         user.findOne({
             _id: userID,
@@ -150,6 +180,33 @@ function getUser(id, userID) {
             } else {
                 console.log("Not_Found");
                 resolve("Not_Found");
+            }
+        });
+
+    });
+}
+
+function pushCommentToResource(id, comment, userName, cohort) {
+    return new Promise(function(resolve, reject) {
+        resource.findOneAndUpdate({
+            _id: id
+        }, {
+            $push: {
+                'resourceComments': {
+                    comment: comment,
+                    commentID: new ObjectID(),
+                    commentBy: userName,
+                    commenterCohort: cohort,
+                    dateWritten: new Date()
+                }
+            }
+        }, {
+            upsert: 'true'
+        }, function(err, doc) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(doc);
             }
         });
 
