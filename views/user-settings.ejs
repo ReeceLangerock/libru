@@ -32,41 +32,43 @@
             </div>
 
             <div>
-                <form method = "POST" action = "/">
+                <form method = "POST" action = "/user/settings/">
                     <div class="form-group">
                         <label for="firstName">First Name:</label>
-                        <input type="text" class="form-control" id="firstName">
+                        <input type="text" class="form-control" id="firstName" name = "firstName" value = "<%=userData.firstName %>">
+
                     </div>
                     <div class="form-group">
                       <label for="lastName">Last Name:</label>
-                      <input type="text" class="form-control" id="lastName">
+                      <input type="text" class="form-control" id="lastName" name = "lastName" value = "<%=userData.lastName %>">
                     </div>
                     <div class="form-group">
-                      <label for="location">Location:</label>
-                      <input type="text" class="form-control" id="location">
+                      <label for="displayName">Display Name:</label>
+                      <input type="text" class="form-control" id="displayName" name = "displayName" value = "<%=userData.displayName%>">
                     </div>
                     <div>
+                      <% var userCohort = (userData.cohort == "None Specified") ? "Cohort" : userData.cohort %>
                       <label for="cohortDropdown">Select Your Cohort:</label>
-                      <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
-                        <option selected disabled>Cohort</option>
-                        <option value="1">Alpaca</option>
-                        <option value="1">Artic Fox</option>
-                        <option value="1">Beluga</option>
-                        <option value="1">Cheetah</option>
-                        <option value="3">Flamingo</option>
-                        <option value="1">Giraffe</option>
-                        <option value="2">Iguana</option>
-                        <option value="3">Kangaroo</option>                        
-                        <option value="3">Koala</option>
-                        <option value="3">Lion</option>
-                        <option value="3">Meerkat</option>
-                        <option value="3">Moose</option>
-                        <option value="3">Penguin</option>
-                        <option value="3">Racoon</option>
-                        <option value="3">Red Panda</option>
-                        <option value="3">Rhino</option>
-                        <option value="3">Turtle</option>
-                        <option value="3">Wombat</option>
+                      <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "cohortName" id="sub-category-select">
+                        <option selected disabled><%=userCohort%></option>
+                        <option value="Alpaca">Alpaca</option>
+                        <option value="Artic Fox">Artic Fox</option>
+                        <option value="Beluga">Beluga</option>
+                        <option value="Cheetah">Cheetah</option>
+                        <option value="Flamingo">Flamingo</option>
+                        <option value="Giraffe">Giraffe</option>
+                        <option value="Iguana">Iguana</option>
+                        <option value="Kangaroo">Kangaroo</option>
+                        <option value="Koala">Koala</option>
+                        <option value="Lion">Lion</option>
+                        <option value="Meerkat">Meerkat</option>
+                        <option value="Moose">Moose</option>
+                        <option value="Penguin">Penguin</option>
+                        <option value="Racoon">Racoon</option>
+                        <option value="Red Panda">Red Panda</option>
+                        <option value="Rhino">Rhino</option>
+                        <option value="Turtle">Turtle</option>
+                        <option value="Wombat">Wombat</option>
                       </select>
                     </div>
 

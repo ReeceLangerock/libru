@@ -1,20 +1,40 @@
 .portfolioContainer{
   border: 1px solid;
   border-radius: 5px;
+  box-shadow: 2px 2px grey;
 }
 
 .recentResourceContainer {
   border: 1px solid;
   margin: 1px;
-  padding: 0px 2px 0px 2px;
+  padding: 0px 2px 6px 2px;
   border-radius: 5px;
+  box-shadow: 2px 2px grey;
+
+}
+
+.resourceItem {
+  width: 32%;
+  min-width: 150px;
+  border:1px solid grey;
+  margin: 3px 3px 3px 3px;
+  box-shadow: 2px 2px grey;
+
+}
+
+.commentItem {
+  border:1px solid grey;
+  margin: 3px 3px 3px 3px;
+  box-shadow: 2px 2px grey;
 }
 
 .popularResourceContainer {
   border: 1px solid;
   margin: 1px;
-  padding: 0px 2px 0px 2px;
+  padding: 0px 2px 6px 2px;
   border-radius: 5px;
+  box-shadow: 2px 2px grey;
+
 }
 
 .commentSpan{

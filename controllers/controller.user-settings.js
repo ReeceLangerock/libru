@@ -1,48 +1,80 @@
 //SETUP ROUTER
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var user = require('../models/userModel');
-var resource = require('../models/resourceModel');
-router.use(bodyParser.urlencoded({
+var mongoose = require("mongoose");
+var bodyParser = require("body-parser");
+var user = require("../models/userModel");
+var resource = require("../models/resourceModel");
+router.use(
+  bodyParser.urlencoded({
     extended: true
-}));
+  })
+);
 router.use(bodyParser.json());
 
 // This accepts all posts requests!
-router.get('/', function(req, res) {
+router.get("/", function(req, res) {
+  getUser(req.user.mongoID).then((response, error) => {
 
-    getUser(req.user.mongoID).then((response, error) => {
-            console.log(response);
-            res.render('user-settings', {
-                isUserAuthenticated: req.isAuthenticated(),
-                userData: response
+    res.render("user-settings", {
+      isUserAuthenticated: req.isAuthenticated(),
+      userData: response
+    });
+  });
+});
 
-            });
-        })
+router.post("/", function(req, res) {
+  console.log("Posting");
+  console.log(req.body);
+  updateUser(req.user.mongoID, req.body).then((response, error) => {
 
+    res.render("user-settings", {
+      isUserAuthenticated: req.isAuthenticated(),
+      userData: response
+    });
+  });
+});
 
-
-    })
-
-
-
+function updateUser(userID, data) {
+  return new Promise(function(resolve, reject) {
+    user.findOneAndUpdate(
+      {
+        _id: userID
+      }, {
+        $set: {
+          "firstName": data.firstName,
+          "lastName": data.lastName,
+          "displayName": data.displayName,
+          "cohort": data.cohortName
+        }
+      },
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(doc);
+        }
+      }
+    );
+  });
+}
 
 function getUser(userID) {
-    return new Promise(function(resolve, reject) {
-        user.findOne({
-            _id: userID
-        }, function(err, doc) {
-            if (err) {
-                reject(err);
-            } else {
-
-                resolve(doc);
-            }
-        });
-
-    });
+  return new Promise(function(resolve, reject) {
+    user.findOne(
+      {
+        _id: userID
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(doc);
+        }
+      }
+    );
+  });
 }
 
 module.exports = router;

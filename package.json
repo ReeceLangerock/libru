@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ReeceLangerock/libru#readme",
   "dependencies": {
     "connect-ensure-login": "^0.1.1",
+    "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-auth0": "^0.6.0"
   }

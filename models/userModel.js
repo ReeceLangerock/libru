@@ -9,6 +9,7 @@ var userSchema = mongoose.Schema({
     'githubID': String,
     'auth0ID': String,
     'cohort': String,
+    'displayName': String,
     'resourcesSubmitted': [String],
     'resourcesCompleted': [{
       'resourceID': String,
@@ -42,6 +43,7 @@ userSchema.methods.newUser = function(id, data){
     'githubID': data.githubID,
     'auth0ID': data.auth0ID,
     'cohort': "None Specified",
+    'displayName': data.firstName,
     'resourcesSubmitted': [],
     'resourcesCompleted': [{
       'resourceID': "",
