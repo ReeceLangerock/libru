@@ -42,3 +42,10 @@
   display:inline;
   background-color: green;
 }
+
+.add-form-container {
+  padding: 0px 10px 5px 10px;
+  border:1px solid grey;
+  margin: 3px 3px 3px 3px;
+  box-shadow: 2px 2px grey;
+}

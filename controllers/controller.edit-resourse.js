@@ -4,7 +4,10 @@ var router = express.Router();
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var user = require("../models/userModel");
+var updateRating = require("./update-resource-rating");
+var updateStatus = require("./update-resource-status");
 var resource = require("../models/resourceModel");
+var ObjectID = require("mongodb").ObjectID;
 var categoryList = require("../models/categoryList.json");
 router.use(
   bodyParser.urlencoded({
@@ -13,18 +16,17 @@ router.use(
 );
 router.use(bodyParser.json());
 
-router.get("/", function(req, res) {
-  getUser(req.user.mongoID).then((response, error) => {
-
-    getUsersResources(req.user.mongoID).then((response, error) => {
-      res.render("user-profile", {
-        isUserAuthenticated: req.isAuthenticated(),
-        resources: response,
-        categoryList: categoryList
-      });
+router.get("/:id", function(req, res) {
+  getResource(req.params.id).then((response, error) => {
+    res.render("edit-resource", {
+      isUserAuthenticated: req.isAuthenticated(),
+      resource: response,
+      categoryList: categoryList
     });
   });
 });
+
+router.post("/", function(req, res) {});
 
 function getUser(userID) {
   return new Promise(function(resolve, reject) {
@@ -43,20 +45,20 @@ function getUser(userID) {
   });
 }
 
-function getUsersResources(user) {
+function getResource(id) {
   return new Promise(function(resolve, reject) {
-    resource
-      .find({
-        resourceAddedBy: user
-      })
-      .exec(function(err, doc) {
+    resource.findOne(
+      {
+        _id: id
+      },
+      function(err, doc) {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
           resolve(doc);
         }
-      });
+      }
+    );
   });
 }
 

@@ -48,6 +48,7 @@ app.use('/', require('./controllers/index'));
 app.use('/signin', require('./controllers/signin'));
 app.use('/signout', require('./controllers/signout'));
 app.use('/add-resource', require('./controllers/addResource'));
+app.use('/edit-resource', require('./controllers/controller.edit-resourse'));
 app.use('/resource', require('./controllers/resource'))
 app.use('/resources', require('./controllers/allResources'))
 app.use('/help', require('./controllers/help'));

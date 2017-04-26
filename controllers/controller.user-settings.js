@@ -5,6 +5,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var user = require("../models/userModel");
 var resource = require("../models/resourceModel");
+
 router.use(
   bodyParser.urlencoded({
     extended: true
@@ -24,13 +25,13 @@ router.get("/", function(req, res) {
 });
 
 router.post("/", function(req, res) {
-  console.log("Posting");
-  console.log(req.body);
+
   updateUser(req.user.mongoID, req.body).then((response, error) => {
 
     res.render("user-settings", {
       isUserAuthenticated: req.isAuthenticated(),
-      userData: response
+      userData: response,
+
     });
   });
 });
