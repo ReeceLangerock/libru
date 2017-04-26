@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <title>Libru</title>
-    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -25,30 +25,49 @@
     <div class="container">
 
 
+      <div class = "form-container">
+        <h1> Edit Resource</h1>
+        <p>Please only make edits if <b>absolutely</b> necessary. The only edits that should be made are to correct a typo, broken link, or a small revision. Please do not change the resource to something entirely different. Other users that have added, rated or commented on this resource did so with the belief that it would remain fundamentally unchanged. Thanks!</p>
 
+        <br>
 
     <form method="POST" action="add-resource/submit">
+
   <div class="form-group">
     <label for="resource-title">Resource Title</label>
-    <input type="text" class="form-control" name = "resourceTitle" id="resource-title" required>
+    <input type="text" class="form-control" name = "resourceTitle" id="resource-title" value = "<%=resource.title%>" required>
   </div>
+
+  <div class="row">
+
+  <div class="col-sm-9 pull-left">
   <div class="form-group">
+
     <label for="resource-url">Resource URL</label>
-    <input type="url" class="form-control" name = "resourceUrl" id="resource-url" required>
+    <input type="url" class="form-control" name = "resourceUrl" id="resource-url" value = "<%=resource.resourceURL%>" required>
   </div>
+
   <div class="form-group">
     <label for="resource-image-url">Resource Image Url</label>
-    <input type="url" class="form-control"  name = "resourceImageUrl" id="resource-image-url">
+    <input type="url" class="form-control"  name = "resourceImageUrl" value = "<%=resource.resourceImageURL%>" id="resource-image-url">
   </div>
+  </div>
+
+  <div class="col-sm-3 pull-right">
+    <img class = "pull-right image-preview" align = "center" id = "image-preview" src = "<%=resource.resourceImageURL%>">
+
+  </div>
+  </div>
+
   <div class="form-group">
     <label for="resource-description">Resouce Description</label>
-    <input type="text" class="form-control" name = "resourceDescription" id="resource-description">
+    <textarea class="form-control" rows="5" name = "resourceDescription" id="resource-description"><%=resource.resourceDescription%></textarea>
   </div>
   <label for="cost">Cost</label>
   <div class="form-inline form-group">
     <div class="input-group">
     <span class="input-group-addon">$</span>
-    <input type="number" class="form-control" name = "resourceCost" id="Cost">
+    <input type="number" class="form-control" name = "resourceCost" value = "<%=resource.resourceCost%>"id="Cost">
 </div>
     <div class="checkbox">
       <label><input type="checkbox" name = "resourceGoesOnSale">Goes On Sale</label>
@@ -57,16 +76,18 @@
 
 <div class="form-inline form-group">
   <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
-    <option selected disabled >Difficulty</option>
+    <option selected disabled ><%=resource.resourceDifficulty%></option>
     <option value="Beginner">Beginner</option>
     <option value="Intermediate">Intermediate</option>
     <option value="Advanced">Advanced</option>
     <option value="Master">Master</option>
-    <option value="Not Applicable">Not Applicable</option>
+    <option value="Master">Not Applicable</option>
   </select>
+  <br>
+  <br>
 
   <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
-    <option selected disabled>Category</option>
+    <option selected disabled><%=resource.resourceCategory%></option>
     <% for(let i =0; i < categoryList.length; i++) { %>
 
     <option id = "<%=i%>" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
@@ -74,7 +95,7 @@
   </select>
 
   <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
-    <option selected disabled>Sub Category</option>
+    <option selected disabled><%=resource.resourceSubCategory%></option>
     <option value="1">?</option>
     <option value="2">?</option>
     <option value="3">?</option>
@@ -85,7 +106,16 @@
   <input type="submit" class="btn btn-default"></input>
 </form>
 
-</div><!--/.container-->
+</div>
+
+
+  <div class="panel panel-danger">
+  <div class="panel-heading">Danger Zone</div>
+  <div class="panel-body">
+  <h3>Delete This Resource</h3>
+  <p class = "pull-left">Once you delete a resource, there is no going back. Please be certain.</p><button class= "pull-right">Delete</button></div>
+</div>
+
 
     </body>
 
@@ -113,5 +143,11 @@
               }
 
     });
+    $("#resource-image-url").on('blur', function() {
+      var imgURL = $("#resource-image-url").val();
+      if(imgURL.length > 5)
+    $("#image-preview").attr('src', imgURL);
+});
+
     </script>
     </html>

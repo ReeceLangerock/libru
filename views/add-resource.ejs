@@ -25,25 +25,40 @@
     <div class="container">
 
 
-      <div class = "add-form-container">
+      <div class = "form-container">
         <h1> Add A Resource</h1>
 
     <form method="POST" action="add-resource/submit">
+
   <div class="form-group">
     <label for="resource-title">Resource Title</label>
     <input type="text" class="form-control" name = "resourceTitle" id="resource-title" required>
   </div>
+
+  <div class="row">
+
+  <div class="col-sm-9 pull-left">
   <div class="form-group">
+
     <label for="resource-url">Resource URL</label>
     <input type="url" class="form-control" name = "resourceUrl" id="resource-url" required>
   </div>
+
   <div class="form-group">
     <label for="resource-image-url">Resource Image Url</label>
     <input type="url" class="form-control"  name = "resourceImageUrl" id="resource-image-url">
   </div>
+  </div>
+
+  <div class="col-sm-3 pull-right">
+    <img class = "pull-right image-preview" align = "center" id = "image-preview" src = "https://cdn0.iconfinder.com/data/icons/popular-files-formats/154/tmp-512.png">
+
+  </div>
+  </div>
+
   <div class="form-group">
     <label for="resource-description">Resouce Description</label>
-    <input type="text" class="form-control" name = "resourceDescription" id="resource-description">
+    <textarea rows="5" class="form-control" name = "resourceDescription" id="resource-description"></textarea>
   </div>
   <label for="cost">Cost</label>
   <div class="form-inline form-group">
@@ -117,5 +132,11 @@
               }
 
     });
+    $("#resource-image-url").on('blur', function() {
+      var imgURL = $("#resource-image-url").val();
+      if(imgURL.length > 5)
+    $("#image-preview").attr('src', imgURL);
+});
+
     </script>
     </html>
