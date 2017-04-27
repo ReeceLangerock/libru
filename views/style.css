@@ -7,10 +7,10 @@
 
 
 .resourceItem {
-  width: 31%;
+
   min-width: 150px;
   border:1px solid grey;
-  margin: 3px 3px 3px 3px;
+  padding: 0px 5px 0px 5px;
   box-shadow: 2px 2px grey;
     border-radius: 5px;
 
@@ -25,9 +25,11 @@
 
 
 .commentSpan{
-  border: 5px solid;
-  display:inline;
-  background-color: green;
+  display: flex;
+  border: 2px solid;
+  padding:2px;
+  margin:2px;
+
 }
 
 .form-container {

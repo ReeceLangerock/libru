@@ -38,18 +38,23 @@
 
     <div class="container">
 
-
   <div class="row">
 
-    <div class="col-xs-12 col-sm-9 col-md-9">
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 
       <div class="panel panel-default">
       <div class="panel-heading">Popular Resources</div>
       <div class="panel-body">
-      <div class="row ">
 
+        <% var iterator = 0; %>
         <% for(let i = 0; i < popularResources.length; i++) { %>
-        <div class="col-xs-6 col-lg-4 resourceItem">
+        <% iterator++ %>
+        <% if(i % 3 == 0) { %>
+          <div class="row ">
+          <% iterator = 0 %>
+            <% } %>
+        <div class="col-xs-4 col-lg-4 col-md-4" style = "padding:3px;">
+          <div class = "resourceItem">
           <h3><%=popularResources[i].title%> (<%=popularResources[i].avgRating%>/5)</h3>
           <img class="img-responsive" src = "<%=popularResources[i].resourceImageURL%>">
           <% if(popularResources[i].resourceDescription.length > 250) { %>
@@ -59,20 +64,30 @@
           <p><%=popularResources[i].resourceDescription%></p>
           <% } %>
           <p><a class="btn btn-default" href="/resource/<%=popularResources[i]['_id']%>" role="button">Check it Out &raquo;</a></p>
+        </div>
         </div><!--/.col-xs-6.col-lg-4-->
-        <% } %>
 
-      </div><!--/row-->
+        <% if(iterator == 2) { %>
+        </div>
+            <% } %>
+              <% } %>
     </div>
   </div>
 
       <div class="panel panel-default">
       <div class="panel-heading">Recent Resources</div>
       <div class="panel-body">
-      <div class="row ">
 
+
+        <% var iterator2 = 0; %>
         <% for(let i = 0; i < recentResources.length; i++) { %>
-        <div class="col-xs-6 col-lg-4 resourceItem">
+          <% iterator2++ %>
+          <% if(i % 3 == 0) { %>
+            <div class="row ">
+            <% iterator2 = 0 %>
+              <% } %>
+        <div class="col-xs-4 col-lg-4 col-md-4" style = "padding:3px;">
+          <div class = "resourceItem">
           <h3><%=recentResources[i].title%></h3>
           <img class="img-responsive" src = "<%=recentResources[i].resourceImageURL%>">
           <% if(recentResources[i].resourceDescription.length > 250) { %>
@@ -82,10 +97,14 @@
           <p><%=recentResources[i].resourceDescription%></p>
           <% } %>
           <p><a class="btn btn-default" href="/resource/<%=recentResources[i]['_id']%>" role="button">Check it Out &raquo;</a></p>
+        </div>
         </div><!--/.col-xs-6.col-lg-4-->
+        <% if(iterator2 == 2) { %>
+        </div>
+            <% } %>
         <% } %>
       </div>
-    </div>
+    
       </div><!--/row-->
 
     </div><!--/.col-xs-12.col-sm-9-->

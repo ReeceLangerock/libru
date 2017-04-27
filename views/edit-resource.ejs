@@ -117,7 +117,13 @@
   <div class="panel-heading">Danger Zone</div>
   <div class="panel-body">
   <h3>Delete This Resource</h3>
-  <p class = "pull-left">Once you delete a resource, there is no going back. Please be certain.</p><button class= "pull-right">Delete</button></div>
+  <p class = "pull-left">Once you delete a resource, there is no going back. Please be certain.</p>
+  <form method = "POST" action = "./delete">
+    <input type = "hidden" name = "id" value = "<%=resource['_id']%>">
+  <span class="input-group-btn">
+       <button class="btn btn-default" type="submit">Delete</button>
+  </span>
+</form>
 </div>
 
 

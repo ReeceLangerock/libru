@@ -18,15 +18,23 @@ router.use(bodyParser.json());
 
 router.get("/:id", function(req, res) {
   getResource(req.params.id).then((response, error) => {
-    res.render("edit-resource", {
-      isUserAuthenticated: req.isAuthenticated(),
-      resource: response,
-      categoryList: categoryList
-    });
+      console.log(response);
+    if ((response.resourceAddedBy = req.user.mongoID)) {
+      res.render("edit-resource", {
+        isUserAuthenticated: req.isAuthenticated(),
+        resource: response,
+        categoryList: categoryList
+      });
+    }
   });
 });
 
-router.post("/", function(req, res) {});
+router.post("/delete", function(req, res) {
+  console.log(req.body.id);
+  deleteResource(req.body.id).then((response, error) => {
+    res.end();
+  });
+});
 
 function getUser(userID) {
   return new Promise(function(resolve, reject) {
@@ -38,6 +46,24 @@ function getUser(userID) {
         if (err) {
           reject(err);
         } else {
+          resolve(doc);
+        }
+      }
+    );
+  });
+}
+
+function deleteResource(id) {
+  return new Promise(function(resolve, reject) {
+    resource.remove(
+      {
+        _id: id
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else {
+          console.log("removing");
           resolve(doc);
         }
       }

@@ -26,8 +26,16 @@
     <%  } %>
     <div class="container">
       <div class = "row">
+        <div class="container">
+
+
+
+
         <div class = "col-md-3">
+            <div class="panel panel-default">
+            <div class = "panel-body">
         <img class="img-responsive" src = "<%-resource.resourceImageURL%>"></img>
+        
         <% if(isUserAuthenticated) { %>
         <form method="POST" action="/resource/change">
         <div class="form-group">
@@ -45,18 +53,23 @@
       <div class="form-group">
         <label for="resource-description">Rate It!</label>
         <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
-        <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resourceRatingForUser%>" min=0 max=5 step=1 data-size="md" data-rtl="false" data-show-clear="false" data-show-caption="false">
+        <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resourceRatingForUser%>" min=0 max=5 step=1 data-size="sm" data-rtl="false" data-show-clear="false" data-show-caption="false">
       </div>
 
       </form>
       <% } %>
     </div>
+    </div>
+  </div>
 
         <div class = "col-md-7">
         <div class = "Category">
 
         </div>
-        <h1><%=resource.title%> <span class = "bg-primary"><%=resource.resourceCategory%></span></h1>
+        <div class="panel panel-default">
+        <div class="panel-heading"><%=resource.title%></div>
+        <div class = "panel-body">
+
 
 
         <% var sum = 0; %>
@@ -89,7 +102,11 @@
         </dl>
 
         <hr>
+
         <% if(isUserAuthenticated) {%>
+
+
+          <hr>
         <form method = "POST" action = '/resource/'>
         <div class="form-group">
           <label for="comment">Leave a comment</label>
@@ -106,21 +123,47 @@
       <% } %>
         <h3>Recent Comments</h3>
         <% for(let i = resource.resourceComments.length-1; i >= 0 ; i-- ){ %>
-          <span class = "commentSpan">
-          <% var imgSrc = 'https://raw.githubusercontent.com/Kornil/Chingu-Animal-Icons/master/animals/'+ resource.resourceComments[i].commenterCohort + '/apple-touch-icon-60x60.png' %>
-          <img src = "<%-imgSrc%>">
+          <div class = "commentSpan">
+          <% var cohort = (resource.resourceComments[i].commenterCohort != undefined) ? (resource.resourceComments[i].commenterCohort).toLowerCase() : "null"%>
+          <% var imgSrc = 'https://raw.githubusercontent.com/Kornil/Chingu-Animal-Icons/master/animals/'+ cohort + '/apple-touch-icon-60x60.png' %>
+          <img src = "<%=imgSrc%>">
           <p><%=resource.resourceComments[i].comment%> - "<%=resource.resourceComments[i].commentBy%>"</p>
-        </span>
+        </div>
         <% } %>
 
-
+          </div>
       </div>
 
-      <div class = "col-md-2">
-        Placeholder Sidebar
+      <% if(isUserAuthenticated) {%>
+        <div class="panel panel-default">
+        <div class="panel-heading">Tattle-Tail Territory</div>
+        <div class = "panel-body">
+        <div>
+          <form class="form-inline">
+        <button type="submit" class="btn btn-danger">Report Broken Link</button>
+
+    <button type="submit" class="btn btn-danger">Report Inappropriate</button>
+  </form>
       </div>
 
     </div>
+  </div>
+
+  <% } %>
+  </div>
+
+      <div class = "col-md-2">
+        <div class="panel panel-default">
+        <div class="panel-heading">Placeholder Sidebar</div>
+        <div class = "panel-body">
+
+
+        </div>
+
+      </div>
+      </div>
+
+
     </div>
 
 
