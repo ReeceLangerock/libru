@@ -35,16 +35,19 @@
   </p>
 </div>
 </div>
+
     <div class="container">
 
 
   <div class="row">
 
-    <div class="col-xs-12  col-sm-9 col-md-9">
+    <div class="col-xs-12 col-sm-9 col-md-9">
 
+      <div class="panel panel-default">
+      <div class="panel-heading">Popular Resources</div>
+      <div class="panel-body">
+      <div class="row ">
 
-      <div class="row popularResourceContainer">
-        <h2>Popular Resources</h2>
         <% for(let i = 0; i < popularResources.length; i++) { %>
         <div class="col-xs-6 col-lg-4 resourceItem">
           <h3><%=popularResources[i].title%> (<%=popularResources[i].avgRating%>/5)</h3>
@@ -60,9 +63,14 @@
         <% } %>
 
       </div><!--/row-->
-      <hr>
-      <div class="row recentResourceContainer">
-        <h2>Recent Resources</h2>
+    </div>
+  </div>
+
+      <div class="panel panel-default">
+      <div class="panel-heading">Recent Resources</div>
+      <div class="panel-body">
+      <div class="row ">
+
         <% for(let i = 0; i < recentResources.length; i++) { %>
         <div class="col-xs-6 col-lg-4 resourceItem">
           <h3><%=recentResources[i].title%></h3>
@@ -76,12 +84,19 @@
           <p><a class="btn btn-default" href="/resource/<%=recentResources[i]['_id']%>" role="button">Check it Out &raquo;</a></p>
         </div><!--/.col-xs-6.col-lg-4-->
         <% } %>
-
+      </div>
+    </div>
       </div><!--/row-->
 
     </div><!--/.col-xs-12.col-sm-9-->
 
-    <div class="col-md-3 portfolioContainer">
+  <div class="col-xs-12 col-sm-9 col-md-3">
+  <div class="panel panel-default">
+  <div class="panel-heading">Recent Resources</div>
+  <div class="panel-body">
+
+
+
       <h2>Trending Portfolios</h2>
       <% for(let i=0;i < portfolios.length; i++){ %>
         <div class = "commentItem">
@@ -93,6 +108,8 @@
       <% }%>
 
     </div>
+  </div>
+</div>
 
 
   </div><!--/row-->

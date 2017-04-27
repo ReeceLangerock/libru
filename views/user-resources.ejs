@@ -32,9 +32,14 @@
     <% var allResources = completedResources.concat(toDoResources,inProgressResources) %>
 
     <div class="container">
+      <div class="panel panel-default">
+      <div class="panel-heading">My Resources</div>
+
+    </div>
       <div class = "row">
+
         <div class = "col-md-2">
-        <h3>Resources</h3>
+
         <p>All (<%=allResources.length%>)</p>
         <p>Completed (<%=completedResources.length%>)</p>
         <p>In Progress (<%=toDoResources.length%>)</p>
@@ -68,7 +73,7 @@
             <% avg = isNaN(avg) ? "No Ratings" : avg %>
           <tr>
             <td class = "col-md-1"><img class="img-responsive" src = "<%=allResources[i].resourceImageURL %>"></td>
-            <td class = "col-md-1"><a href ="../resource/<%=allResources[i]['_id'] %>"><%=allResources[i].title %></a></td>
+            <td class = "col-md-1"><span hidden><%-allResources[i].title %></span><a href ="../resource/<%=allResources[i]['_id'] %>"><%=allResources[i].title %></a></td>
             <td class = "col-md-1"><%=allResources[i].resourceCategory %></td>
             <td class = "col-md-1"><%=allResources[i].resourceSubCategory %></td>
             <td class = "col-md-1"><%=allResources[i].resourceDifficulty %></td>

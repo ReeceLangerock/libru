@@ -17,7 +17,7 @@ router.use(bodyParser.json());
 
 // This accepts all posts requests!
 router.get("/", function(req, res) {
-  getAllResources().then((response, error) => {
+  getAllPortfolios().then((response, error) => {
     if (req.isAuthenticated()) {
       var resources = updateRating.filterOutCurrentUserRating(
         response,
@@ -32,14 +32,14 @@ router.get("/", function(req, res) {
           );
         }
 
-        res.render("all-resources", {
+        res.render("all-portfolios", {
           isUserAuthenticated: req.isAuthenticated(),
           resources: resources,
           categoryList: categoryList
         });
       });
     } else {
-      res.render("all-resources", {
+      res.render("all-portfolios", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: response,
         categoryList: categoryList
@@ -52,7 +52,7 @@ router.post("/", (req, res) => {
   var resources, category, categoryQuery, resourceQueryPromise;
 
   if (req.body.category == "All") {
-    resourceQueryPromise = getAllResources();
+    resourceQueryPromise = getAllPortfolios();
   } else if (req.body.category === req.body.subcategory) {
     category = req.body.category;
     categoryQuery = "resourceCategory";
@@ -79,7 +79,7 @@ router.post("/", (req, res) => {
           console.log(resources[i].status);
         }
 
-        res.render("all-resources", {
+        res.render("all-portfolios", {
           isUserAuthenticated: req.isAuthenticated(),
           resources: resources,
           categoryList: categoryList
@@ -87,7 +87,7 @@ router.post("/", (req, res) => {
       });
     } else {
       resources = response;
-      res.render("all-resources", {
+      res.render("all-portfolios", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: resources,
         categoryList: categoryList
@@ -230,9 +230,9 @@ function getResourceCategory(category, categoryQuery) {
   });
 }
 
-function getAllResources() {
+function getAllPortfolios() {
   return new Promise(function(resolve, reject) {
-    resource.find({'resourceCategory': {$ne: 'Portfolios'}}).exec(function(err, doc) {
+    resource.find({'resourceCategory': 'Portfolios'}).exec(function(err, doc) {
       if (err) {
         console.log(err);
         reject(err);

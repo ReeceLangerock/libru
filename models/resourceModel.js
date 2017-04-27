@@ -45,19 +45,7 @@ resourceSchema.methods.newResource = function(data, userID) {
       'resourceCategory': data.resourceCategory,
       'resourceSubCategory': data.resourceSubCategory,
       'resourceCost': data.resourceCost,
-      'resourceGoesOnSale': data.resourceGoesOnSale,
-      'resourceRatings': [{
-          'ratedBy': "",
-          'rating': ""
-      }],
-      'resourceComments': [{
-        'comment': "",
-        'commentID': "",
-        'commentBy': "",
-        'commenterCohort': "",
-        'dateWritten': "",
-        '_id' : false
-      }],
+      'resourceGoesOnSale': data.resourceGoesOnSale,      
       'resourceAddedBy': userID,
       'resourceFlagged': 0,
     });

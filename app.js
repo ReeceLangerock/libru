@@ -53,6 +53,7 @@ app.use("/add-resource", require("./controllers/addResource"));
 app.use("/edit-resource", require("./controllers/controller.edit-resource"));
 app.use("/resource", require("./controllers/resource"));
 app.use("/resources", require("./controllers/allResources"));
+app.use("/portfolios", require("./controllers/allPortfolios"));
 app.use("/help", require("./controllers/help"));
 app.use("/about", require("./controllers/about"));
 //app.user('/user/settings', require('/controllers/settings'));

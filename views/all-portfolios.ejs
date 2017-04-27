@@ -31,66 +31,29 @@
 
     <div class="container">
       <div class="panel panel-default">
-      <div class="panel-heading">Resources</div>
+      <div class="panel-heading">Portfolios</div>
     </div>
       <div class = "row">
-        <div class = "col-md-2 sidebar-offcanvas" style="padding-top: 54px">
 
-
-        <div class="panel-group">
-          <div class="panel panel-default">
-            <form method="POST" action="/resources">
-            <input type = "hidden" value = "All" name = "category">
-
-          <li class="list-group-item"><button type="button" onclick="form.submit();"class="btn-link">All</button></li>
-        </form>
-
-        <% for(let catIndex = 0; catIndex < categoryList.length; catIndex++) { %>
-
-          <% var collapseID = "collapse" + catIndex %>
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" href="#<%=collapseID%>"><%=categoryList[catIndex].category%></a>
-            </h4>
-          </div>
-
-          <div id="<%=collapseID%>" class="panel-collapse collapse">
-            <ul class="list-group">
-              <% for(let subCatIndex = 0; subCatIndex < categoryList[catIndex].subcategories.length; subCatIndex++) { %>
-                <form method="POST" action="/resources">
-                <input type = "hidden" value = "<%=categoryList[catIndex].category%>" name = "category">
-                <input type = "hidden" value = "<%=categoryList[catIndex].subcategories[subCatIndex]%>" name = "subcategory">
-                <li class="list-group-item"><button type="button" onclick="form.submit();"class="btn-link"><%=categoryList[catIndex].subcategories[subCatIndex]%></button></li>
-                </form>
-              <% } %>
-            </ul>
-          </div>
-
-
-      <% } %>
-        </div>
-      </div>
-
-        </div>
 <div class = "col-md-10">
 
       <table data-toggle="table"
       data-page-list="[10, 25, 50, 100, ALL]"
         data-search="true"
+
           data-pagination="true"
              data-classes="table" class = "table">
         <thead>
           <tr>
             <th>Cover</th>
             <th data-sortable="true" 	data-searchable = "true">Title</th>
-            <th data-sortable="true">Category</th>
-            <th data-sortable="true">Sub Category</th>
-            <th data-sortable="true">Difficulty</th>
+
             <th data-sortable="true">Avg. Rating</th>
             <% if(isUserAuthenticated) {%>
 
             <th data-sortable="true">Your Rating</th>
-            <th data-sortable="true">Status</th>
+
+
 
             <% } %>
           </tr>
@@ -106,11 +69,10 @@
             <% avg = isNaN(avg) ? "No Ratings" : avg %>
           <tr>
 
-            <td class = "col-md-1"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
+            <td class = "col-md-3"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
             <td class = "col-md-1"><span hidden><%-resources[i].title %></span><a href ="resource/<%=resources[i]['_id'] %>"><%-resources[i].title %></a></td>
-            <td class = "col-md-1"><%=resources[i].resourceCategory %></td>
-            <td class = "col-md-1"><%=resources[i].resourceSubCategory %></td>
-            <td class = "col-md-1"><%=resources[i].resourceDifficulty %></td>
+
+
             <td class = "col-md-1"><%=avg %></td>
             <% if(isUserAuthenticated) {%>
 
@@ -123,25 +85,8 @@
               </div>
               </form>
             </td>
-            <td class = "col-md-1">
-              <form method="POST" action="/resources/status">
-              <div class="form-group">
-                <select onchange="this.form.submit()" class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
-                  <% if(resources[i].status.length === 4){ %>
-                    <option value = "<%=resources[i].status[2]%>" selected disabled><%=resources[i].status[0]%></option>
-                    <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
-                    <option value="<%=resources[i].status[2]%>"><%=resources[i].status[2]%></option>
-                    <option value="<%=resources[i].status[3]%>"><%=resources[i].status[3]%></option>
-                  <% } else { %>
-                  <option value = "<%=resources[i].status[0]%>"selected><%=resources[i].status[0]%></option>
-                  <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
-                  <option value="<%=resources[i].status[2]%>"><%=resources[i].status[2]%></option>
-                  <% } %>
-                </select>
-                <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
-              </div>
-            </form>
-          </td>
+            <td></td>
+
 
 
           <%  } %>
@@ -152,6 +97,15 @@
 
       </table>
 
+      </div>
+
+      <div class="col-md-2">
+        <div class="panel panel-default">
+
+        <div class="panel-body">
+          Placeholder Sidebar
+        </div>
+      </div>
       </div>
     </div>
 

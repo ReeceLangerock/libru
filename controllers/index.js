@@ -6,6 +6,7 @@ var resource = require("../models/resourceModel");
 var user = require("../models/userModel");
 var bodyParser = require("body-parser");
 var categoryList = require("../models/categoryList.json");
+var numResourcesToGet = 6;
 
 router.use(
   bodyParser.urlencoded({
@@ -54,7 +55,7 @@ function getPortfolios() {
       .sort({
         dateAdded: -1
       })
-      .limit(5)
+      .limit(numResourcesToGet)
       .exec(function(err, doc) {
         if (err) {
           reject(err);
@@ -110,7 +111,7 @@ function getPopularResources() {
       .sort({
         avgRating: -1
       })
-      .limit(3)
+      .limit(numResourcesToGet)
       .exec(function(err, doc) {
         if (err) {
           reject(err);
@@ -128,7 +129,7 @@ function getRecentResources() {
       .sort({
         dateAdded: -1
       })
-      .limit(3)
+      .limit(numResourcesToGet)
       .exec(function(err, doc) {
         if (err) {
           reject(err);
