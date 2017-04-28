@@ -33,7 +33,8 @@
         <hr>
 
 
-    <form method="POST" action="add-resource/submit">
+    <form method="POST" action="./edit">
+    <input type = "hidden" name = "id" value = "<%=resource['_id']%>">
 
   <div class="form-group">
     <label for="resource-title">Resource Title</label>
@@ -65,11 +66,19 @@
     <label for="resource-description">Resouce Description</label>
     <textarea class="form-control" rows="5" name = "resourceDescription" id="resource-description"><%=resource.resourceDescription%></textarea>
   </div>
-  <label for="cost">Cost</label>
+
   <div class="form-inline form-group">
     <div class="input-group">
     <span class="input-group-addon">$</span>
-    <input type="number" class="form-control" name = "resourceCost" value = "<%=resource.resourceCost%>"id="Cost">
+    <select class="form-control" name = "resourceCost" id="cost-select" value = "test">
+      <option value = "test" selected disabled>Cost</option>
+      <option value="Free">Free</option>
+      <option value="$1 - $10">$1 - $10</option>
+      <option value="3">$10 - $25</option>
+      <option value="3">$25 - $50</option>
+      <option value="3">$50 - $100</option>
+      <option value="3">$100+</option>
+    </select>
 </div>
     <div class="checkbox">
       <label><input type="checkbox" name = "resourceGoesOnSale">Goes On Sale</label>
@@ -77,8 +86,8 @@
     </div>
 
 <div class="form-inline form-group">
-  <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
-    <option selected disabled ><%=resource.resourceDifficulty%></option>
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
+    <option value = "<%=resource.resourceDifficulty%>"selected disabled ><%=resource.resourceDifficulty%></option>
     <option value="Beginner">Beginner</option>
     <option value="Intermediate">Intermediate</option>
     <option value="Advanced">Advanced</option>
@@ -88,7 +97,7 @@
   <br>
   <br>
 
-  <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
     <option selected disabled><%=resource.resourceCategory%></option>
     <% for(let i =0; i < categoryList.length; i++) { %>
 
@@ -96,7 +105,7 @@
     <% } %>
   </select>
 
-  <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
     <option selected disabled><%=resource.resourceSubCategory%></option>
     <option value="1">?</option>
     <option value="2">?</option>

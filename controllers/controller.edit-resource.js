@@ -18,7 +18,7 @@ router.use(bodyParser.json());
 
 router.get("/:id", function(req, res) {
   getResource(req.params.id).then((response, error) => {
-      console.log(response);
+
     if ((response.resourceAddedBy = req.user.mongoID)) {
       res.render("edit-resource", {
         isUserAuthenticated: req.isAuthenticated(),
@@ -30,11 +30,19 @@ router.get("/:id", function(req, res) {
 });
 
 router.post("/delete", function(req, res) {
-  console.log(req.body.id);
+
   deleteResource(req.body.id).then((response, error) => {
     res.end();
   });
 });
+
+router.post("/edit", function(req, res){
+  console.log("edit");
+  console.log(req.body);
+  /*editResource(req.body).then((response, error) => {
+    res.end();
+  });*/
+})
 
 function getUser(userID) {
   return new Promise(function(resolve, reject) {
@@ -70,6 +78,35 @@ function deleteResource(id) {
     );
   });
 }
+
+function editResource(data){
+  resource.findOne(
+    {
+      _id: data.id
+    }, {
+      $set: {
+        "title": data.title,
+        "resourceURL": data.resourceURL,
+        "resourceImageURL": data.resourceImageURL,
+        "resourceDescription": data.resourceDescription,
+        "resourceDifficulty": data.resourceDifficulty,
+        "resourceCategory": data.resourceCategory,
+        "resourceSubCategory": data.resourceSubCategory,
+        "resourceCost": data.resourceCost,
+        "resourceGoesOnSale": data.resourceGoesOnSale
+
+      }
+    },
+    function(err, doc) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(doc);
+      }
+    }
+  );
+};
+
 
 function getResource(id) {
   return new Promise(function(resolve, reject) {
