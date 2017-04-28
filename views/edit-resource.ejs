@@ -64,24 +64,27 @@
 
   <div class="form-group">
     <label for="resource-description">Resouce Description</label>
-    <textarea class="form-control" rows="5" name = "resourceDescription" id="resource-description"><%=resource.resourceDescription%></textarea>
+    <textarea class="form-control" rows="5" name = "resourceDescription" value = "<%=resource.resourceDescription%>" id="resource-description"><%=resource.resourceDescription%></textarea>
   </div>
+
+  <% var selectedCost = resource.resourceCost %>
+  <% var costOptions = ["Free", "$1 - $10", "$10 - $25", "$25 - $50", "$50 - $100", "$100+"] %>
+  <% for (let i = 0; i < costOptions.length; i++ ) {  %>
+  <% if(costOptions[i] == selectedCost) { costOptions.splice(i, 1) } %>
+  <% } %>
 
   <div class="form-inline form-group">
     <div class="input-group">
     <span class="input-group-addon">$</span>
     <select class="form-control" name = "resourceCost" id="cost-select" value = "test">
-      <option value = "test" selected disabled>Cost</option>
-      <option value="Free">Free</option>
-      <option value="$1 - $10">$1 - $10</option>
-      <option value="3">$10 - $25</option>
-      <option value="3">$25 - $50</option>
-      <option value="3">$50 - $100</option>
-      <option value="3">$100+</option>
+      <option value = "<%=selectedCost%>" selected><%=selectedCost%></option>
+      <% for(let i =0; i < costOptions.length; i++) { %>
+      <option value="<%=costOptions[i]%>"><%=costOptions[i]%></option>
+      <% } %>
     </select>
 </div>
     <div class="checkbox">
-      <label><input type="checkbox" name = "resourceGoesOnSale">Goes On Sale</label>
+      <label><input type="checkbox" value = "true" name = "resourceGoesOnSale">Goes On Sale</label>
     </div>
     </div>
 
@@ -106,7 +109,7 @@
   </select>
 
   <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
-    <option selected disabled><%=resource.resourceSubCategory%></option>
+    <option value = "test" selected disabled><%=resource.resourceSubCategory%></option>
     <option value="1">?</option>
     <option value="2">?</option>
     <option value="3">?</option>
@@ -129,12 +132,12 @@
   <p class = "pull-left">Once you delete a resource, there is no going back. Please be certain.</p>
   <form method = "POST" action = "./delete">
     <input type = "hidden" name = "id" value = "<%=resource['_id']%>">
-  <span class="input-group-btn">
+  <span class="input-group-btn pull-right">
        <button class="btn btn-default" type="submit">Delete</button>
   </span>
 </form>
 </div>
-
+</div>
 
     </body>
 

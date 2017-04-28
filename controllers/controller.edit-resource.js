@@ -16,10 +16,13 @@ router.use(
 );
 router.use(bodyParser.json());
 
-router.get("/:id", function(req, res) {
-  getResource(req.params.id).then((response, error) => {
+router.get('/:id', function(req, res) {
+  if(req.params.id != '/favicon.ico'){
+    id = req.params.id
+  }
+  getResource(id).then((response, error) => {
 
-    if ((response.resourceAddedBy = req.user.mongoID)) {
+    if ((response.resourceAddedBy == req.user.mongoID)) {
       res.render("edit-resource", {
         isUserAuthenticated: req.isAuthenticated(),
         resource: response,
@@ -118,6 +121,8 @@ function getResource(id) {
         if (err) {
           reject(err);
         } else {
+          console.log("doc");
+          console.log(doc);
           resolve(doc);
         }
       }

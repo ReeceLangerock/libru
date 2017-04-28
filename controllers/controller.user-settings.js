@@ -13,7 +13,7 @@ router.use(
 );
 router.use(bodyParser.json());
 
-// This accepts all posts requests!
+
 router.get("/", function(req, res) {
   getUser(req.user.mongoID).then((response, error) => {
 
