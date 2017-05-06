@@ -70,6 +70,7 @@
             <%  sum += allResources[i].resourceRatings[j].rating; %>
             <% } %>
             <% var avg = sum / allResources[i].resourceRatings.length; %>
+            <% avg = Number.isInteger(avg) ? avg : avg.toPrecision(3)%>
             <% avg = isNaN(avg) ? "No Ratings" : avg %>
           <tr>
             <td class = "col-md-1"><img class="img-responsive" src = "<%=allResources[i].resourceImageURL %>"></td>
@@ -110,4 +111,5 @@
 
 
     </div>
+    <%- include ./partials/footer.ejs %>
   </body>

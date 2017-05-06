@@ -55,7 +55,8 @@
             <% } %>
         <div class="col-xs-4 col-lg-4 col-md-4" style = "padding:3px;">
           <div class = "resourceItem">
-          <h3><%=popularResources[i].title%> (<%=popularResources[i].avgRating%>/5)</h3>
+          <% avg = Number.isInteger(popularResources[i].avgRating) ? popularResources[i].avgRating : popularResources[i].avgRating.toPrecision(3)%>
+          <h3><%=popularResources[i].title%> (<%=avg%>/5)</h3>
           <img class="img-responsive" src = "<%=popularResources[i].resourceImageURL%>">
           <% if(popularResources[i].resourceDescription.length > 250) { %>
           <% var shortenedDescription = popularResources[i].resourceDescription.slice(0, 250) + "..."; %>
@@ -104,7 +105,7 @@
             <% } %>
         <% } %>
       </div>
-    
+
       </div><!--/row-->
 
     </div><!--/.col-xs-12.col-sm-9-->
@@ -133,12 +134,8 @@
 
   </div><!--/row-->
 
-  <hr>
-  <footer class="footer">
-      <div class="container">
-        <p class="text-muted">&copy; 2017 Reece Langerock</p>
-      </div>
-    </footer>
+
+  <%- include ./partials/footer.ejs %>
 
 
 </div><!--/.container-->
