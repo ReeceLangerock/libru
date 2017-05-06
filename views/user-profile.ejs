@@ -41,7 +41,7 @@
 
         <div class="panel-group">
           <div class="panel panel-default">
-            <form method="POST" action="/resources">
+            <form method="POST" action="/user/profile">
             <input type = "hidden" value = "All" name = "category">
 
           <li class="list-group-item"><button type="button" onclick="form.submit();"class="btn-link">All</button></li>
@@ -59,7 +59,7 @@
           <div id="<%=collapseID%>" class="panel-collapse collapse">
             <ul class="list-group">
               <% for(let subCatIndex = 0; subCatIndex < categoryList[catIndex].subcategories.length; subCatIndex++) { %>
-                <form method="POST" action="/resources">
+                <form method="POST" action="/user/profile">
                 <input type = "hidden" value = "<%=categoryList[catIndex].category%>" name = "category">
                 <input type = "hidden" value = "<%=categoryList[catIndex].subcategories[subCatIndex]%>" name = "subcategory">
                 <li class="list-group-item"><button type="button" onclick="form.submit();"class="btn-link"><%=categoryList[catIndex].subcategories[subCatIndex]%></button></li>

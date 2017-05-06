@@ -51,11 +51,16 @@ router.get('/:id', function(req, res) {
 
 router.post('/', function(req, res) {
     var comment = req.body.comment;
-    if (comment.length <= 1) {
-        req.end();
+    if (comment.length <= 3) {
+      req.flash(
+        "error",
+        "You can't leave an empty comment!\nClick anywhere to close."
+      );
+      res.redirect("back");
     } else {
         getUser(req.user.mongoID).then((response, error) => {
             pushCommentToResource(req.body.resourceID, comment, response.firstName, response.cohort)
+            res.redirect("back");
 
         })
     }
@@ -65,7 +70,7 @@ router.post('/', function(req, res) {
 
 router.post('/rate', function(req, res) {
     updateRating.updateResourceRating(req.body.resourceID, req.user.mongoID, req.body.resourceRating).then((response, error) => {
-        res.end();
+        res.redirect("back");
     });
 
 })
@@ -91,13 +96,13 @@ router.post('/change', function(req, res) {
         if (response == "Not_Found") {
             updateStatus.pushResource(req.user.mongoID, resourceStatus, dateField, req.body.resourceID).then((response, error) => {
                 console.log("Added");
-                res.end();
+                res.redirect("back");
             })
         } else {
             var oldResourceStatus = findResourceStatus(response, req.body.resourceID);
             if (newResourceStatus == oldResourceStatus) {
                 console.log("NO CHANGE");
-                res.end();
+                res.redirect("back");
             } else {
                 console.log(oldResourceStatus);
 
@@ -110,7 +115,7 @@ router.post('/change', function(req, res) {
                 }
                 updateStatus.updateResourceStatus(req.user.mongoID, resourceStatus, oldResourceStatus, dateField, req.body.resourceID).then((response, error) => {
 
-                    res.end();
+                    res.redirect("back");
                 });
             }
         }

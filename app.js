@@ -57,9 +57,10 @@ app.use("/studyguides", require("./controllers/controller.study-guides"));
 app.use("/portfolios", require("./controllers/allPortfolios"));
 app.use("/help", require("./controllers/help"));
 app.use("/about", require("./controllers/about"));
-//app.user('/user/settings', require('/controllers/settings'));
+
 app.use("/user/submissions", require("./controllers/submissions"));
 app.use("/user/resources", require("./controllers/userResources"));
+app.use("/user/studyguides", require("./controllers/controller.user-study-guides"));
 app.use("/user/settings", require("./controllers/controller.user-settings"));
 app.use("/user/profile", require("./controllers/controller.user-profile"));
 

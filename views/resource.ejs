@@ -24,6 +24,8 @@
     <%  } else { %>
     <%- include ./partials/navigation.ejs %>
     <%  } %>
+
+    <%- include ./partials/flash-popup-modal.ejs %>
     <div class="container">
       <div class = "row">
         <div class="container">
@@ -37,7 +39,7 @@
         <img class="img-responsive" src = "<%-resource.resourceImageURL%>"></img>
 
         <% if(isUserAuthenticated) { %>
-        
+
         <form method="POST" action="/resource/change">
         <div class="form-group">
 
