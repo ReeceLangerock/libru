@@ -103,6 +103,7 @@
             <%  sum += resources[i].resourceRatings[j].rating; %>
             <% } %>
             <% var avg = sum / resources[i].resourceRatings.length; %>
+            <% avg = Number.isInteger(avg) ? avg : avg.toPrecision(3)%>
             <% avg = isNaN(avg) ? "No Ratings" : avg %>
           <tr>
 

@@ -9,7 +9,7 @@
 .resourceItem {
 
   min-width: 150px;
-  border:1px solid grey;
+  border: 1px solid #ddd;
   padding: 0px 5px 0px 5px;
   box-shadow: 2px 2px grey;
     border-radius: 5px;
@@ -26,9 +26,11 @@
 
 .commentSpan{
   display: flex;
-  border: 2px solid;
+  border: 1px solid #ddd;
+  border-radius: 3px;
   padding:2px;
-  margin:2px;
+  margin:6px 2px 6px 2px;
+  background-color: #f5f5f5;
 
 }
 

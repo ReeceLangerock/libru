@@ -80,6 +80,7 @@
         <%  sum += resource.resourceRatings[i].rating; %>
         <% } %>
         <% var avg = sum / resource.resourceRatings.length; %>
+        <% avg = Number.isInteger(avg) ? avg : avg.toPrecision(3)%>
         <span class = "ratingSpan"><h5>Avg. Rating: <%=avg %> | Total ratings: <%=resource.resourceRatings.length %></h5>
           <p><%=resource.resourceDescription%></>
           <p>Check it out <a href = "<%=resource.resourceURL%>">here</a></p>

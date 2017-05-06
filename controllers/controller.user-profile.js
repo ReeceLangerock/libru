@@ -15,7 +15,6 @@ router.use(bodyParser.json());
 
 router.get("/", function(req, res) {
   getUser(req.user.mongoID).then((response, error) => {
-
     getUsersResources(req.user.mongoID).then((response, error) => {
       res.render("user-profile", {
         isUserAuthenticated: req.isAuthenticated(),
@@ -24,6 +23,41 @@ router.get("/", function(req, res) {
       });
     });
   });
+});
+
+router.post("/", (req, res) => {
+  if (req.isAuthenticated()) {
+  var resources, category, categoryQuery, resourceQueryPromise
+  console.log("BODY");
+  console.log(req.body);
+
+  if (req.body.category == "All") {
+    resourceQueryPromise = getUsersResources();
+  } else if (req.body.category === req.body.subcategory) {
+    category = req.body.category;
+    categoryQuery = "resourceCategory";
+    resourceQueryPromise = getResourceCategory(category, categoryQuery, req.user.mongoID);
+  } else {
+    category = req.body.subcategory;
+    categoryQuery = "resourceSubCategory";
+    resourceQueryPromise = getResourceCategory(category, categoryQuery, req.user.mongoID);
+  }
+
+  resourceQueryPromise.then((response, error) => {
+
+
+
+        res.render("user-profile", {
+          isUserAuthenticated: req.isAuthenticated(),
+          resources: response,
+          categoryList: categoryList
+        });
+
+
+  });
+} else {
+  res.redirect('../');
+}
 });
 
 function getUser(userID) {
@@ -40,6 +74,27 @@ function getUser(userID) {
         }
       }
     );
+  });
+}
+
+function getResourceCategory(category, categoryQuery,user) {
+  console.log(category);
+  console.log(categoryQuery);
+  return new Promise(function(resolve, reject) {
+    resource
+      .find({
+        resourceAddedBy: user,
+        [categoryQuery]: category
+      })
+      .exec(function(err, doc) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          console.log(doc);
+          resolve(doc);
+        }
+      });
   });
 }
 

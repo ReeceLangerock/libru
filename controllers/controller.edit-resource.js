@@ -42,6 +42,7 @@ router.post("/delete", function(req, res) {
 router.post("/edit", function(req, res){
   console.log("edit");
   console.log(req.body);
+  res.redirect("back");
   /*editResource(req.body).then((response, error) => {
     res.end();
   });*/

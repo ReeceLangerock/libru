@@ -33,7 +33,7 @@ var resourceSchema = mongoose.Schema({
 });
 
 resourceSchema.methods.newResource = function(data, userID) {
-
+    var goesOnSale = (!data.resourceGoesOnSale) ? false : data.resourceGoesOnSale
     var newResource = new resourceModel({
       '_id': new ObjectID(),
       'dateAdded': new Date(),
@@ -45,7 +45,7 @@ resourceSchema.methods.newResource = function(data, userID) {
       'resourceCategory': data.resourceCategory,
       'resourceSubCategory': data.resourceSubCategory,
       'resourceCost': data.resourceCost,
-      'resourceGoesOnSale': data.resourceGoesOnSale,      
+      'resourceGoesOnSale': goesOnSale,
       'resourceAddedBy': userID,
       'resourceFlagged': 0,
     });

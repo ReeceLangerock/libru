@@ -73,6 +73,9 @@
   <% if(costOptions[i] == selectedCost) { costOptions.splice(i, 1) } %>
   <% } %>
 
+  <% var checked = resource.resourceGoesOnSale ? checked : false %>
+
+
   <div class="form-inline form-group">
     <div class="input-group">
     <span class="input-group-addon">$</span>
@@ -84,24 +87,36 @@
     </select>
 </div>
     <div class="checkbox">
-      <label><input type="checkbox" value = "true" name = "resourceGoesOnSale">Goes On Sale</label>
+      <% if(resource.resourceGoesOnSale) { %>
+      <label><input type="checkbox" checked name = "resourceGoesOnSale">Goes On Sale</label>
+      <% } else  { %>
+        <label><input type="checkbox"  name = "resourceGoesOnSale">Goes On Sale</label>
+        <% } %>
     </div>
     </div>
 
+    <%=console.log(resource.resourceDifficulty) %>
+    <% var selectedDifficulty = (resource.resourceDifficulty) ? "Difficulty" : resource.resourceDifficulty %>
+    <% var difficultyOptions = ["Beginner", "Intermediate", "Advanced", "Master", "Not Applicable"] %>
+    <% for (let i = 0; i < difficultyOptions.length; i++ ) {  %>
+    <% if(difficultyOptions[i] == selectedDifficulty) { difficultyOptions.splice(i, 1) } %>
+    <% } %>
+
 <div class="form-inline form-group">
-  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select">
     <option value = "<%=resource.resourceDifficulty%>"selected disabled ><%=resource.resourceDifficulty%></option>
-    <option value="Beginner">Beginner</option>
-    <option value="Intermediate">Intermediate</option>
-    <option value="Advanced">Advanced</option>
-    <option value="Master">Master</option>
-    <option value="Master">Not Applicable</option>
+    <option value = "<%=selectedDifficulty%>" selected><%=selectedDifficulty%></option>
+    <% for(let i =0; i < difficultyOptions.length; i++) { %>
+    <option value="<%=difficultyOptions[i]%>"><%=difficultyOptions[i]%></option>
+    <% } %>
+
   </select>
   <br>
   <br>
 
-  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
-    <option selected disabled><%=resource.resourceCategory%></option>
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select">
+    <option value = "<%=resource.resourceCategory%>" selected disabled><%=resource.resourceCategory%></option>
+    <option value = "test" selected>test</option>
     <% for(let i =0; i < categoryList.length; i++) { %>
 
     <option id = "<%=i%>" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
