@@ -4,8 +4,8 @@ var modal, btn, span;
 
 $(document).ready(function() {
   modal = document.getElementById('myModal');
-  modalBookReceiveIdValue = document.getElementById('modalBookReceiveId');
-    modalBookOwnerIdValue = document.getElementById('modalBookOwnerID');
+
+    console.log("modal");
 
   // Get the button that opens the modal
   buttons = document.querySelectorAll(".requestButton");

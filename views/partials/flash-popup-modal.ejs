@@ -1,0 +1,33 @@
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  
+</div>
+              <!-- for Req.flash -->
+              <% if(error && error.length > 0){ %>
+                <div class = "flashPage" id = "flashPageID">
+                  <div class = "ui error">
+                    <h1>Error</h1>
+                    <p><%= error %></p>
+                  </div>
+                </div>
+              <% } %>
+              <% if(success && success.length > 0){ %>
+              <div class = "flashPage" id = "flashPageID">
+              <div class = "ui success">
+                <h1>Success!</h1>
+                <p><%= success[0] %></p><br>
+                <p><%= success[1] %></p>
+              </div>
+            </div>
+            <% } %>
+
+            <script>
+            document.onclick = function(event) {
+              if (document.getElementById("flashPageID")) {
+                document.getElementById("flashPageID").style.display = "none";
+              }
+            };
+            </script>
+            <script class = 'modal-input' type="text/javascript" src="./javascript/modal.js"></script>
