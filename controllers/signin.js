@@ -51,9 +51,10 @@ passport.deserializeUser(function(user, callback) {
           break;
       case 'github':
           providerQuery = 'githubID';
-          dataToSave.firstName = user.name.givenName;
-          dataToSave.lastName = user.name.familyName;
-          dataToSave.googleID = user.identities[0].user_id;
+          dataToSave.firstName = (user._json.name).split(" " , 1);
+          var tempLastName = (user._json.name).split(" ");
+          dataToSave.lastName = tempLastName.slice(1);
+          dataToSave.githubID = user.identities[0].user_id;
           break;
       case 'auth0':
           providerQuery = 'auth0ID';
@@ -79,7 +80,7 @@ passport.deserializeUser(function(user, callback) {
               callback(null, user);
           }
       });
-      
+
 });
 
 

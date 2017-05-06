@@ -1,0 +1,50 @@
+<!-- The Modal -->
+              <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <form action = "/send-request" method = "post">
+                  <span class="close">&times;</span>
+                  <input id = "modalBookReceiveId" type = "hidden" name = "bookToReceiveID" value = "">
+                  <input id = "modalBookOwnerID" type = "hidden" name = "bookOwnerID" value = "">
+                  <h1>Select which book you'd like to trade</h1>
+                  <select name="bookToSendID" id = "modalDropdown">
+                    <% if(userBooks) { %>
+                      <% for(var i = 0; i < userBooks.length; i++){ %>
+                    <option value="<%=userBooks[i]['_id'] %>"><%=userBooks[i].title %></option>
+                   <% } %>
+                  </select>
+                  <input type = "submit" value = "Submit">
+                    <% } %>
+                </form>
+
+                </div>
+              </div>
+              <!-- for Req.flash -->
+              <% if(error && error.length > 0){ %>
+                <div class = "flashPage" id = "flashPageID">
+                  <div class = "ui error">
+                    <p><%= error %></p>
+                  </div>
+                </div>
+              <% } %>
+              <% if(success && success.length > 0){ %>
+              <div class = "flashPage" id = "flashPageID">
+              <div class = "ui success">
+                <h1>success!</h1>
+                <p><%= success[0] %></p><br>
+                <p><%= success[1] %></p>
+              </div>
+            </div>
+            <% } %>
+
+            <script>
+            document.onclick = function(event) {
+              if (document.getElementById("flashPageID")) {
+                document.getElementById("flashPageID").style.display = "none";
+              }
+            };
+            </script>
+            <script class = 'modal-input' type="text/javascript" src="./javascript/modal.js"></script>
+
+            <script class = 'modal-input' type="text/javascript" src="./javascript/modal.js"></script>
