@@ -22,6 +22,8 @@
     <%- include ./partials/navigation.ejs %>
     <%  } %>
 
+    <%- include ./partials/flash-popup-modal.ejs %>
+
     <div class="container">
 
 
@@ -47,12 +49,12 @@
   <div class="form-group">
 
     <label for="resource-url">Resource URL</label>
-    <input type="url" class="form-control" name = "resourceUrl" id="resource-url" value = "<%=resource.resourceURL%>" required>
+    <input type="url" class="form-control" name = "resourceURL" id="resource-url" value = "<%=resource.resourceURL%>" required>
   </div>
 
   <div class="form-group">
     <label for="resource-image-url">Resource Image Url</label>
-    <input type="url" class="form-control"  name = "resourceImageUrl" value = "<%=resource.resourceImageURL%>" id="resource-image-url">
+    <input type="url" class="form-control"  name = "resourceImageURL" value = "<%=resource.resourceImageURL%>" id="resource-image-url">
   </div>
   </div>
 
@@ -69,9 +71,6 @@
 
   <% var selectedCost = resource.resourceCost %>
   <% var costOptions = ["Free", "$1 - $10", "$10 - $25", "$25 - $50", "$50 - $100", "$100+"] %>
-  <% for (let i = 0; i < costOptions.length; i++ ) {  %>
-  <% if(costOptions[i] == selectedCost) { costOptions.splice(i, 1) } %>
-  <% } %>
 
   <% var checked = resource.resourceGoesOnSale ? checked : false %>
 
@@ -95,19 +94,19 @@
     </div>
     </div>
 
-    <%=console.log(resource.resourceDifficulty) %>
+
     <% var selectedDifficulty = (resource.resourceDifficulty) ? "Difficulty" : resource.resourceDifficulty %>
     <% var difficultyOptions = ["Beginner", "Intermediate", "Advanced", "Master", "Not Applicable"] %>
-    <% for (let i = 0; i < difficultyOptions.length; i++ ) {  %>
-    <% if(difficultyOptions[i] == selectedDifficulty) { difficultyOptions.splice(i, 1) } %>
-    <% } %>
 
 <div class="form-inline form-group">
   <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select">
-    <option value = "<%=resource.resourceDifficulty%>"selected disabled ><%=resource.resourceDifficulty%></option>
-    <option value = "<%=selectedDifficulty%>" selected><%=selectedDifficulty%></option>
+
     <% for(let i =0; i < difficultyOptions.length; i++) { %>
+    <% if(difficultyOptions[i] == resource.resourceDifficulty) { %>
+      <option selected = "selected" value="<%=difficultyOptions[i]%>"><%=difficultyOptions[i]%></option>
+    <%} else { %>
     <option value="<%=difficultyOptions[i]%>"><%=difficultyOptions[i]%></option>
+    <% } %>
     <% } %>
 
   </select>
@@ -115,19 +114,34 @@
   <br>
 
   <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select">
-    <option value = "<%=resource.resourceCategory%>" selected disabled><%=resource.resourceCategory%></option>
-    <option value = "test" selected>test</option>
+
     <% for(let i =0; i < categoryList.length; i++) { %>
+      <% if(categoryList[i].category == resource.resourceCategory) { %>
+        <option selected = "selected" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
+      <%} else { %>
 
     <option id = "<%=i%>" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
     <% } %>
+    <% } %>
   </select>
 
+  <% var categoryIndex; %>
+  <% for (let i = 0; i < categoryList.length; i++) { %>
+  <%    if(categoryList[i].category == resource.resourceCategory) { %>
+  <%      categoryIndex = i; %>
+  <%    } %>
+  <% } %>
   <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
-    <option value = "test" selected disabled><%=resource.resourceSubCategory%></option>
-    <option value="1">?</option>
-    <option value="2">?</option>
-    <option value="3">?</option>
+    <% for(let i =0; i < categoryList[categoryIndex].subcategories.length; i++) { %>
+      <% if(categoryList[categoryIndex].subcategories[i] == resource.resourceSubCategory) { %>
+        <option selected id = "<%=i%>" value="<%=categoryList[categoryIndex].subcategories[i]%>"><%=categoryList[categoryIndex].subcategories[i]%></option>
+      <%} else { %>
+
+        <option id = "<%=i%>" value="<%=categoryList[categoryIndex].subcategories[i]%>"><%=categoryList[categoryIndex].subcategories[i]%></option>
+    <% } %>
+    <% } %>
+
+
   </select>
 </div>
 
@@ -163,7 +177,7 @@
         var id = $(this).children(":selected").attr("id");
 
         if(categoryList[id].subcategories.length > 1){
-
+          $("#sub-category-select").show();
           $("#sub-category-select").empty();
           $("#sub-category-select").append( $("<option>")
             .val("Sub Category")
@@ -177,7 +191,21 @@
           .html(categoryList[id].subcategories[i])
         );
       }
-              }
+    } else {
+      $("#sub-category-select").hide();
+      $("#sub-category-select").append( $("<option>")
+        .val("Sub Category")
+        .html("Sub Category")
+        .prop('disabled', true)
+        .prop('selected', true)
+      );
+      $("#sub-category-select").append( $("<option>")
+        .val(categoryList[id].subcategories[0])
+        .html(categoryList[id].subcategories[0])
+      );
+    }
+
+
 
     });
     $("#resource-image-url").on('blur', function() {

@@ -17,7 +17,8 @@ router.use(
 router.use(bodyParser.json());
 
 router.get('/:id', function(req, res) {
-  if(req.params.id != '/favicon.ico'){
+  console.log(req.params.id);
+  if(req.params.id != '/favicon.ico' && req.params.id != null){
     id = req.params.id
   }
   getResource(id).then((response, error) => {
@@ -35,17 +36,19 @@ router.get('/:id', function(req, res) {
 router.post("/delete", function(req, res) {
 
   deleteResource(req.body.id).then((response, error) => {
-    res.end();
+    req.flash("success", "Resource deleted!\nClick anywhere to close.");
+    res.redirect("back");
   });
 });
 
 router.post("/edit", function(req, res){
-  console.log("edit");
-  console.log(req.body);
-  res.redirect("back");
-  /*editResource(req.body).then((response, error) => {
-    res.end();
-  });*/
+
+
+  editResource(req.body).then((response, error) => {
+
+    req.flash("success", "Resource edited!\nClick anywhere to close.");
+    res.redirect("back");;
+  });
 })
 
 function getUser(userID) {
@@ -75,7 +78,7 @@ function deleteResource(id) {
         if (err) {
           reject(err);
         } else {
-          console.log("removing");
+
           resolve(doc);
         }
       }
@@ -84,12 +87,14 @@ function deleteResource(id) {
 }
 
 function editResource(data){
-  resource.findOne(
+  return new Promise(function(resolve, reject) {
+
+  resource.findOneAndUpdate(
     {
       _id: data.id
     }, {
       $set: {
-        "title": data.title,
+        "title": data.resourceTitle,
         "resourceURL": data.resourceURL,
         "resourceImageURL": data.resourceImageURL,
         "resourceDescription": data.resourceDescription,
@@ -103,13 +108,15 @@ function editResource(data){
     },
     function(err, doc) {
       if (err) {
+        console.log(err);
         reject(err);
       } else {
         resolve(doc);
       }
     }
   );
-};
+});
+}
 
 
 function getResource(id) {
@@ -122,8 +129,7 @@ function getResource(id) {
         if (err) {
           reject(err);
         } else {
-          console.log("doc");
-          console.log(doc);
+
           resolve(doc);
         }
       }

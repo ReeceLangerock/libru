@@ -38,17 +38,26 @@
             <div class = "panel-body">
         <img class="img-responsive" src = "<%-resource.resourceImageURL%>"></img>
 
+        <hr>
         <% if(isUserAuthenticated) { %>
+          <% var status = ["Want To Do", "In Progress", "Completed"] %>
+          <% var value = ["toDo", "inProgress", "Completed"] %>
 
         <form method="POST" action="/resource/change">
-        <div class="form-group">
+        <div class="form-inline form-group">
 
           <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
-          <select onchange="this.form.submit()" class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
-            <option selected><%=resourseStatusForUser%></option>
-            <option value="Completed">Completed</option>
-            <option value="toDo">Want To Do</option>
-            <option value="inProgress">In Progress</option>
+          <select onchange="this.form.submit()" class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
+            <% if(resourseStatusForUser == "...") { %>
+              <option selected = "selected" value="">...</option>
+            <% } %>
+            <% for(let i =0; i < status.length; i++) { %>
+            <% if(status[i] == resourseStatusForUser) { %>
+              <option selected = "selected" value="<%=value[i]%>"><%=resourseStatusForUser%></option>
+            <%} else { %>
+            <option value="<%=value[i]%>"><%=status[i]%></option>
+            <% } %>
+            <% } %>
           </select>
         </div>
       </form>
