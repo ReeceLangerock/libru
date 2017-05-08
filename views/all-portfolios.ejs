@@ -76,11 +76,11 @@
             <td class = "col-md-1"><%=avg %></td>
             <% if(isUserAuthenticated) {%>
 
-            <td class = "col-md-1">
+            <td  id = "<%=i%>" class = "col-md-1">
               <form method="POST" action="/resources/rate">
                 <div class="form-group">
                   <input type = "hidden"  value = "<%=resources[i].rating%>">
-                <input onchange="this.form.submit()" name="resourceRating" type="number" class="rating"  value = "<%-resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-show-clear="false" data-show-caption="false">
+                <input onchange="this.form.submit()" name="resourceRating" type="number" class="rating-loading"  id = "star<%=i%>" value = "<%-resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
                 <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
               </div>
               </form>
@@ -112,3 +112,30 @@
     </div>
     <%- include ./partials/footer.ejs %>
   </body>
+
+  <script>
+  $(document).ready(function() {
+    refreshStars([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
+
+  $("#table").on("all.bs.table", function(e, arg1, arg2) {
+    var data = $("#table").bootstrapTable("getData");
+    var rows = [];
+    for (let i = 0; i < data.length; i++) {
+      rows.push(data[i]["_6_id"]);
+    }
+
+
+    refreshStars(rows);
+  });
+
+  function refreshStars(rows) {
+    for (let i = 0; i < rows.length; i++) {
+      $("#star" + rows[i]).rating({
+        disabled: false,
+        showClear: false,
+        showCaption: true
+      });
+    }
+  }
+  </script>

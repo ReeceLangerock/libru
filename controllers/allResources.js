@@ -104,7 +104,7 @@ router.post("/rate", function(req, res) {
       req.body.resourceRating
     )
     .then((response, error) => {
-      res.end();
+      res.redirect("back");
     });
 });
 

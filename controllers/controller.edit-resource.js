@@ -17,7 +17,6 @@ router.use(
 router.use(bodyParser.json());
 
 router.get("/:id", function(req, res) {
-  console.log(req.params.id);
   if (req.params.id != "/favicon.ico" && req.params.id != null) {
     id = req.params.id;
   }
