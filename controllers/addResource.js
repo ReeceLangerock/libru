@@ -22,7 +22,7 @@ router.get("/", function(req, res) {
 });
 
 router.post("/submit", (req, res) => {
-  console.log(req.body.resourceUrl);
+  console.log(req.body);
   checkIfResourceAlreadyAdded(req.body.resourceUrl).then((response, error) => {
     if (response == "NOT_ADDED") {
       resource.schema.methods.newResource(req.body, req.user.mongoID);

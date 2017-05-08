@@ -17,9 +17,11 @@
 }
 
 .commentItem {
-  border:1px solid grey;
-  margin: 3px 3px 3px 3px;
-  box-shadow: 2px 2px grey;
+  margin: 3px 5px 3px 5px;
+
+}
+.commentItem p {
+  margin: 0px;
 }
 
 

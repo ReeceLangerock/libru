@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libru</title>
     <!--<link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -35,7 +36,7 @@
 
         <div class = "col-md-3">
             <div class="panel panel-default">
-            <div class = "panel-body">
+            <div class = "panel-body" align = "center">
         <img class="img-responsive" src = "<%-resource.resourceImageURL%>"></img>
 
         <hr>
@@ -70,6 +71,10 @@
 
       </form>
       <% } %>
+
+      <% if(user && resource.resourceAddedBy == user['_id']) { %>
+        <button class="btn btn-primary" onclick="location.href='../edit-resource/<%=resource['_id']%>';">Edit</button>
+        <% } %>
     </div>
     </div>
   </div>
@@ -99,7 +104,7 @@
         <dt>Difficulty:</dt>
         <dd><%=resource.resourceDifficulty%></dd>
         <dt>Category:</dt>
-        <% if(resource.resourceSubCategory == "none"){ %>
+        <% if(resource.resourceSubCategory == resource.resourceCategory){ %>
         <dd><%=resource.resourceCategory%></dd>
         <% } else { %>
         <dd><%=resource.resourceCategory%> - <%=resource.resourceSubCategory%></dd>
@@ -107,8 +112,10 @@
 
         <dt>Cost:</dt>
         <dd><%=resource.resourceCost%></dd>
+        <%if(resource.resourceCost != "Free") { %>
         <dt>Goes On Sale:</dt>
         <dd><%=resource.resourceGoesOnSale%></dd>
+        <% } %>
 
         <dt>Added On:</dt>
         <dd><%=resource.dateAdded%></dd>
@@ -135,13 +142,25 @@
 
       <% } %>
         <h3>Recent Comments</h3>
-        <% for(let i = resource.resourceComments.length-1; i >= 0 ; i-- ){ %>
+        <% var recentComments = resource.resourceComments %>
+        <% recentComments.sort(function(a, b){return b.dateWritten-a.dateWritten}); %>
+
+
+        <% for(let i = 0; i < recentComments.length; i++){ %>
           <div class = "commentSpan">
-          <% var cohort = (resource.resourceComments[i].commenterCohort != undefined) ? (resource.resourceComments[i].commenterCohort).toLowerCase() : "null"%>
+          <% var cohort = (recentComments[i].commenterCohort != undefined) ? (recentComments[i].commenterCohort).toLowerCase() : "null"%>
+          <div class = "commentItem">
           <% var imgSrc = 'https://raw.githubusercontent.com/Kornil/Chingu-Animal-Icons/master/animals/'+ cohort + '/apple-touch-icon-60x60.png' %>
+
           <img src = "<%=imgSrc%>">
-          <p><%=resource.resourceComments[i].comment%> - "<%=resource.resourceComments[i].commentBy%>"</p>
+          </div>
+<div class = "commentItem">
+          <p><b><%=recentComments[i].commentBy%></b></p>
+
+          <p><%=recentComments[i].comment%></p>
         </div>
+
+      </div>
         <% } %>
 
           </div>

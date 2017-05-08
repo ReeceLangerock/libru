@@ -78,7 +78,7 @@
   <div class="form-inline form-group">
     <div class="input-group">
     <span class="input-group-addon">$</span>
-    <select class="form-control" name = "resourceCost" id="cost-select" value = "test">
+    <select class="form-control" name = "resourceCost" id="cost-select">
       <option value = "<%=selectedCost%>" selected><%=selectedCost%></option>
       <% for(let i =0; i < costOptions.length; i++) { %>
       <option value="<%=costOptions[i]%>"><%=costOptions[i]%></option>
@@ -131,6 +131,8 @@
   <%      categoryIndex = i; %>
   <%    } %>
   <% } %>
+
+
   <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceSubCategory" id="sub-category-select">
     <% for(let i =0; i < categoryList[categoryIndex].subcategories.length; i++) { %>
       <% if(categoryList[categoryIndex].subcategories[i] == resource.resourceSubCategory) { %>
@@ -161,8 +163,8 @@
   <p class = "pull-left">Once you delete a resource, there is no going back. Please be certain.</p>
   <form method = "POST" action = "./delete">
     <input type = "hidden" name = "id" value = "<%=resource['_id']%>">
-  <span class="input-group-btn pull-right">
-       <button class="btn btn-default" type="submit">Delete</button>
+  <span class="input-group-btn">
+       <button class="btn btn-default pull-right" type="submit">Delete</button>
   </span>
 </form>
 </div>
@@ -196,12 +198,12 @@
       $("#sub-category-select").append( $("<option>")
         .val("Sub Category")
         .html("Sub Category")
-        .prop('disabled', true)
-        .prop('selected', true)
+
       );
       $("#sub-category-select").append( $("<option>")
         .val(categoryList[id].subcategories[0])
         .html(categoryList[id].subcategories[0])
+        .prop('selected', true)
       );
     }
 

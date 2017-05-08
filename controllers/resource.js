@@ -45,7 +45,8 @@ router.get("/:id", function(req, res) {
     getResource(req.params.id).then((response, error) => {
       res.render("resource", {
         isUserAuthenticated: req.isAuthenticated(),
-        resource: response
+        resource: response,
+        user: null
       });
     });
   }
@@ -59,6 +60,13 @@ router.post("/", function(req, res) {
       "You can't leave an empty comment!\nClick anywhere to close."
     );
     res.redirect("back");
+  } else if(comment.length >= 140) {
+    req.flash(
+      "error",
+      "You can't leave a comment over 140 characters!\nClick anywhere to close."
+    );
+    res.redirect("back");
+
   } else {
     getUser(req.user.mongoID).then((response, error) => {
       pushCommentToResource(

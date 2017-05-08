@@ -1,6 +1,21 @@
-[{
-        "cohort": ["HTML"],
+[{ "cohort": [
+  "Alpaca",
+  "Artic Fox",
+  "Beluga",
+  "Cheetah",
+  "Flamingo",
+  "Giraffe",
+  "Iguana",
+  "Kangaroo",
+  "Koala",
+  "Lion",
+  "Meerkat",
+  "Moose",
+  "Penguin",
+  "Racoon",
+  "Red Panda",
+  "Rhino",
+  "Turtle",
+  "Wombat"]
 
-    }
-    
-]
+    }]

@@ -50,7 +50,7 @@ function getPortfolios() {
   return new Promise(function(resolve, reject) {
     resource
       .find({
-        resourceCategory: "Portfolios"
+        resourceCategory: "Portfolio"
       })
       .sort({
         dateAdded: -1

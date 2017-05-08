@@ -72,12 +72,12 @@
     <span class="input-group-addon">$</span>
     <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCost" id="cost-select">
       <option selected disabled>Cost</option>
-      <option value="1">Free</option>
-      <option value="2">$1 - $10</option>
-      <option value="3">$10 - $25</option>
-      <option value="3">$25 - $50</option>
-      <option value="3">$50 - $100</option>
-      <option value="3">$100+</option>
+      <option value="Free">Free</option>
+      <option value="$1 - $10">$1 - $10</option>
+      <option value="$10 - $25">$10 - $25</option>
+      <option value="$25 - $50">$25 - $50</option>
+      <option value="$50 - $100">$50 - $100</option>
+      <option value="$100+">$100+</option>
     </select>
 </div>
 
@@ -135,6 +135,7 @@
 
         if(categoryList[id].subcategories.length > 1){
 
+          $("#sub-category-select").show();
           $("#sub-category-select").empty();
           $("#sub-category-select").append( $("<option>")
             .val("Sub Category")
@@ -147,8 +148,20 @@
           .val(categoryList[id].subcategories[i])
           .html(categoryList[id].subcategories[i])
         );
+      }}else {
+        $("#sub-category-select").hide();
+        $("#sub-category-select").append( $("<option>")
+          .val("Sub Category")
+          .html("Sub Category")
+
+        );
+        $("#sub-category-select").append( $("<option>")
+          .val(categoryList[id].subcategories[0])
+          .html(categoryList[id].subcategories[0])
+          .prop('selected', true)
+        );
       }
-              }
+
 
     });
     $("#resource-image-url").on('blur', function() {

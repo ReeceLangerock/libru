@@ -232,7 +232,7 @@ function getResourceCategory(category, categoryQuery) {
 
 function getAllPortfolios() {
   return new Promise(function(resolve, reject) {
-    resource.find({'resourceCategory': 'Portfolios'}).exec(function(err, doc) {
+    resource.find({ resourceCategory: "Portfolio" }).exec(function(err, doc) {
       if (err) {
         console.log(err);
         reject(err);

@@ -5,6 +5,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var user = require("../models/userModel");
 var resource = require("../models/resourceModel");
+var cohortList = require("../models/cohortList");
 
 router.use(
   bodyParser.urlencoded({
@@ -19,7 +20,8 @@ router.get("/", function(req, res) {
 
     res.render("user-settings", {
       isUserAuthenticated: req.isAuthenticated(),
-      userData: response
+      userData: response,
+      cohortList: cohortList
     });
   });
 });

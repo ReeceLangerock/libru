@@ -47,8 +47,9 @@
                     </div>
                     <div>
                       <% var userCohort = (userData.cohort == "None Specified") ? "Cohort" : userData.cohort %>
+                      <div class="form-inline form-group">
                       <label for="cohortDropdown">Select Your Cohort:</label>
-                      <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "cohortName" id="sub-category-select">
+                      <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "cohortName" id="sub-category-select">
                         <option selected disabled><%=userCohort%></option>
                         <option value="Alpaca">Alpaca</option>
                         <option value="Artic Fox">Artic Fox</option>
@@ -70,6 +71,7 @@
                         <option value="Wombat">Wombat</option>
                       </select>
                     </div>
+                  </div>
 
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
