@@ -80,12 +80,12 @@
               <form method="POST" action="/resources/rate">
                 <div class="form-group">
                   <input type = "hidden"  value = "<%=resources[i].rating%>">
-                <input onchange="this.form.submit()" name="resourceRating" type="number" class="rating"  value = "<%-resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
+                <input onchange="this.form.submit()" name="resourceRating" type="number" class="rating"  value = "<%-resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-show-clear="false" data-show-caption="false">
                 <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
               </div>
               </form>
             </td>
-            <td></td>
+
 
 
 

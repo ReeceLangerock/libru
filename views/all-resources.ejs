@@ -74,13 +74,14 @@
         </div>
 <div class = "col-md-10">
 
-      <table data-toggle="table"
+      <table id = "table" data-toggle="table"
       data-page-list="[10, 25, 50, 100, ALL]"
         data-search="true"
           data-pagination="true"
              data-classes="table" class = "table">
         <thead>
           <tr>
+
             <th>Cover</th>
             <th data-sortable="true" 	data-searchable = "true">Title</th>
             <th data-sortable="true">Category</th>
@@ -91,6 +92,7 @@
 
             <th data-sortable="true">Your Rating</th>
             <th data-sortable="true">Status</th>
+
 
             <% } %>
           </tr>
@@ -107,7 +109,7 @@
             <% avg = isNaN(avg) ? "No Ratings" : avg %>
           <tr>
 
-            <td class = "col-md-1"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
+            <td class = "col-md-2"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
             <td class = "col-md-1"><span hidden><%-resources[i].title %></span><a href ="resource/<%=resources[i]['_id'] %>"><%-resources[i].title %></a></td>
             <td class = "col-md-1"><%=resources[i].resourceCategory %></td>
             <td class = "col-md-1"><%=resources[i].resourceSubCategory %></td>
@@ -115,19 +117,20 @@
             <td class = "col-md-1"><%=avg %></td>
             <% if(isUserAuthenticated) {%>
 
-            <td class = "col-md-1">
+            <td id = "<%=i%>">
               <form method="POST" action="/resources/rate">
                 <div class="form-group">
                   <input type = "hidden"  value = "<%=resources[i].rating%>">
-                <input onchange="this.form.submit()" name="resourceRating" type="number" class="rating"  value = "<%-resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
-                <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
+                  <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
+                <input class = "rating-loading" onchange="this.form.submit()" id = "star<%=i%>" name="resourceRating" type="number" value = "<%-resources[i].rating%>" min=0 max=5 step=1 data-size="xs" data-show-clear="false" data-show-caption="false">
+
               </div>
               </form>
             </td>
-            <td class = "col-md-1">
+            <td id = "test"class = "col-md-2">
               <form method="POST" action="/resources/status">
               <div class="form-group">
-                <select onchange="this.form.submit()" class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
+                <select onchange="this.form.submit()" class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
                   <% if(resources[i].status.length === 4){ %>
                     <option value = "<%=resources[i].status[2]%>" selected disabled><%=resources[i].status[0]%></option>
                     <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
@@ -145,6 +148,7 @@
           </td>
 
 
+
           <%  } %>
 
           </tr>
@@ -158,4 +162,28 @@
 
     </div>
     <%- include ./partials/footer.ejs %>
+
   </body>
+  <script>
+  $( document ).ready(function() {
+    refreshStars([0,1,2,3,4,5,6,7,8,9]);
+});
+
+$('#table').on('all.bs.table', function (e, arg1, arg2) {
+  var data = $('#table').bootstrapTable('getData')
+  var rows = [];
+  for(let i =0; i < data.length; i ++){
+    rows.push((data[i]['_6_id']));
+  }
+  console.log(rows);
+
+    refreshStars(rows);
+});
+
+  function refreshStars(rows){
+
+    for(let i =0; i < rows.length; i++){
+  $('#star'+ rows[i]).rating({disabled: false, showClear: false, showCaption: true});
+}
+  }
+  </script>
