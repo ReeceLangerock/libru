@@ -37,6 +37,7 @@ router.get("/:id", function(req, res) {
         isUserAuthenticated: req.isAuthenticated(),
         resource: responses[0],
         user: responses[1],
+        userID: req.user.mongoID,
         resourseStatusForUser: resourseStatusForUser,
         resourceRatingForUser: usersResourceRating
       });
