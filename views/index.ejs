@@ -54,10 +54,12 @@
           <% iterator = 0 %>
             <% } %>
         <div class="col-xs-4 col-lg-4 col-md-4" style = "padding:3px;">
-          <div class = "resourceItem">
+          <div class = "well">
+
           <% avg = Number.isInteger(popularResources[i].avgRating) ? popularResources[i].avgRating : popularResources[i].avgRating.toPrecision(3)%>
-          <h3><%=popularResources[i].title%> (<%=avg%>/5)</h3>
-          <img class="img-responsive" src = "<%=popularResources[i].resourceImageURL%>">
+          <legend><%=popularResources[i].title%> (<%=avg%>/5)</legend>
+
+          <img class="img-responsive resourceItem" src = "<%=popularResources[i].resourceImageURL%>">
           <% if(popularResources[i].resourceDescription.length > 250) { %>
           <% var shortenedDescription = popularResources[i].resourceDescription.slice(0, 250) + "..."; %>
           <p><%=shortenedDescription%></p>
@@ -88,9 +90,10 @@
             <% iterator2 = 0 %>
               <% } %>
         <div class="col-xs-4 col-lg-4 col-md-4" style = "padding:3px;">
-          <div class = "resourceItem">
-          <h3><%=recentResources[i].title%></h3>
-          <img class="img-responsive" src = "<%=recentResources[i].resourceImageURL%>">
+          <div class = "well">
+          <legend><%=recentResources[i].title%></legend>
+
+          <img class="img-responsive resourceItem" src = "<%=recentResources[i].resourceImageURL%>">
           <% if(recentResources[i].resourceDescription.length > 250) { %>
           <% var shortenedDescription = recentResources[i].resourceDescription.slice(0, 250) + "..."; %>
           <p><%=shortenedDescription%></p>
@@ -119,12 +122,14 @@
 
 
       <% for(let i=0;i < portfolios.length; i++){ %>
-        <div class = "commentItem">
-        <h4><%=portfolios[i].title %></h4>
-        <img class="img-responsive" src = "<%=portfolios[i].resourceImageURL%>">
+        <div class = "well">
+        <legend><%=portfolios[i].title%></legend>
+
+
+        <a href="/resource/<%=portfolios[i]['_id']%>"><img class="img-responsive" src = "<%=portfolios[i].resourceImageURL%>"></a>
+
       </div>
-        <hr>
-        <br>
+
       <% }%>
 
     </div>

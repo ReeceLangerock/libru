@@ -1,9 +1,11 @@
-[{ "cohort": [
+{ "cohort": [
+  "Chingu Camper",
   "Alpaca",
   "Artic Fox",
   "Beluga",
   "Cheetah",
   "Flamingo",
+  "Gerenuk",
   "Giraffe",
   "Iguana",
   "Kangaroo",
@@ -11,11 +13,14 @@
   "Lion",
   "Meerkat",
   "Moose",
+  "Otter",
+  "Parrot",
   "Penguin",
   "Racoon",
   "Red Panda",
   "Rhino",
   "Turtle",
+  "Walrus",
   "Wombat"]
 
-    }]
+    }

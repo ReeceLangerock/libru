@@ -4,7 +4,7 @@
     },
     {
         "category": "CSS",
-        "subcategories": ["CSS", "SCSS", "LESS"]
+        "subcategories": ["CSS", "SCSS", "LESS", "Flexbox"]
     },
     {
         "category": "JavaScript",
@@ -28,7 +28,23 @@
     },
     {
         "category": "General Programming",
-        "subcategories": ["General Programming"]
+        "subcategories": ["General Programming", "Design Patterns"]
+    },
+    {
+        "category": "Testing",
+        "subcategories": ["Mocha", "Karma", "Sinon", "Chai", "Jasmine"]
+    },
+    {
+        "category": "Build Tools",
+        "subcategories": ["Grunt", "Gulp", "Yeoman", "Webpack"]
+    },
+    {
+        "category": "Ruby",
+        "subcategories": ["Ruby"]
+    },
+    {
+        "category": "Python",
+        "subcategories": ["Python"]
     },
     {
         "category": "Portfolio",
