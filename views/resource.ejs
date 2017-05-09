@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
     <title>Libru</title>
-    <!--<link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
@@ -148,10 +148,13 @@
 
         <% for(let i = 0; i < recentComments.length; i++){ %>
           <div class = "commentSpan">
-          <% var cohort = (recentComments[i].commenterCohort != undefined) ? (recentComments[i].commenterCohort).toLowerCase() : "null"%>
+          <% var cohort = (recentComments[i].commenterCohort != undefined) ? (recentComments[i].commenterCohort).toLowerCase() : "none"%>
           <div class = "commentItem">
+          <% if(cohort == "none") { %>
+          <% var imgSrc = '../images/ChinguCohortDefault.jpg' %>
+          <% } else { %>
           <% var imgSrc = 'https://raw.githubusercontent.com/Kornil/Chingu-Animal-Icons/master/animals/'+ cohort + '/apple-touch-icon-60x60.png' %>
-
+          <% } %>
           <img src = "<%=imgSrc%>">
           </div>
 <div class = "commentItem">

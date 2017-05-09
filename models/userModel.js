@@ -42,7 +42,7 @@ userSchema.methods.newUser = function(id, data){
     'fbID': data.fbID,
     'githubID': data.githubID,
     'auth0ID': data.auth0ID,
-    'cohort': "None Specified",
+    'cohort': "none",
     'displayName': data.firstName,
     'resourcesSubmitted': [],
     'resourcesCompleted': [{

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
     <title>Libru</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -78,7 +78,7 @@
   <div class="form-inline form-group">
     <div class="input-group">
     <span class="input-group-addon">$</span>
-    <select class="form-control" name = "resourceCost" id="cost-select">
+    <select class="form-control" name = "resourceCost" id="cost-select" required>
       <option value = "<%=selectedCost%>" selected><%=selectedCost%></option>
       <% for(let i =0; i < costOptions.length; i++) { %>
       <option value="<%=costOptions[i]%>"><%=costOptions[i]%></option>
@@ -99,7 +99,7 @@
     <% var difficultyOptions = ["Beginner", "Intermediate", "Advanced", "Master", "Not Applicable"] %>
 
 <div class="form-inline form-group">
-  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select">
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
 
     <% for(let i =0; i < difficultyOptions.length; i++) { %>
     <% if(difficultyOptions[i] == resource.resourceDifficulty) { %>
@@ -113,7 +113,7 @@
   <br>
   <br>
 
-  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select">
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
 
     <% for(let i =0; i < categoryList.length; i++) { %>
       <% if(categoryList[i].category == resource.resourceCategory) { %>

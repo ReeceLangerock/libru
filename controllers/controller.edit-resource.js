@@ -17,7 +17,7 @@ router.use(
 router.use(bodyParser.json());
 
 router.get("/:id", function(req, res) {
-  if (req.params.id != "/favicon.ico" && req.params.id != null) {
+  if (req.params.id != "favicon.ico" && req.params.id != "null") {
     id = req.params.id;
   }
   getResource(id).then((response, error) => {
@@ -33,8 +33,13 @@ router.get("/:id", function(req, res) {
 
 router.post("/delete", function(req, res) {
   deleteResource(req.body.id).then((response, error) => {
-    req.flash("success", "Resource deleted!\nClick anywhere to close.");
-    res.redirect("back");
+    if (response == "DELETED") {
+      req.flash("success", "Resource deleted!\nClick anywhere to close.");
+      res.redirect("back");
+    } else {
+      req.flash("error", "Resource was not deleted\nClick anywhere to close.");
+      res.redirect("back");
+    }
   });
 });
 
@@ -82,7 +87,7 @@ function deleteResource(id) {
         if (err) {
           reject(err);
         } else {
-          resolve(doc);
+          resolve("DELETED");
         }
       }
     );
@@ -130,10 +135,8 @@ function checkIfResourceAlreadyAdded(url) {
         if (err) {
           reject(err);
         } else if (doc) {
-          console.log(doc);
           resolve(doc);
         } else {
-          console.log("not added");
           resolve("NOT_ADDED");
         }
       }

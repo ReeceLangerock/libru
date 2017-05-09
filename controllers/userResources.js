@@ -1,219 +1,351 @@
 //SETUP ROUTER
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var user = require('../models/userModel');
-var resource = require('../models/resourceModel');
-var updateRating = require('./update-resource-rating');
-var updateStatus = require('./update-resource-status');
-router.use(bodyParser.urlencoded({
+var mongoose = require("mongoose");
+var bodyParser = require("body-parser");
+var user = require("../models/userModel");
+var resource = require("../models/resourceModel");
+var categoryList = require("../models/categoryList");
+var updateRating = require("./update-resource-rating");
+var updateStatus = require("./update-resource-status");
+router.use(
+  bodyParser.urlencoded({
     extended: true
-}));
+  })
+);
 router.use(bodyParser.json());
 
 // This accepts all posts requests!
-router.get('/', function(req, res) {
+router.get("/", function(req, res) {
+  getUser(req.user.mongoID).then((response, error) => {
+    var resourcesCompletedToGet = [];
+    var resourcesToDoToGet = [];
+    var resourcesInProgressToGet = [];
+    for (let i = 0; i < response.resourcesCompleted.length; i++) {
+      resourcesCompletedToGet.push(response.resourcesCompleted[i].resourceID);
+    }
+    for (let i = 0; i < response.resourcesToDo.length; i++) {
+      resourcesToDoToGet.push(response.resourcesToDo[i].resourceID);
+    }
+    for (let i = 0; i < response.resourcesInProgress.length; i++) {
+      resourcesInProgressToGet.push(response.resourcesInProgress[i].resourceID);
+    }
 
-    getUser(req.user.mongoID).then((response, error) => {
+    var completedProm = getAllResources(resourcesCompletedToGet);
+    var ToDoProm = getAllResources(resourcesToDoToGet);
+    var InProgressProm = getAllResources(resourcesInProgressToGet);
 
-        var resourcesCompletedToGet = [];
-        var resourcesToDoToGet = [];
-        var resourcesInProgressToGet = [];
-        for (let i = 0; i < response.resourcesCompleted.length; i++) {
-            resourcesCompletedToGet.push(response.resourcesCompleted[i].resourceID);
-        }
-        for (let i = 0; i < response.resourcesToDo.length; i++) {
-            resourcesToDoToGet.push(response.resourcesToDo[i].resourceID);
-        }
-        for (let i = 0; i < response.resourcesInProgress.length; i++) {
-            resourcesInProgressToGet.push(response.resourcesInProgress[i].resourceID);
-        }
-
-        var completedProm = getAllResources(resourcesCompletedToGet);
-        var ToDoProm = getAllResources(resourcesToDoToGet);
-        var InProgressProm = getAllResources(resourcesInProgressToGet);
-
-
-        Promise.all([completedProm, ToDoProm, InProgressProm]).then((responses, error) => {
-            for(let i = 0; i < responses[0].length; i++){
-              responses[0][i].status = "Completed";
-              responses[0][i].secondStatus = "Want To Do";
-              responses[0][i].thirdStatus = "In Progress";
-            }
-            for(let i = 0; i < responses[1].length; i++){
-              responses[1][i].status = "Want To Do";
-              responses[1][i].secondStatus = "Completed";
-              responses[1][i].thirdStatus = "In Progress";
-            }
-            for(let i = 0; i < responses[2].length; i++){
-              responses[2][i].status = "In Progress";
-              responses[2][i].secondStatus = "Completed";
-              responses[2][i].thirdStatus = "Want To Do";
-            }
-            responses[0] = updateRating.filterOutCurrentUserRating(responses[0], req.user.mongoID);
-            responses[1] = updateRating.filterOutCurrentUserRating(responses[1], req.user.mongoID);
-            responses[2] = updateRating.filterOutCurrentUserRating(responses[2], req.user.mongoID);
-            res.render('user-resources', {
-                isUserAuthenticated: req.isAuthenticated(),
-                completedResources: responses[0],
-                toDoResources: responses[1],
-                inProgressResources: responses[2],
-            });
-        })
-
-
-
-    })
-
-
+    Promise.all([
+      completedProm,
+      ToDoProm,
+      InProgressProm
+    ]).then((responses, error) => {
+      for (let i = 0; i < responses[0].length; i++) {
+        responses[0][i].status = "Completed";
+        responses[0][i].secondStatus = "Want To Do";
+        responses[0][i].thirdStatus = "In Progress";
+      }
+      for (let i = 0; i < responses[1].length; i++) {
+        responses[1][i].status = "Want To Do";
+        responses[1][i].secondStatus = "Completed";
+        responses[1][i].thirdStatus = "In Progress";
+      }
+      for (let i = 0; i < responses[2].length; i++) {
+        responses[2][i].status = "In Progress";
+        responses[2][i].secondStatus = "Completed";
+        responses[2][i].thirdStatus = "Want To Do";
+      }
+      responses[0] = updateRating.filterOutCurrentUserRating(
+        responses[0],
+        req.user.mongoID
+      );
+      responses[1] = updateRating.filterOutCurrentUserRating(
+        responses[1],
+        req.user.mongoID
+      );
+      responses[2] = updateRating.filterOutCurrentUserRating(
+        responses[2],
+        req.user.mongoID
+      );
+      res.render("user-resources", {
+        isUserAuthenticated: req.isAuthenticated(),
+        completedResources: responses[0],
+        toDoResources: responses[1],
+        inProgressResources: responses[2],
+        categoryList: categoryList
+      });
+    });
+  });
 });
 
-router.post('/rate', function(req, res) {
-    updateRating.updateResourceRating(req.body.resourceID, req.user.mongoID, req.body.resourceRating).then((response, error) => {
+router.post("/", function(req, res) {
+  getUser(req.user.mongoID).then((response, error) => {
+    var resourcesCompletedToGet = [];
+    var resourcesToDoToGet = [];
+    var resourcesInProgressToGet = [];
+    for (let i = 0; i < response.resourcesCompleted.length; i++) {
+      resourcesCompletedToGet.push(response.resourcesCompleted[i].resourceID);
+    }
+    for (let i = 0; i < response.resourcesToDo.length; i++) {
+      resourcesToDoToGet.push(response.resourcesToDo[i].resourceID);
+    }
+    for (let i = 0; i < response.resourcesInProgress.length; i++) {
+      resourcesInProgressToGet.push(response.resourcesInProgress[i].resourceID);
+    }
+
+    var resources, category, categoryQuery, completedProm, ToDoProm, InProgressProm;
+
+    if (req.body.category == "All") {
+      completedProm = getAllResourcesByCategory(resourcesCompletedToGet);
+      ToDoProm = getAllResourcesByCategory(resourcesToDoToGet);
+      InProgressProm = getAllResourcesByCategory(resourcesInProgressToGet);
+    } else if (req.body.category === req.body.subcategory) {
+      category = req.body.category;
+      categoryQuery = "resourceCategory";
+      completedProm = getAllResourcesByCategory(resourcesCompletedToGet, category, categoryQuery);
+      ToDoProm = getAllResourcesByCategory(resourcesToDoToGet, category, categoryQuery);
+      InProgressProm = getAllResourcesByCategory(resourcesInProgressToGet, category, categoryQuery);
+    } else {
+      category = req.body.subcategory;
+      categoryQuery = "resourceSubCategory";
+      completedProm = getAllResourcesByCategory(resourcesCompletedToGet, category, categoryQuery);
+      ToDoProm = getAllResourcesByCategory(resourcesToDoToGet, category, categoryQuery);
+      InProgressProm = getAllResourcesByCategory(resourcesInProgressToGet, category, categoryQuery);
+    }
+
+
+    Promise.all([
+      completedProm,
+      ToDoProm,
+      InProgressProm
+    ]).then((responses, error) => {
+      for (let i = 0; i < responses[0].length; i++) {
+        responses[0][i].status = "Completed";
+        responses[0][i].secondStatus = "Want To Do";
+        responses[0][i].thirdStatus = "In Progress";
+      }
+      for (let i = 0; i < responses[1].length; i++) {
+        responses[1][i].status = "Want To Do";
+        responses[1][i].secondStatus = "Completed";
+        responses[1][i].thirdStatus = "In Progress";
+      }
+      for (let i = 0; i < responses[2].length; i++) {
+        responses[2][i].status = "In Progress";
+        responses[2][i].secondStatus = "Completed";
+        responses[2][i].thirdStatus = "Want To Do";
+      }
+      responses[0] = updateRating.filterOutCurrentUserRating(
+        responses[0],
+        req.user.mongoID
+      );
+      responses[1] = updateRating.filterOutCurrentUserRating(
+        responses[1],
+        req.user.mongoID
+      );
+      responses[2] = updateRating.filterOutCurrentUserRating(
+        responses[2],
+        req.user.mongoID
+      );
+      res.render("user-resources", {
+        isUserAuthenticated: req.isAuthenticated(),
+        completedResources: responses[0],
+        toDoResources: responses[1],
+        inProgressResources: responses[2],
+        categoryList: categoryList
+      });
+    });
+  });
+});
+
+
+router.post("/rate", function(req, res) {
+  updateRating
+    .updateResourceRating(
+      req.body.resourceID,
+      req.user.mongoID,
+      req.body.resourceRating
+    )
+    .then((response, error) => {
+      res.end();
+    });
+});
+
+router.post("/status", function(req, res) {
+  var newResourceStatus = req.body.resourceStatus;
+
+  getUserWithStatus(
+    req.body.resourceID,
+    req.user.mongoID
+  ).then((response, error) => {
+    var resourceStatus, dateField;
+
+    if (newResourceStatus == "Completed") {
+      resourceStatus = "resourcesCompleted";
+      dateField = "dateCompleted";
+    } else if (newResourceStatus == "Want To Do") {
+      resourceStatus = "resourcesToDo";
+      dateField = "dateAdded";
+    } else if (newResourceStatus == "In Progress") {
+      resourceStatus = "resourcesInProgress";
+      dateField = "dateStarted";
+    }
+    console.log(resourceStatus);
+    console.log(newResourceStatus);
+
+    if (response == "Not_Found") {
+      updateStatus
+        .pushResource(
+          req.user.mongoID,
+          resourceStatus,
+          dateField,
+          req.body.resourceID
+        )
+        .then((response, error) => {
+          console.log("Added");
+          res.end();
+        });
+    } else {
+      var oldResourceStatus = findResourceStatusForPost(
+        response,
+        req.body.resourceID
+      );
+
+      if (newResourceStatus == oldResourceStatus) {
+        console.log("NO CHANGE");
         res.end();
-    });
-
-})
-
-router.post('/status', function(req, res) {
-
-    var newResourceStatus = req.body.resourceStatus;
-
-    getUserWithStatus(req.body.resourceID, req.user.mongoID).then((response, error) => {
-
-        var resourceStatus, dateField;
-
-        if (newResourceStatus == "Completed") {
-            resourceStatus = "resourcesCompleted";
-            dateField = "dateCompleted";
-        } else if (newResourceStatus == "Want To Do") {
-            resourceStatus = "resourcesToDo";
-            dateField = "dateAdded";
-        } else if (newResourceStatus == "In Progress") {
-            resourceStatus = "resourcesInProgress";
-            dateField = "dateStarted";
+      } else {
+        if (oldResourceStatus == "Completed") {
+          oldResourceStatus = "resourcesCompleted";
+        } else if (oldResourceStatus == "Want To Do") {
+          oldResourceStatus = "resourcesToDo";
+        } else if (oldResourceStatus == "In Progress") {
+          oldResourceStatus = "resourcesInProgress";
         }
-        console.log(resourceStatus);
-        console.log(newResourceStatus);
 
-        if (response == "Not_Found") {
-            updateStatus.pushResource(req.user.mongoID, resourceStatus, dateField, req.body.resourceID).then((response, error) => {
-                console.log("Added");
-                res.end();
-            })
-        } else {
-            var oldResourceStatus = findResourceStatusForPost(response, req.body.resourceID);
-            console.log(oldResourceStatus);
-            console.log(newResourceStatus);
-            if (newResourceStatus == oldResourceStatus) {
-                console.log("NO CHANGE");
-                res.end();
-            } else {
-
-                if (oldResourceStatus == "Completed") {
-                    oldResourceStatus = "resourcesCompleted";
-                } else if (oldResourceStatus == "Want To Do") {
-                    oldResourceStatus = "resourcesToDo";
-                } else if (oldResourceStatus == "In Progress") {
-                    oldResourceStatus = "resourcesInProgress";
-                }
-
-                updateStatus.updateResourceStatus(req.user.mongoID, resourceStatus, oldResourceStatus, dateField, req.body.resourceID).then((response, error) => {
-
-                    res.end();
-                });
-            }
-        }
-    });
-})
+        updateStatus
+          .updateResourceStatus(
+            req.user.mongoID,
+            resourceStatus,
+            oldResourceStatus,
+            dateField,
+            req.body.resourceID
+          )
+          .then((response, error) => {
+            res.end();
+          });
+      }
+    }
+  });
+});
 
 function findResourceStatusForPost(data, id) {
   for (let i = 0; i < data.resourcesCompleted.length; i++) {
-      if (data.resourcesCompleted[i].resourceID == id) {
-          return "Completed"
-      }
+    if (data.resourcesCompleted[i].resourceID == id) {
+      return "Completed";
+    }
   }
 
   for (let i = 0; i < data.resourcesToDo.length; i++) {
-      if (data.resourcesToDo[i].resourceID == id) {
-          return "Want To Do"
-      }
+    if (data.resourcesToDo[i].resourceID == id) {
+      return "Want To Do";
+    }
   }
 
   for (let i = 0; i < data.resourcesInProgress.length; i++) {
-      if (data.resourcesInProgress[i].resourceID == id) {
-          return "In Progress"
-      }
+    if (data.resourcesInProgress[i].resourceID == id) {
+      return "In Progress";
+    }
   }
-
 }
 
 function getUser(userID) {
-    return new Promise(function(resolve, reject) {
-        user.findOne({
-            _id: userID
-        }, function(err, doc) {
-            if (err) {
-                reject(err);
-            } else {
-
-                resolve(doc);
-            }
-        });
-
-    });
+  return new Promise(function(resolve, reject) {
+    user.findOne(
+      {
+        _id: userID
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(doc);
+        }
+      }
+    );
+  });
 }
 
 function getUserWithStatus(id, userID) {
-    return new Promise(function(resolve, reject) {
-        user.findOne({
-            _id: userID,
-            $or: [{
-                    "resourcesToDo.resourceID": id
-                },
-                {
-                    "resourcesInProgress.resourceID": id
-                },
-                {
-                    "resourcesCompleted.resourceID": id
-                }
-            ]
-
-        }, function(err, doc) {
-            if (err) {
-                reject(err);
-            } else if (doc) {
-                resolve(doc);
-            } else {
-                console.log("Not_Found");
-                resolve("Not_Found");
-            }
-        });
-
-    });
+  return new Promise(function(resolve, reject) {
+    user.findOne(
+      {
+        _id: userID,
+        $or: [
+          {
+            "resourcesToDo.resourceID": id
+          },
+          {
+            "resourcesInProgress.resourceID": id
+          },
+          {
+            "resourcesCompleted.resourceID": id
+          }
+        ]
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else if (doc) {
+          resolve(doc);
+        } else {
+          console.log("Not_Found");
+          resolve("Not_Found");
+        }
+      }
+    );
+  });
 }
 
 function getAllResources(resourceID) {
-    return new Promise(function(resolve, reject) {
-        resource.find({
-          _id: {
-              $in: resourceID
-          }
-        }, function(err, doc) {
-            if (err) {
-                reject(err);
-            } else {
-
-              console.log(doc);
-                resolve(doc);
-            }
-        });
-
-    });
+  return new Promise(function(resolve, reject) {
+    resource.find(
+      {
+        _id: {
+          $in: resourceID
+        }
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else {
+          console.log(doc);
+          resolve(doc);
+        }
+      }
+    );
+  });
 }
 
+function getAllResourcesByCategory(resourceID, category, categoryQuery) {
+  return new Promise(function(resolve, reject) {
+    resource.find(
+      {
+        _id: {
+          $in: resourceID
+        },
+        [categoryQuery]: category
 
-
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else {
+          console.log(doc);
+          resolve(doc);
+        }
+      }
+    );
+  });
+}
 
 module.exports = router;

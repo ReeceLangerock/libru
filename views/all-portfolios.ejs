@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
     <title>Libru</title>
     <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -37,7 +37,7 @@
 
 <div class = "col-md-10">
 
-      <table data-toggle="table"
+      <table id = "table" data-toggle="table"
       data-page-list="[10, 25, 50, 100, ALL]"
         data-search="true"
 
@@ -122,7 +122,7 @@
     var data = $("#table").bootstrapTable("getData");
     var rows = [];
     for (let i = 0; i < data.length; i++) {
-      rows.push(data[i]["_6_id"]);
+      rows.push(data[i]["_3_id"]);
     }
 
 

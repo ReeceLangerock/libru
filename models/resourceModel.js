@@ -27,7 +27,8 @@ var resourceSchema = mongoose.Schema({
         '_id' : false
     }],
     'resourceAddedBy': String,
-    'resourceFlagged': Number,
+    'resourceFlaggedBrokenLink': [String],
+    'resourceFlaggedInappropriate': [String],
 
 
 });

@@ -76,7 +76,6 @@ router.post("/", (req, res) => {
             response,
             resources[i]["_id"]
           );
-          console.log(resources[i].status);
         }
 
         res.render("all-resources", {
