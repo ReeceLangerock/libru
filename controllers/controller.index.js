@@ -35,7 +35,7 @@ router.get("/", function(req, res) {
       categories: categoryList.length,
       users: responses[3]
     };
-    res.render("view-index", {      
+    res.render("view-index", {
       isUserAuthenticated: req.isAuthenticated(),
       popularResources: responses[0],
       recentResources: responses[1],
@@ -71,7 +71,6 @@ function getUserCount() {
       if (err) {
         reject(err);
       } else {
-        console.log(doc);
         resolve(doc);
       }
     });
@@ -84,7 +83,6 @@ function getResourceCount() {
       if (err) {
         reject(err);
       } else {
-        console.log(doc);
         resolve(doc);
       }
     });

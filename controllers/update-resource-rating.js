@@ -21,10 +21,8 @@ update.updateResourceRating = function(id, userID, rating) {
           console.log(err);
           reject(err);
         } else if (doc) {
-          console.log(doc);
           resolve(doc);
         } else {
-          console.log("else");
           resource.findOneAndUpdate(
             {
               _id: id
@@ -45,13 +43,11 @@ update.updateResourceRating = function(id, userID, rating) {
                 console.log(err);
                 reject(err);
               } else if (doc) {
-                console.log(doc);
                 resolve(doc);
               }
             }
           );
         }
-
       }
     );
   });

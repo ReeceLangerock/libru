@@ -61,13 +61,12 @@ router.post("/", function(req, res) {
       "You can't leave an empty comment!\nClick anywhere to close."
     );
     res.redirect("back");
-  } else if(comment.length >= 140) {
+  } else if (comment.length >= 140) {
     req.flash(
       "error",
       "You can't leave a comment over 140 characters!\nClick anywhere to close."
     );
     res.redirect("back");
-
   } else {
     getUser(req.user.mongoID).then((response, error) => {
       pushCommentToResource(
@@ -122,17 +121,13 @@ router.post("/change", function(req, res) {
           req.body.resourceID
         )
         .then((response, error) => {
-          console.log("Added");
           res.redirect("back");
         });
     } else {
       var oldResourceStatus = findResourceStatus(response, req.body.resourceID);
       if (newResourceStatus == oldResourceStatus) {
-        console.log("NO CHANGE");
         res.redirect("back");
       } else {
-        console.log(oldResourceStatus);
-
         if (oldResourceStatus == "Completed") {
           oldResourceStatus = "resourcesCompleted";
         } else if (oldResourceStatus == "Want To Do") {
@@ -158,21 +153,18 @@ router.post("/change", function(req, res) {
 
 function findResourceStatus(data, id) {
   for (let i = 0; i < data.resourcesCompleted.length; i++) {
-    console.log("comp");
     if (data.resourcesCompleted[i].resourceID == id) {
       return "Completed";
     }
   }
 
   for (let i = 0; i < data.resourcesToDo.length; i++) {
-    console.log("want");
     if (data.resourcesToDo[i].resourceID == id) {
       return "Want To Do";
     }
   }
 
   for (let i = 0; i < data.resourcesInProgress.length; i++) {
-    console.log("prog");
     if (data.resourcesInProgress[i].resourceID == id) {
       return "In Progress";
     }
@@ -219,7 +211,6 @@ function getUserDataForResource(id, userID) {
         } else if (doc) {
           resolve(doc);
         } else {
-          console.log("Not_Found");
           resolve("Not_Found");
         }
       }

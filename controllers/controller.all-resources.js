@@ -16,7 +16,6 @@ router.use(
 );
 router.use(bodyParser.json());
 
-// This accepts all posts requests!
 router.get("/", function(req, res) {
   getAllResources().then((response, error) => {
     if (req.isAuthenticated()) {
@@ -141,8 +140,7 @@ router.post("/status", function(req, res) {
           req.body.resourceID
         )
         .then((response, error) => {
-          console.log("Added");
-          res.end();
+          res.redirect("back");
         });
     } else {
       var oldResourceStatus = findResourceStatusForPost(
@@ -150,8 +148,7 @@ router.post("/status", function(req, res) {
         req.body.resourceID
       );
       if (newResourceStatus == oldResourceStatus) {
-        console.log("NO CHANGE");
-        res.end();
+        res.redirect("back");
       } else {
         if (oldResourceStatus == "Completed") {
           oldResourceStatus = "resourcesCompleted";
@@ -169,7 +166,7 @@ router.post("/status", function(req, res) {
             req.body.resourceID
           )
           .then((response, error) => {
-            res.end();
+            res.redirect("back");
           });
       }
     }
@@ -290,7 +287,6 @@ function getUserWithStatus(id, userID) {
         } else if (doc) {
           resolve(doc);
         } else {
-          console.log("Not_Found");
           resolve("Not_Found");
         }
       }

@@ -61,7 +61,6 @@ update.updateResourceStatus = function(
           console.log(err);
           reject(err);
         } else if (doc) {
-          console.log(doc);
           resolve(doc);
         }
       }

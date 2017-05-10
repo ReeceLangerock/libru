@@ -16,23 +16,24 @@ router.use(
 );
 router.use(bodyParser.json());
 
-// This accepts all posts requests!
 router.get("/", function(req, res) {
   getAllPortfolios().then((response, error) => {
     if (req.isAuthenticated()) {
+      // filter the resources returned from db to only include users ratings
       var resources = updateRating.filterOutCurrentUserRating(
         response,
         req.user.mongoID
       );
 
       getUser(req.user.mongoID).then((response, error) => {
+        // filter the resources returned from db to only include users status
         for (let i = 0; i < resources.length; i++) {
           resources[i].status = findResourceStatus(
             response,
             resources[i]["_id"]
           );
         }
-
+        // render page for authenticated user
         res.render("view-all-portfolios", {
           isUserAuthenticated: req.isAuthenticated(),
           resources: resources,
@@ -41,6 +42,7 @@ router.get("/", function(req, res) {
         });
       });
     } else {
+      // render page for un-authenticated user
       res.render("view-all-portfolios", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: response,
@@ -51,56 +53,7 @@ router.get("/", function(req, res) {
   });
 });
 
-router.post("/", (req, res) => {
-  var resources, category, categoryQuery, resourceQueryPromise;
-
-  if (req.body.category == "All") {
-    resourceQueryPromise = getAllPortfolios();
-  } else if (req.body.category === req.body.subcategory) {
-    category = req.body.category;
-    categoryQuery = "resourceCategory";
-    resourceQueryPromise = getResourceCategory(category, categoryQuery);
-  } else {
-    category = req.body.subcategory;
-    categoryQuery = "resourceSubCategory";
-    resourceQueryPromise = getResourceCategory(category, categoryQuery);
-  }
-
-  resourceQueryPromise.then((response, error) => {
-    if (req.isAuthenticated()) {
-      resources = updateRating.filterOutCurrentUserRating(
-        response,
-        req.user.mongoID
-      );
-
-      getUser(req.user.mongoID).then((response, error) => {
-        for (let i = 0; i < resources.length; i++) {
-          resources[i].status = findResourceStatus(
-            response,
-            resources[i]["_id"]
-          );
-          console.log(resources[i].status);
-        }
-
-        res.render("view-all-portfolios", {
-          isUserAuthenticated: req.isAuthenticated(),
-          resources: resources,
-          categoryList: categoryList,
-          moment: moment
-        });
-      });
-    } else {
-      resources = response;
-      res.render("view-all-portfolios", {
-        isUserAuthenticated: req.isAuthenticated(),
-        resources: resources,
-        categoryList: categoryList,
-        moment: moment
-      });
-    }
-  });
-});
-
+// register update to users rating
 router.post("/rate", function(req, res) {
   updateRating
     .updateResourceRating(
@@ -109,10 +62,11 @@ router.post("/rate", function(req, res) {
       req.body.resourceRating
     )
     .then((response, error) => {
-      res.end();
+      res.redirect("back");
     });
 });
 
+// register update to users status for the resource, not currently included on page
 router.post("/status", function(req, res) {
   var newResourceStatus = req.body.resourceStatus;
 
@@ -142,8 +96,7 @@ router.post("/status", function(req, res) {
           req.body.resourceID
         )
         .then((response, error) => {
-          console.log("Added");
-          res.end();
+          res.redirect("back");
         });
     } else {
       var oldResourceStatus = findResourceStatusForPost(
@@ -151,8 +104,7 @@ router.post("/status", function(req, res) {
         req.body.resourceID
       );
       if (newResourceStatus == oldResourceStatus) {
-        console.log("NO CHANGE");
-        res.end();
+        res.redirect("back");
       } else {
         if (oldResourceStatus == "Completed") {
           oldResourceStatus = "resourcesCompleted";
@@ -170,7 +122,7 @@ router.post("/status", function(req, res) {
             req.body.resourceID
           )
           .then((response, error) => {
-            res.end();
+            res.redirect("back");
           });
       }
     }
@@ -289,7 +241,6 @@ function getUserWithStatus(id, userID) {
         } else if (doc) {
           resolve(doc);
         } else {
-          console.log("Not_Found");
           resolve("Not_Found");
         }
       }

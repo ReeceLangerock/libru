@@ -15,23 +15,25 @@ router.use(
 router.use(bodyParser.json());
 
 router.get("/", function(req, res) {
-  getUser(req.user.mongoID).then((response, error) => {
-    getUsersResources(req.user.mongoID).then((response, error) => {
-      res.render("view-manage-resources", {
-        isUserAuthenticated: req.isAuthenticated(),
-        resources: response,
-        categoryList: categoryList,
-        moment: moment
+  if (req.isAuthenticated()) {
+    getUser(req.user.mongoID).then((response, error) => {
+      getUsersResources(req.user.mongoID).then((response, error) => {
+        res.render("view-manage-resources", {
+          isUserAuthenticated: req.isAuthenticated(),
+          resources: response,
+          categoryList: categoryList,
+          moment: moment
+        });
       });
     });
-  });
+  } else {
+    res.render("view-access-denied");
+  }
 });
 
 router.post("/", (req, res) => {
   if (req.isAuthenticated()) {
     var resources, category, categoryQuery, resourceQueryPromise;
-    console.log("BODY");
-    console.log(req.body);
 
     if (req.body.category == "All") {
       resourceQueryPromise = getUsersResources();
@@ -62,7 +64,7 @@ router.post("/", (req, res) => {
       });
     });
   } else {
-    res.redirect("../");
+    res.render("view-access-denied");
   }
 });
 
@@ -84,8 +86,6 @@ function getUser(userID) {
 }
 
 function getResourceCategory(category, categoryQuery, user) {
-  console.log(category);
-  console.log(categoryQuery);
   return new Promise(function(resolve, reject) {
     resource
       .find({
@@ -97,7 +97,6 @@ function getResourceCategory(category, categoryQuery, user) {
           console.log(err);
           reject(err);
         } else {
-          console.log(doc);
           resolve(doc);
         }
       });

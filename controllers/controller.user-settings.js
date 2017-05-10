@@ -14,28 +14,31 @@ router.use(
 );
 router.use(bodyParser.json());
 
-
 router.get("/", function(req, res) {
-  getUser(req.user.mongoID).then((response, error) => {
-
-    res.render("view-user-settings", {
-      isUserAuthenticated: req.isAuthenticated(),
-      userData: response,
-      cohortList: cohortList
+  if (req.isAuthenticated) {
+    getUser(req.user.mongoID).then((response, error) => {
+      res.render("view-user-settings", {
+        isUserAuthenticated: req.isAuthenticated(),
+        userData: response,
+        cohortList: cohortList
+      });
     });
-  });
+  } else {
+    res.render("view-access-denied");
+  }
 });
 
 router.post("/", function(req, res) {
-
-  updateUser(req.user.mongoID, req.body).then((response, error) => {
-
-    res.render("view-user-settings", {
-      isUserAuthenticated: req.isAuthenticated(),
-      userData: response,
-
+  if (req.isAuthenticated) {
+    updateUser(req.user.mongoID, req.body).then((response, error) => {
+      res.render("view-user-settings", {
+        isUserAuthenticated: req.isAuthenticated(),
+        userData: response
+      });
     });
-  });
+  } else {
+    res.render("view-access-denied");
+  }
 });
 
 function updateUser(userID, data) {
@@ -43,12 +46,13 @@ function updateUser(userID, data) {
     user.findOneAndUpdate(
       {
         _id: userID
-      }, {
+      },
+      {
         $set: {
-          "firstName": data.firstName,
-          "lastName": data.lastName,
-          "displayName": data.displayName,
-          "cohort": data.cohortName
+          firstName: data.firstName,
+          lastName: data.lastName,
+          displayName: data.displayName,
+          cohort: data.cohortName
         }
       },
       function(err, doc) {

@@ -32,9 +32,7 @@ router.get("/:id", function(req, res) {
 });
 
 router.post("/delete", function(req, res) {
-  console.log(req.body);
   deleteResource(req.body.id).then((response, error) => {
-    console.log(response);
     if (response == "DELETED") {
       req.flash("success", "Resource deleted!\nClick anywhere to close.");
       res.redirect("./");
