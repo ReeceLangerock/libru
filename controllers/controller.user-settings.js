@@ -33,7 +33,8 @@ router.post("/", function(req, res) {
     updateUser(req.user.mongoID, req.body).then((response, error) => {
       res.render("view-user-settings", {
         isUserAuthenticated: req.isAuthenticated(),
-        userData: response
+        userData: response,
+        cohortList: cohortList
       });
     });
   } else {

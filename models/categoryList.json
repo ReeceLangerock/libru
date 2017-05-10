@@ -4,15 +4,15 @@
     },
     {
         "category": "CSS",
-        "subcategories": ["CSS", "SCSS", "LESS", "Flexbox"]
+        "subcategories": ["CSS", "Flexbox", "LESS", "SASS"]
     },
     {
         "category": "JavaScript",
-        "subcategories": ["JavaScript","TypeScript", "CoffeeScript"]
+        "subcategories": ["JavaScript", "CoffeeScript", "Elm", "TypeScript"]
     },
     {
         "category": "Framework",
-        "subcategories": ["Framework","Angular", "React", "Vue"]
+        "subcategories": ["Framework","Angular", "Ember", "React", "Vue"]
     },
     {
         "category": "Node",
@@ -20,19 +20,19 @@
     },
     {
         "category": "Database",
-        "subcategories": ["Database", "MongoDB", "Redis","Firebase", "MySQL"]
+        "subcategories": ["Database", "Firebase","MongoDB", "MySQL", "Redis", "SQL"]
     },
     {
         "category": "Data Visualization",
-        "subcategories": ["Data Visualization", "D3", "ChartJS"]
+        "subcategories": ["Data Visualization", "ChartJS", "D3", "Tableau"]
     },
     {
         "category": "General Programming",
-        "subcategories": ["General Programming", "Design Patterns"]
+        "subcategories": ["General Programming", "Algorithms", "Design Patterns"]
     },
     {
         "category": "Testing",
-        "subcategories": ["Mocha", "Karma", "Sinon", "Chai", "Jasmine"]
+        "subcategories": ["Chai", "Jasmine", "Karma", "Mocha", "Sinon"]
     },
     {
         "category": "Build Tools",
@@ -40,12 +40,16 @@
     },
     {
         "category": "Ruby",
-        "subcategories": ["Ruby"]
+        "subcategories": ["Ruby", "Ruby on Rails"]
     },
     {
         "category": "Python",
         "subcategories": ["Python"]
     },
+    {
+        "category": "Java",
+        "subcategories": ["Java"]
+    },    
     {
         "category": "Portfolio",
         "subcategories": ["Portfolio"]

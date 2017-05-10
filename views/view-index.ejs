@@ -28,8 +28,8 @@
     <div class="jumbotron" style = "margin-top:-20px;">
 <div class="container">
   <h1>Libru</h1>
-  <p>Welcome to the Chingu Resource Library</p>
-  <p>The Libru archives contain <%=numbers.resources%> resources across <%=numbers.categories%> categories, posted by <%=numbers.users%> different users.</p>
+  <p>Share; Discover; Learn;</p>
+  <p>Welcome to the Chingu Resource Library. The Libru archives contain <%=numbers.resources%> resources across <%=numbers.categories%> categories, shared by <%=numbers.users%> different users</p>
   <p class="lead">
     <a class="btn btn-primary btn-lg" href="/about" role="button">Learn more</a>
   </p>
@@ -59,7 +59,7 @@
           <% avg = Number.isInteger(popularResources[i].avgRating) ? popularResources[i].avgRating : popularResources[i].avgRating.toPrecision(3)%>
           <legend><%=popularResources[i].title%> (<%=avg%>/5)</legend>
 
-          <img class="img-responsive resourceItem" src = "<%=popularResources[i].resourceImageURL%>">
+          <a href="/resource/<%=popularResources[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=popularResources[i].resourceImageURL%>"></a>
           <% if(popularResources[i].resourceDescription.length > 250) { %>
           <% var shortenedDescription = popularResources[i].resourceDescription.slice(0, 250) + "..."; %>
           <p><%=shortenedDescription%></p>
@@ -93,7 +93,7 @@
           <div class = "well">
           <legend><%=recentResources[i].title%></legend>
 
-          <img class="img-responsive resourceItem" src = "<%=recentResources[i].resourceImageURL%>">
+          <a href="/resource/<%=recentResources[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=recentResources[i].resourceImageURL%>"></a>
           <% if(recentResources[i].resourceDescription.length > 250) { %>
           <% var shortenedDescription = recentResources[i].resourceDescription.slice(0, 250) + "..."; %>
           <p><%=shortenedDescription%></p>
