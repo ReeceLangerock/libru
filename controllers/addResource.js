@@ -14,7 +14,6 @@ router.use(bodyParser.json());
 
 // This accepts all posts requests!
 router.get("/", function(req, res) {
-  console.log("add");
   res.render("add-resource", {
     isUserAuthenticated: req.isAuthenticated(),
     categoryList: categoryList
@@ -22,9 +21,13 @@ router.get("/", function(req, res) {
 });
 
 router.post("/submit", (req, res) => {
-  console.log(req.body);
+
   checkIfResourceAlreadyAdded(req.body.resourceUrl).then((response, error) => {
     if (response == "NOT_ADDED") {
+      if(!req.body.resourceSubCategory) {
+        req.body.resourceSubCategory = req.body.resourceCategory
+      }
+
       resource.schema.methods.newResource(req.body, req.user.mongoID);
       req.flash("success", "Resource added!\nClick anywhere to close.");
       res.redirect("back");

@@ -47,7 +47,7 @@
           <tr>
             <th>Cover</th>
             <th data-sortable="true" 	data-searchable = "true">Title</th>
-
+            <th data-sortable="true">Date Added</th>
             <th data-sortable="true">Avg. Rating</th>
             <% if(isUserAuthenticated) {%>
 
@@ -72,6 +72,7 @@
             <td class = "col-md-3"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
             <td class = "col-md-1"><span hidden><%-resources[i].title %></span><a href ="resource/<%=resources[i]['_id'] %>"><%-resources[i].title %></a></td>
 
+            <td class = "col-md-1"><%=moment(resources[i].dateAdded).format('l')%></td>
 
             <td class = "col-md-1"><%=avg %></td>
             <% if(isUserAuthenticated) {%>
@@ -122,7 +123,7 @@
     var data = $("#table").bootstrapTable("getData");
     var rows = [];
     for (let i = 0; i < data.length; i++) {
-      rows.push(data[i]["_3_id"]);
+      rows.push(data[i]["_4_id"]);
     }
 
 

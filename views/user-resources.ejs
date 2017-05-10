@@ -90,6 +90,7 @@
             <th data-sortable="true">Category</th>
             <th data-sortable="true">Sub Category</th>
             <th data-sortable="true">Difficulty</th>
+            <th data-sortable="true">Date Added</th>
             <th data-sortable="true">Avg. Rating</th>
             <th >Your Rating</th>
             <th data-sortable="true">Status</th>
@@ -110,6 +111,7 @@
             <td class = "col-md-1"><%=allResources[i].resourceCategory %></td>
             <td class = "col-md-1"><%=allResources[i].resourceSubCategory %></td>
             <td class = "col-md-1"><%=allResources[i].resourceDifficulty %></td>
+            <td class = "col-md-1"><%=moment(allResources[i].dateAdded).format('l')%></td>
             <td class = "col-md-1"><%=avg %></td>
             <td class = "col-md-1 "id = "<%=i%>">
               <form method="POST" action="../user/resources/rate">
@@ -126,7 +128,7 @@
               <div class="form-group">
                 <input type = "hidden"  value = "<%=allResources[i].status%>">
                 <input type = "hidden" name = "resourceID" value = "<%=allResources[i]['_id']%>">
-                <select onchange="this.form.submit()" class="custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
+                <select onchange="this.form.submit()" class="form-control mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
                   <option value = "<%=allResources[i].status%>"selected><%=allResources[i].status%></option>
 
                   <option value="<%=allResources[i].secondStatus%>"><%=allResources[i].secondStatus%></option>
@@ -157,7 +159,7 @@
     var data = $("#table").bootstrapTable("getData");
     var rows = [];
     for (let i = 0; i < data.length; i++) {
-      rows.push(data[i]["_6_id"]);
+      rows.push(data[i]["_7_id"]);
     }
 
 

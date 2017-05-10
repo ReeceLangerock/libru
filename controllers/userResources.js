@@ -8,6 +8,7 @@ var resource = require("../models/resourceModel");
 var categoryList = require("../models/categoryList");
 var updateRating = require("./update-resource-rating");
 var updateStatus = require("./update-resource-status");
+var moment = require("moment");
 router.use(
   bodyParser.urlencoded({
     extended: true
@@ -72,7 +73,8 @@ router.get("/", function(req, res) {
         completedResources: responses[0],
         toDoResources: responses[1],
         inProgressResources: responses[2],
-        categoryList: categoryList
+        categoryList: categoryList,
+        moment: moment
       });
     });
   });
@@ -151,7 +153,8 @@ router.post("/", function(req, res) {
         completedResources: responses[0],
         toDoResources: responses[1],
         inProgressResources: responses[2],
-        categoryList: categoryList
+        categoryList: categoryList,
+        moment: moment
       });
     });
   });

@@ -32,10 +32,12 @@ router.get("/:id", function(req, res) {
 });
 
 router.post("/delete", function(req, res) {
+  console.log(req.body);
   deleteResource(req.body.id).then((response, error) => {
+    console.log(response);
     if (response == "DELETED") {
       req.flash("success", "Resource deleted!\nClick anywhere to close.");
-      res.redirect("back");
+      res.redirect("./");
     } else {
       req.flash("error", "Resource was not deleted\nClick anywhere to close.");
       res.redirect("back");
@@ -79,7 +81,7 @@ function getUser(userID) {
 
 function deleteResource(id) {
   return new Promise(function(resolve, reject) {
-    resource.remove(
+    resource.findByIdAndRemove(
       {
         _id: id
       },

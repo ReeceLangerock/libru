@@ -8,6 +8,7 @@ var updateRating = require("./update-resource-rating");
 var updateStatus = require("./update-resource-status");
 var bodyParser = require("body-parser");
 var categoryList = require("../models/categoryList.json");
+var moment = require("moment");
 router.use(
   bodyParser.urlencoded({
     extended: true
@@ -35,14 +36,16 @@ router.get("/", function(req, res) {
         res.render("all-resources", {
           isUserAuthenticated: req.isAuthenticated(),
           resources: resources,
-          categoryList: categoryList
+          categoryList: categoryList,
+          moment: moment
         });
       });
     } else {
       res.render("all-resources", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: response,
-        categoryList: categoryList
+        categoryList: categoryList,
+        moment: moment
       });
     }
   });
@@ -81,7 +84,8 @@ router.post("/", (req, res) => {
         res.render("all-resources", {
           isUserAuthenticated: req.isAuthenticated(),
           resources: resources,
-          categoryList: categoryList
+          categoryList: categoryList,
+          moment: moment
         });
       });
     } else {
@@ -89,7 +93,8 @@ router.post("/", (req, res) => {
       res.render("all-resources", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: resources,
-        categoryList: categoryList
+        categoryList: categoryList,
+        moment: moment
       });
     }
   });
@@ -231,14 +236,16 @@ function getResourceCategory(category, categoryQuery) {
 
 function getAllResources() {
   return new Promise(function(resolve, reject) {
-    resource.find({'resourceCategory': {$ne: 'Portfolios'}}).exec(function(err, doc) {
-      if (err) {
-        console.log(err);
-        reject(err);
-      } else {
-        resolve(doc);
-      }
-    });
+    resource
+      .find({ resourceCategory: { $ne: "Portfolios" } })
+      .exec(function(err, doc) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(doc);
+        }
+      });
   });
 }
 

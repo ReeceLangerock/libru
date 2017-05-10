@@ -107,7 +107,7 @@
             <td class = "col-md-1"><%=resources[i].resourceCategory %></td>
             <td class = "col-md-1"><%=resources[i].resourceSubCategory %></td>
             <td class = "col-md-1"><%=resources[i].resourceDifficulty %></td>
-            <td class = "col-md-1"><%=resources[i].dateAdded %></td>
+            <td class = "col-md-1"><%=moment(resources[i].dateAdded).format('l')%></td>
 
             <td class = "col-md-1">Coming Soon</td>
             <td class = "col-md-1"><a href="../edit-resource/<%=resources[i]['_id']%>">Edit</a></td>

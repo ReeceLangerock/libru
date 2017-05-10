@@ -78,6 +78,7 @@
       data-page-list="[10, 25, 50, 100, ALL]"
         data-search="true"
           data-pagination="true"
+          data-show-columns = "true"
              data-classes="table" class = "table">
         <thead>
           <tr>
@@ -85,8 +86,9 @@
             <th>Cover</th>
             <th data-sortable="true" 	data-searchable = "true">Title</th>
             <th data-sortable="true">Category</th>
-            <th data-sortable="true">Sub Category</th>
+            <th data-sortable="true" >Sub Category</th>
             <th data-sortable="true">Difficulty</th>
+            <th data-sortable="true">Date Added</th>
             <th data-sortable="true">Avg. Rating</th>
             <% if(isUserAuthenticated) {%>
 
@@ -109,15 +111,16 @@
             <% avg = isNaN(avg) ? "No Ratings" : avg %>
           <tr>
 
-            <td class = "col-md-2"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
+            <td class = "col-md-1"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
             <td class = "col-md-1"><span hidden><%-resources[i].title %></span><a href ="resource/<%=resources[i]['_id'] %>"><%-resources[i].title %></a></td>
             <td class = "col-md-1"><%=resources[i].resourceCategory %></td>
             <td class = "col-md-1"><%=resources[i].resourceSubCategory %></td>
             <td class = "col-md-1"><%=resources[i].resourceDifficulty %></td>
+            <td class = "col-md-1"><%=moment(resources[i].dateAdded).format('l')%></td>
             <td class = "col-md-1"><%=avg %></td>
             <% if(isUserAuthenticated) {%>
 
-            <td id = "<%=i%>">
+            <td id = "<%=i%>" class = "col-md-1">
               <form method="POST" action="/resources/rate">
                 <div class="form-group">
                   <input type = "hidden"  value = "<%=resources[i].rating%>">
@@ -127,7 +130,7 @@
               </div>
               </form>
             </td>
-            <td class = "col-md-2">
+            <td class = "col-md-1">
               <form method="POST" action="/resources/status">
               <div class="form-group">
                 <select onchange="this.form.submit()" class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
@@ -173,7 +176,7 @@
     var data = $("#table").bootstrapTable("getData");
     var rows = [];
     for (let i = 0; i < data.length; i++) {
-      rows.push(data[i]["_6_id"]);
+      rows.push(data[i]["_7_id"]);
     }
     console.log(rows);
 

@@ -63,24 +63,7 @@
     <textarea rows="5" class="form-control" name = "resourceDescription" id="resource-description" required></textarea>
   </div>
 
-  <div class="form-inline form-group">
-    <div class="input-group">
-    <span class="input-group-addon">$</span>
-    <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCost" id="cost-select" required>
-      <option value = "" selected disabled>Cost</option>
-      <option value="Free">Free</option>
-      <option value="$1 - $10">$1 - $10</option>
-      <option value="$10 - $25">$10 - $25</option>
-      <option value="$25 - $50">$25 - $50</option>
-      <option value="$50 - $100">$50 - $100</option>
-      <option value="$100+">$100+</option>
-    </select>
-</div>
 
-    <div class="checkbox">
-      <label><input type="checkbox" name = "resourceGoesOnSale">Goes On Sale</label>
-    </div>
-    </div>
 
 <div class="form-inline form-group">
 
@@ -111,6 +94,25 @@
   </select>
 </div>
 
+<div class="form-inline form-group">
+  <div class="input-group">
+  <span class="input-group-addon">$</span>
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCost" id="cost-select" required>
+    <option value = "" selected disabled>Cost</option>
+    <option value="Free">Free</option>
+    <option value="$1 - $10">$1 - $10</option>
+    <option value="$10 - $25">$10 - $25</option>
+    <option value="$25 - $50">$25 - $50</option>
+    <option value="$50 - $100">$50 - $100</option>
+    <option value="$100+">$100+</option>
+  </select>
+</div>
+
+  <div class="checkbox">
+    <label><input type="checkbox" name = "resourceGoesOnSale">Goes On Sale</label>
+  </div>
+  </div>
+
 
   <input type="submit" class="btn btn-default"></input>
 </form>
@@ -134,7 +136,7 @@
           $("#sub-category-select").show();
           $("#sub-category-select").empty();
           $("#sub-category-select").append( $("<option>")
-            .val("Sub Category")
+            .val("")
             .html("Sub Category")
             .prop('disabled', true)
             .prop('selected', true)

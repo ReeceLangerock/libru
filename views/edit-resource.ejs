@@ -69,55 +69,13 @@
     <textarea class="form-control" rows="5" name = "resourceDescription" value = "<%=resource.resourceDescription%>" id="resource-description"><%=resource.resourceDescription%></textarea>
   </div>
 
-  <% var selectedCost = resource.resourceCost %>
-  <% var costOptions = ["Free", "$1 - $10", "$10 - $25", "$25 - $50", "$50 - $100", "$100+"] %>
 
-  <% var checked = resource.resourceGoesOnSale ? checked : false %>
-
-
-  <div class="form-inline form-group">
-    <div class="input-group">
-    <span class="input-group-addon">$</span>
-    <select class="form-control" name = "resourceCost" id="cost-select" required>
-      <option value = "<%=selectedCost%>" selected><%=selectedCost%></option>
-      <% for(let i =0; i < costOptions.length; i++) { %>
-      <option value="<%=costOptions[i]%>"><%=costOptions[i]%></option>
-      <% } %>
-    </select>
-</div>
-    <div class="checkbox">
-      <% if(resource.resourceGoesOnSale) { %>
-      <label><input type="checkbox" checked name = "resourceGoesOnSale">Goes On Sale</label>
-      <% } else  { %>
-        <label><input type="checkbox"  name = "resourceGoesOnSale">Goes On Sale</label>
-        <% } %>
-    </div>
-    </div>
-
-
-    <% var selectedDifficulty = (resource.resourceDifficulty) ? "Difficulty" : resource.resourceDifficulty %>
-    <% var difficultyOptions = ["Beginner", "Intermediate", "Advanced", "Master", "Not Applicable"] %>
-
-<div class="form-inline form-group">
-  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
-
-    <% for(let i =0; i < difficultyOptions.length; i++) { %>
-    <% if(difficultyOptions[i] == resource.resourceDifficulty) { %>
-      <option selected = "selected" value="<%=difficultyOptions[i]%>"><%=difficultyOptions[i]%></option>
-    <%} else { %>
-    <option value="<%=difficultyOptions[i]%>"><%=difficultyOptions[i]%></option>
-    <% } %>
-    <% } %>
-
-  </select>
-  <br>
-  <br>
-
+  <div class = "form-inline form-group">
   <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceCategory" id="category-select" required>
 
     <% for(let i =0; i < categoryList.length; i++) { %>
       <% if(categoryList[i].category == resource.resourceCategory) { %>
-        <option selected = "selected" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
+        <option id = "<%=i%>" selected = "selected" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
       <%} else { %>
 
     <option id = "<%=i%>" value="<%=categoryList[i].category%>"><%=categoryList[i].category%></option>
@@ -145,10 +103,60 @@
 
 
   </select>
+
 </div>
 
+  <% var selectedCost = resource.resourceCost %>
+  <% var costOptions = ["Free", "$1 - $10", "$10 - $25", "$25 - $50", "$50 - $100", "$100+"] %>
 
+  <% var checked = resource.resourceGoesOnSale ? checked : false %>
+
+
+
+
+
+    <% var selectedDifficulty = (resource.resourceDifficulty) ? "Difficulty" : resource.resourceDifficulty %>
+    <% var difficultyOptions = ["Beginner", "Intermediate", "Advanced", "Master", "Not Applicable"] %>
+
+<div class="form-inline form-group">
+  <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceDifficulty" id="difficulty-select" required>
+
+    <% for(let i =0; i < difficultyOptions.length; i++) { %>
+    <% if(difficultyOptions[i] == resource.resourceDifficulty) { %>
+      <option selected = "selected" value="<%=difficultyOptions[i]%>"><%=difficultyOptions[i]%></option>
+    <%} else { %>
+    <option value="<%=difficultyOptions[i]%>"><%=difficultyOptions[i]%></option>
+    <% } %>
+    <% } %>
+
+  </select>
+  </div>
+
+  <div class="form-inline form-group">
+    <div class="input-group">
+    <span class="input-group-addon">$</span>
+    <select class="form-control" name = "resourceCost" id="cost-select" required>
+      <option value = "<%=selectedCost%>" selected><%=selectedCost%></option>
+      <% for(let i =0; i < costOptions.length; i++) { %>
+      <option value="<%=costOptions[i]%>"><%=costOptions[i]%></option>
+      <% } %>
+    </select>
+</div>
+    <div class="checkbox">
+      <% if(resource.resourceGoesOnSale) { %>
+      <label><input type="checkbox" checked name = "resourceGoesOnSale">Goes On Sale</label>
+      <% } else  { %>
+        <label><input type="checkbox"  name = "resourceGoesOnSale">Goes On Sale</label>
+        <% } %>
+    </div>
+    </div>
+
+
+
+
+  <div class = "form-group">
   <input type="submit" class="btn btn-default"></input>
+</div>
 </form>
 
 </div>
@@ -160,7 +168,7 @@
   <div class="panel-heading">Danger Zone</div>
   <div class="panel-body">
   <h3>Delete This Resource</h3>
-  <p class = "pull-left">Once you delete a resource, there is no going back. Please be certain.</p>
+  <p class = "pull-left">Once you delete a resource, there is no going back. Please be certain. You'll be returned to the resource management page on successful deletion.</p>
   <form method = "POST" action = "./delete">
     <input type = "hidden" name = "id" value = "<%=resource['_id']%>">
   <span class="input-group-btn">
@@ -173,6 +181,16 @@
     </body>
 
     <script>
+    $(document).ready(function() {
+      var categoryList = <%-JSON.stringify(categoryList) %>
+      var category = $("#category-select").find('option:selected').attr('id');
+
+      if(categoryList[category].subcategories.length <=1){
+
+      $("#sub-category-select").hide();
+      }
+
+    });
     var categoryList = <%-JSON.stringify(categoryList) %>
 
     $("#category-select").change(function () {

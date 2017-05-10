@@ -8,6 +8,7 @@ var updateRating = require("./update-resource-rating");
 var updateStatus = require("./update-resource-status");
 var bodyParser = require("body-parser");
 var categoryList = require("../models/categoryList.json");
+var moment = require("moment");
 router.use(
   bodyParser.urlencoded({
     extended: true
@@ -35,14 +36,16 @@ router.get("/", function(req, res) {
         res.render("all-portfolios", {
           isUserAuthenticated: req.isAuthenticated(),
           resources: resources,
-          categoryList: categoryList
+          categoryList: categoryList,
+          moment: moment
         });
       });
     } else {
       res.render("all-portfolios", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: response,
-        categoryList: categoryList
+        categoryList: categoryList,
+        moment: moment
       });
     }
   });
@@ -82,7 +85,8 @@ router.post("/", (req, res) => {
         res.render("all-portfolios", {
           isUserAuthenticated: req.isAuthenticated(),
           resources: resources,
-          categoryList: categoryList
+          categoryList: categoryList,
+          moment: moment
         });
       });
     } else {
@@ -90,7 +94,8 @@ router.post("/", (req, res) => {
       res.render("all-portfolios", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: resources,
-        categoryList: categoryList
+        categoryList: categoryList,
+        moment: moment
       });
     }
   });
