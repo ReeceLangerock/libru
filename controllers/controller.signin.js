@@ -20,7 +20,7 @@ passport.use(
       clientID: process.env.AUTH0_CLIENT_ID/* || config.getAuth0clientID()*/,
       clientSecret: process.env.AUTH0_CLIENT_SECRET/* ||
         config.getAuth0clientSecret()*/,
-      callbackURL: process.env.AUTH0_CALLBACK_URL || "http://localhost:3000/signin/callback"
+      callbackURL: "https://libru1.herokuapp.com/signin/callback" || "http://localhost:3000/signin/callback"
     },
     function(accessToken, refreshToken, extraParams, profile, done) {
       // accessToken is the token to call Auth0 API (not needed in the most cases)
