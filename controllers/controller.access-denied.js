@@ -9,9 +9,7 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-// This accepts all posts requests!
 router.get('/', function(req, res) {
-
 
     res.render('view-access-denied', {
         isUserAuthenticated: req.isAuthenticated(),

@@ -9,7 +9,6 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-
 router.get('/', function(req, res) {
 
     res.render('view-about', {
