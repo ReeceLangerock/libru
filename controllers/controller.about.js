@@ -9,12 +9,12 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-// This accepts all posts requests!
+
 router.get('/', function(req, res) {
 
-
-    res.render('about', {
+    res.render('view-about', {
         isUserAuthenticated: req.isAuthenticated(),
     });
 });
+
 module.exports = router;

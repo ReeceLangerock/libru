@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 router.get('/', function(req, res) {
 
 
-    res.render('help', {
+    res.render('view-access-denied', {
         isUserAuthenticated: req.isAuthenticated(),
     });
 });

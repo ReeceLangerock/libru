@@ -87,7 +87,7 @@ passport.deserializeUser(function(user, callback) {
 router.get('/',
     passport.authenticate('auth0', {}),
     function(req, res) {
-        res.redirect("/");
+        res.redirect("./");
     });
 
 router.get('/callback',

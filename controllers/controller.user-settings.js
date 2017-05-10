@@ -18,7 +18,7 @@ router.use(bodyParser.json());
 router.get("/", function(req, res) {
   getUser(req.user.mongoID).then((response, error) => {
 
-    res.render("user-settings", {
+    res.render("view-user-settings", {
       isUserAuthenticated: req.isAuthenticated(),
       userData: response,
       cohortList: cohortList
@@ -30,7 +30,7 @@ router.post("/", function(req, res) {
 
   updateUser(req.user.mongoID, req.body).then((response, error) => {
 
-    res.render("user-settings", {
+    res.render("view-user-settings", {
       isUserAuthenticated: req.isAuthenticated(),
       userData: response,
 

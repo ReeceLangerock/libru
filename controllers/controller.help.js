@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 router.get('/', function(req, res) {
 
 
-    res.render('view-study-guides', {
+    res.render('view-help', {
         isUserAuthenticated: req.isAuthenticated(),
     });
 });

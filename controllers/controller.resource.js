@@ -33,7 +33,7 @@ router.get("/:id", function(req, res) {
           usersResourceRating = responses[0].resourceRatings[i].rating;
         }
       }
-      res.render("resource", {
+      res.render("view-resource", {
         isUserAuthenticated: req.isAuthenticated(),
         resource: responses[0],
         user: responses[1],
@@ -44,7 +44,7 @@ router.get("/:id", function(req, res) {
     });
   } else {
     getResource(req.params.id).then((response, error) => {
-      res.render("resource", {
+      res.render("view-resource", {
         isUserAuthenticated: req.isAuthenticated(),
         resource: response,
         user: null

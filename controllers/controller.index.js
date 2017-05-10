@@ -35,8 +35,7 @@ router.get("/", function(req, res) {
       categories: categoryList.length,
       users: responses[3]
     };
-    res.render("index", {
-      test: "TEST",
+    res.render("view-index", {      
       isUserAuthenticated: req.isAuthenticated(),
       popularResources: responses[0],
       recentResources: responses[1],

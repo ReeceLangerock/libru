@@ -5,6 +5,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var resource = require("../models/resourceModel");
 var categoryList = require("../models/categoryList.json");
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 router.use(
   bodyParser.urlencoded({
     extended: true
@@ -13,19 +14,18 @@ router.use(
 router.use(bodyParser.json());
 
 // This accepts all posts requests!
-router.get("/", function(req, res) {
-  res.render("add-resource", {
+router.get("/", ensureLoggedIn, function(req, res) {
+  res.render("view-add-resource", {
     isUserAuthenticated: req.isAuthenticated(),
     categoryList: categoryList
   });
 });
 
 router.post("/submit", (req, res) => {
-
   checkIfResourceAlreadyAdded(req.body.resourceUrl).then((response, error) => {
     if (response == "NOT_ADDED") {
-      if(!req.body.resourceSubCategory) {
-        req.body.resourceSubCategory = req.body.resourceCategory
+      if (!req.body.resourceSubCategory) {
+        req.body.resourceSubCategory = req.body.resourceCategory;
       }
 
       resource.schema.methods.newResource(req.body, req.user.mongoID);
@@ -42,7 +42,6 @@ router.post("/submit", (req, res) => {
 });
 
 function checkIfResourceAlreadyAdded(url) {
-  console.log(url);
   return new Promise(function(resolve, reject) {
     resource.findOne(
       {
@@ -52,10 +51,8 @@ function checkIfResourceAlreadyAdded(url) {
         if (err) {
           reject(err);
         } else if (doc) {
-          console.log(doc);
           resolve(doc);
         } else {
-          console.log("not added");
           resolve("NOT_ADDED");
         }
       }

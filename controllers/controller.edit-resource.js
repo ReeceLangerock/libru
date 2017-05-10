@@ -22,7 +22,7 @@ router.get("/:id", function(req, res) {
   }
   getResource(id).then((response, error) => {
     if (response.resourceAddedBy == req.user.mongoID) {
-      res.render("edit-resource", {
+      res.render("view-edit-resource", {
         isUserAuthenticated: req.isAuthenticated(),
         resource: response,
         categoryList: categoryList

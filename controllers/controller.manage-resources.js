@@ -17,7 +17,7 @@ router.use(bodyParser.json());
 router.get("/", function(req, res) {
   getUser(req.user.mongoID).then((response, error) => {
     getUsersResources(req.user.mongoID).then((response, error) => {
-      res.render("user-profile", {
+      res.render("view-manage-resources", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: response,
         categoryList: categoryList,
@@ -54,7 +54,7 @@ router.post("/", (req, res) => {
     }
 
     resourceQueryPromise.then((response, error) => {
-      res.render("user-profile", {
+      res.render("view-manage-resources", {
         isUserAuthenticated: req.isAuthenticated(),
         resources: response,
         categoryList: categoryList,

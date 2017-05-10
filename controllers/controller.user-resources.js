@@ -68,7 +68,7 @@ router.get("/", function(req, res) {
         responses[2],
         req.user.mongoID
       );
-      res.render("user-resources", {
+      res.render("view-user-resources", {
         isUserAuthenticated: req.isAuthenticated(),
         completedResources: responses[0],
         toDoResources: responses[1],
@@ -148,7 +148,7 @@ router.post("/", function(req, res) {
         responses[2],
         req.user.mongoID
       );
-      res.render("user-resources", {
+      res.render("view-user-resources", {
         isUserAuthenticated: req.isAuthenticated(),
         completedResources: responses[0],
         toDoResources: responses[1],
