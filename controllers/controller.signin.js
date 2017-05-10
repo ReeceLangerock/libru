@@ -8,7 +8,7 @@ var session = require("express-session");
 var userModel = require("../models/userModel");
 var passport = require("passport");
 var ObjectID = require("mongodb").ObjectID;
-router.use(session({ /*secret: "123secret" */process.env.PASSPORT_SECRET }));
+router.use(session({ /*secret: "123secret" */secret: process.env.PASSPORT_SECRET }));
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -20,7 +20,7 @@ passport.use(
       clientID: process.env.AUTH0_CLIENT_ID/* || config.getAuth0clientID()*/,
       clientSecret: process.env.AUTH0_CLIENT_SECRET/* ||
         config.getAuth0clientSecret()*/,
-      callbackURL: "http://localhost:3000/signin/callback"
+      callbackURL: process.env.AUTH0_CALLBACK_URL || "http://localhost:3000/signin/callback"
     },
     function(accessToken, refreshToken, extraParams, profile, done) {
       // accessToken is the token to call Auth0 API (not needed in the most cases)
