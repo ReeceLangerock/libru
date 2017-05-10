@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var path = require("path");
 var port = process.env.PORT || 3000;
 var app = express();
-var config = require("./config.js");
+//var config = require("./config.js");
 var flash = require("connect-flash");
 var passport = require("passport");
 var session = require("express-session");
@@ -15,8 +15,8 @@ app.use(
   })
 );
 
-var mongoUser = process.env.DB_USERNAME || config.getMongoUser();
-var mongoPass = process.env.DB_PASSWORD || config.getMongoPass();
+var mongoUser = process.env.DB_USERNAME;// || config.getMongoUser();
+var mongoPass = process.env.DB_PASSWORD;// || config.getMongoPass();
 
 mongoose.connect(
   `mongodb://${mongoUser}:${mongoPass}@ds131340.mlab.com:31340/libru`
