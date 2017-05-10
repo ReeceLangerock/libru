@@ -66,7 +66,7 @@
             <%  sum += resources[i].resourceRatings[j].rating; %>
             <% } %>
             <% var avg = sum / resources[i].resourceRatings.length; %>
-            <% avg = isNaN(avg) ? "No Ratings" : avg %>
+            <% avg = isNaN(avg) ? " - " : avg %>
           <tr>
 
             <td class = "col-md-3"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
