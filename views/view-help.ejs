@@ -16,13 +16,13 @@
 
 <body>
     <!--import navbar -->
+  <div id="wrap">
     <% if (isUserAuthenticated) { %>
         <%- include ./partials/authenticated-navigation.ejs %>
             <%  } else { %>
                 <%- include ./partials/navigation.ejs %>
                     <%  } %>
-                        <div class="container">
-
+                      <div id="main" class="container clear-top">
                             <div class="row">
 
                                 <div class="col-md-10">
@@ -66,6 +66,7 @@
                             </div>
 
                         </div>
+                      </div>
 
                         <%- include ./partials/footer.ejs %>
 </body>

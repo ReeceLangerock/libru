@@ -19,6 +19,7 @@
 </head>
 
 <body>
+  <div id="wrap">
     <!--import navbar -->
     <% if (isUserAuthenticated) { %>
     <%- include ./partials/authenticated-navigation.ejs %>
@@ -29,7 +30,8 @@
     <%- include ./partials/flash-popup-modal.ejs %>
     <div class="container">
       <div class = "row">
-        <div class="container">
+        <div id="main" class="container clear-top">
+
 
 
 
@@ -200,6 +202,7 @@
 
 
     </div>
+  </div>
 <%- include ./partials/footer.ejs %>
 
   </body>

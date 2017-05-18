@@ -22,6 +22,7 @@
 </head>
 
 <body>
+  <div id ="wrap">
     <!--import navbar -->
     <% if (isUserAuthenticated) { %>
     <%- include ./partials/authenticated-navigation.ejs %>
@@ -29,7 +30,7 @@
     <%- include ./partials/navigation.ejs %>
     <%  } %>
 
-    <div class="container">
+    <div id="main" class="container clear-top">
       <div class="panel panel-default">
       <div class="panel-heading">Portfolios</div>
     </div>
@@ -109,7 +110,7 @@
       </div>
       </div>
     </div>
-
+  </div>
     </div>
     <%- include ./partials/footer.ejs %>
   </body>

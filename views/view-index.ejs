@@ -66,16 +66,23 @@
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script type="text/javascript">
-      $(document).ready(function(){
-        $('.carousel').slick({
+      $(document).ready(function() {
+        var numSlidesToShow;
+        if (matchMedia("handheld").matches) {
+          numSlidesToShow = 1;
+        } else {
+          numSlidesToShow = 4;
+        }
+        $(".carousel").slick({
           dots: true,
           infinite: true,
-  slidesToShow: 4,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 5000,
+          slidesToShow: numSlidesToShow,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 5000
         });
       });
+
     </script>
 
 
@@ -114,7 +121,7 @@
       <div class="panel-body">
 
 
-        <div class="carousel" >
+        <div class="carousel">
           <% for(let i = 0; i < recentResources.length; i++) { %>
         <div class = "well carousel-resource-item">
 
