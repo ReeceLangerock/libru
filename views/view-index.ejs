@@ -68,11 +68,15 @@
     <script type="text/javascript">
       $(document).ready(function() {
         var numSlidesToShow;
-        if (matchMedia("handheld").matches) {
-          numSlidesToShow = 1;
-        } else {
-          numSlidesToShow = 4;
-        }
+        testMobile = new RegExp(
+          "Android|webOS|iPhone|iPad|" +
+            "BlackBerry|Windows Phone|" +
+            "Opera Mini|IEMobile|Mobile",
+          "i"
+        );
+
+        if (testMobile.test(navigator.userAgent)) numSlidesToShow = 1;
+        else numSlidesToShow = 4;
         $(".carousel").slick({
           dots: true,
           infinite: true,
