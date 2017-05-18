@@ -16,12 +16,13 @@
 
 <body>
     <!--import navbar -->
+    <div id="wrap">
     <% if (false) { %>
         <%- include ./partials/authenticated-navigation.ejs %>
             <%  } else { %>
                 <%- include ./partials/navigation.ejs %>
                     <%  } %>
-                        <div class="container">
+                        <div id="main" class="container clear-top">
 
                             <div class="row">
 
@@ -41,6 +42,7 @@
                             </div>
 
                         </div>
+</div>
   <%- include ./partials/footer.ejs %>
 
 </body>

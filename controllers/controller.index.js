@@ -6,7 +6,7 @@ var resource = require("../models/resourceModel");
 var user = require("../models/userModel");
 var bodyParser = require("body-parser");
 var categoryList = require("../models/categoryList.json");
-var numResourcesToGet = 6;
+var numResourcesToGet = 8;
 
 router.use(
   bodyParser.urlencoded({

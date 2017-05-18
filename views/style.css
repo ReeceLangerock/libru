@@ -2,12 +2,68 @@
     font-size: 14px;
 }
 
-.portfolioContainer{
-  border: 1px solid;
-  border-radius: 5px;
-  box-shadow: 2px 2px grey;
+/* INDEX PAGE CAROUSEL */
+
+legend {
+  margin: 0px;
+  margin-bottom: 2px;
+  min-height:60px;
+  max-height: 90px;
+  overflow-y: hidden;
 }
 
+
+
+.carousel a {
+  color: black;
+}
+
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow:auto;
+  padding-bottom:160px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+  position: relative;
+margin-top: -180px; /* negative value of footer height */
+height: 150px;
+clear:both;
+
+}
+
+.carousel-image {
+  height: 200px;
+  margin: auto;
+}
+
+.carousel-resource-item {
+  margin: 5px;
+  padding: 5px;
+  height: 415px;
+}
+
+.carousel-portfolio-item {
+  margin: 5px;
+  padding: 5px;
+  height: 400px;
+}
+.carousel img {
+  height: 200px;
+  margin: auto;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: black;
+}
 
 
 .resourceItem {
