@@ -8,7 +8,7 @@ var session = require("express-session");
 var userModel = require("../models/userModel");
 var passport = require("passport");
 var ObjectID = require("mongodb").ObjectID;
-router.use(session({ /*secret: "123secret" */secret: process.env.PASSPORT_SECRET }));
+router.use(session({ secret: "123secret" /*secret: process.env.PASSPORT_SECRET*/ }));
 router.use(passport.initialize());
 router.use(passport.session());
 
