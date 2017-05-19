@@ -134,7 +134,7 @@
             <td class = "fixedSizeRow">
               <form method="POST" action="/resources/status">
               <div class="form-group">
-                <select onchange="this.form.submit()" class="form-control custom-select mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
+                <select onchange="this.form.submit()" class="form-control" name = "resourceStatus" id="status-select">
                   <% if(resources[i].status.length === 4){ %>
                     <option value = "<%=resources[i].status[2]%>" selected disabled><%=resources[i].status[0]%></option>
                     <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
