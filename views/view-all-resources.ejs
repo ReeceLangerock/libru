@@ -118,10 +118,10 @@
             <td><%=resources[i].resourceSubCategory %></td>
             <td><%=resources[i].resourceDifficulty %></td>
             <td><%=moment(resources[i].dateAdded).format('l')%></td>
-            <td class = "fixedSizeRow"><%=avg %></td>
+            <td><%=avg %></td>
             <% if(isUserAuthenticated) {%>
 
-            <td id = "<%=i%>" class = "fixedSizeRow">
+            <td id = "<%=i%>">
               <form method="POST" action="/resources/rate">
                 <div class="form-group">
                   <input type = "hidden"  value = "<%=resources[i].rating%>">
@@ -131,10 +131,10 @@
               </div>
               </form>
             </td>
-            <td class = "fixedSizeRow">
+            <td>
               <form method="POST" action="/resources/status">
               <div class="form-group">
-                <select onchange="this.form.submit()" class="form-control" name = "resourceStatus" id="status-select">
+                <select onchange="this.form.submit()" class="table-form-control" name = "resourceStatus" id="status-select">
                   <% if(resources[i].status.length === 4){ %>
                     <option value = "<%=resources[i].status[2]%>" selected disabled><%=resources[i].status[0]%></option>
                     <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
