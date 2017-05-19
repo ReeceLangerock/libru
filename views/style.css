@@ -12,6 +12,10 @@ legend {
   overflow-y: hidden;
 }
 
+th.fixedSizeRow{
+  width: 400px;
+
+}
 
 
 .carousel a {
