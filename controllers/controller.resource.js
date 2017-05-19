@@ -154,6 +154,33 @@ router.post("/change", function(req, res) {
   });
 });
 
+router.post("/link", function(req, res) {
+  reportBrokenLink(req.body.resourceID, "user").then((response, error) => {
+    if (response == "DUPLICATE") {
+      req.flash(
+        "error",
+        "You already reported this broken link!\nClick anywhere to close."
+      );
+      res.redirect("back");
+    } else if (response == "REPORTED") {
+      req.flash(
+        "success",
+        "Success!\nThanks for reporting the broken link.\nClick anywhere to close."
+      );
+      res.redirect("back");
+    } else {
+      req.flash("error", "Resource was not deleted\nClick anywhere to close.");
+      res.redirect("back");
+    }
+  });
+});
+
+router.post("/inappropriate", function(req, res) {
+  console.log("inappropriate");
+  req.flash("error", "Resource was not deleted\nClick anywhere to close.");
+  res.redirect("back");
+});
+
 function findResourceStatus(data, id) {
   for (let i = 0; i < data.resourcesCompleted.length; i++) {
     if (data.resourcesCompleted[i].resourceID == id) {
@@ -246,6 +273,43 @@ function pushCommentToResource(id, comment, userName, cohort) {
           reject(err);
         } else {
           resolve(doc);
+        }
+      }
+    );
+  });
+}
+
+function reportBrokenLink(id, user) {
+  return new Promise(function(resolve, reject) {
+    resource.findOne(
+      {
+        _id: id
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else {
+          if (doc.resourceFlaggedBrokenLink.includes(user)) {
+            resolve("DUPLICATE");
+          } else {
+            resource.findOneAndUpdate(
+              {
+                _id: id
+              },
+              {
+                $push: {
+                  resourceFlaggedBrokenLink: user
+                }
+              },
+              function(err, doc) {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve("REPORTED");
+                }
+              }
+            );
+          }
         }
       }
     );

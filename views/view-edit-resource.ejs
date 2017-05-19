@@ -48,11 +48,22 @@
   <div class="row">
 
   <div class="col-sm-9 pull-left">
+
+  <%if(resource.resourceFlaggedBrokenLink.length > 0 ) { %>
+    <div class="form-group has-danger">
+
+      <label for="resource-url">Resource URL</label>
+      <input type="url" class="form-control form-control-danger" name = "resourceURL" id="resource-url" value = "<%=resource.resourceURL%>" required>
+    </div>
+
+  <% } else { %>
   <div class="form-group">
 
     <label for="resource-url">Resource URL</label>
-    <input type="url" class="form-control" name = "resourceURL" id="resource-url" value = "<%=resource.resourceURL%>" required>
+    <input type="url" class="form-control " name = "resourceURL" id="resource-url" value = "<%=resource.resourceURL%>" required>
   </div>
+
+  <% } %>
 
   <div class="form-group">
     <label for="resource-image-url">Resource Image Url</label>

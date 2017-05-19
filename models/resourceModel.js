@@ -49,8 +49,8 @@ resourceSchema.methods.newResource = function(data, userID) {
     resourceSubCategory: data.resourceSubCategory,
     resourceCost: data.resourceCost,
     resourceGoesOnSale: goesOnSale,
-    resourceAddedBy: userID,
-    resourceFlagged: 0
+    resourceAddedBy: userID
+
   });
 
   newResource.save(function(err) {

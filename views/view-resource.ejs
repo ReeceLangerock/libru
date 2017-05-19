@@ -173,14 +173,17 @@
           </div>
       </div>
 
-      <% if(isUserAuthenticated) {%>
+      <% if(true) {%>
         <div class="panel panel-default">
         <div class="panel-heading">Tattle-Tail Territory</div>
         <div class = "panel-body">
         <div>
-          <form class="form-inline">
+          <form method = "POST" action = "/resource/link">
+            <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
         <button type="submit" class="btn btn-danger">Report Broken Link</button>
-
+      </form>
+      <form method = "POST" action = "/resource/inappropriate">
+        <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
     <button type="submit" class="btn btn-danger">Report Inappropriate</button>
   </form>
       </div>

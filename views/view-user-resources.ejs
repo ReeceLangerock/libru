@@ -130,7 +130,7 @@
               <div class="form-group">
                 <input type = "hidden"  value = "<%=allResources[i].status%>">
                 <input type = "hidden" name = "resourceID" value = "<%=allResources[i]['_id']%>">
-                <select onchange="this.form.submit()" class="table-form-control mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
+                <select onchange="this.form.submit()" class="table-form-control" name = "resourceStatus" id="status-select">
                   <option value = "<%=allResources[i].status%>"selected><%=allResources[i].status%></option>
 
                   <option value="<%=allResources[i].secondStatus%>"><%=allResources[i].secondStatus%></option>
