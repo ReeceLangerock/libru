@@ -70,7 +70,7 @@
             <% avg = isNaN(avg) ? " - " : avg %>
           <tr>
 
-            <td class = "col-md-3"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
+            <td class = "col-md-3"><a href ="resource/<%=resources[i]['_id'] %>"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></a></td>
             <td class = "col-md-1"><span hidden><%-resources[i].title %></span><a href ="resource/<%=resources[i]['_id'] %>"><%-resources[i].title %></a></td>
 
             <td class = "col-md-1"><%=moment(resources[i].dateAdded).format('l')%></td>
@@ -98,6 +98,7 @@
         </tbody>
 
       </table>
+      <br>
 
       </div>
 

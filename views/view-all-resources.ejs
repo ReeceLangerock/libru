@@ -90,7 +90,7 @@
             <th data-sortable="true" >Sub Category</th>
             <th data-sortable="true">Difficulty</th>
             <th data-sortable="true">Date Added</th>
-            <th data-sortable="true" data-align="center" data-cell-style="cellStyle" class="fixedSizeRow">Rating</th>
+            <th data-sortable="true" data-align="center">Rating</th>
             <% if(isUserAuthenticated) {%>
 
             <th data-sortable="true">Your Rating</th>
@@ -112,7 +112,7 @@
             <% avg = isNaN(avg) ? " - " : avg %>
           <tr>
 
-            <td><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
+            <td><a href ="resource/<%=resources[i]['_id'] %>"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></a></td>
             <td><span hidden><%-resources[i].title %></span><a href ="resource/<%=resources[i]['_id'] %>"><%-resources[i].title %></a></td>
             <td><%=resources[i].resourceCategory %></td>
             <td><%=resources[i].resourceSubCategory %></td>
@@ -160,6 +160,7 @@
         </tbody>
 
       </table>
+      <br>
 
       </div>
     </div>

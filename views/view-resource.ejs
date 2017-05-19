@@ -68,7 +68,7 @@
       <div class="form-group">
         <label for="resource-description">Rate It!</label>
         <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
-        <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resourceRatingForUser%>" min=0 max=5 step=1 data-size="sm" data-rtl="false" data-show-clear="false" data-show-caption="false">
+        <input onchange="this.form.submit()" id="input-id" name="resourceRating" type="number" class="rating" value = "<%=resourceRatingForUser%>" min=0 max=5 step=1 data-size="xs" data-rtl="false" data-show-clear="false" data-show-caption="false">
       </div>
 
       </form>
@@ -97,6 +97,7 @@
         <% } %>
         <% var avg = sum / resource.resourceRatings.length; %>
         <% avg = Number.isInteger(avg) ? avg : avg.toPrecision(3)%>
+        <% avg = isNaN(avg) ? " No Ratings " : avg %>
         <span class = "ratingSpan"><h5>Avg. Rating: <%=avg %> | Total ratings: <%=resource.resourceRatings.length %></h5>
           <p><%=resource.resourceDescription%></>
           <p>Check it out <a href = "<%=resource.resourceURL%>">here</a></p>
@@ -120,7 +121,8 @@
         <% } %>
 
         <dt>Added On:</dt>
-        <dd><%=resource.dateAdded%></dd>
+        <dd><%=moment(resource.dateAdded).format('l')%></dd>
+
         </dl>
 
         <hr>

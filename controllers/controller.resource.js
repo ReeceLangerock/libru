@@ -8,6 +8,7 @@ var updateRating = require("./update-resource-rating");
 var updateStatus = require("./update-resource-status");
 var resource = require("../models/resourceModel");
 var ObjectID = require("mongodb").ObjectID;
+var moment = require("moment");
 router.use(
   bodyParser.urlencoded({
     extended: true
@@ -39,7 +40,8 @@ router.get("/:id", function(req, res) {
         user: responses[1],
         userID: req.user.mongoID,
         resourseStatusForUser: resourseStatusForUser,
-        resourceRatingForUser: usersResourceRating
+        resourceRatingForUser: usersResourceRating,
+        moment: moment
       });
     });
   } else {
@@ -47,7 +49,8 @@ router.get("/:id", function(req, res) {
       res.render("view-resource", {
         isUserAuthenticated: req.isAuthenticated(),
         resource: response,
-        user: null
+        user: null,
+        moment: moment
       });
     });
   }
