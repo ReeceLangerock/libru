@@ -74,7 +74,7 @@
       </form>
       <% } %>
 
-      <% if(true) { %>
+      <% if(user && resource.resourceAddedBy == user['_id']) { %>
         <button class="btn btn-primary" onclick="location.href='../edit-resource/<%=resource['_id']%>';">Edit</button>
         <% } %>
     </div>
