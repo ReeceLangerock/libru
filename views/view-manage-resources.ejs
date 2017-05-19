@@ -104,15 +104,15 @@
 
           <tr>
 
-            <td class = "col-md-1"><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
-            <td class = "col-md-1"><a href ="../resource/<%=resources[i]['_id'] %>"><%=resources[i].title %></a></td>
-            <td class = "col-md-1"><%=resources[i].resourceCategory %></td>
-            <td class = "col-md-1"><%=resources[i].resourceSubCategory %></td>
-            <td class = "col-md-1"><%=resources[i].resourceDifficulty %></td>
-            <td class = "col-md-1"><%=moment(resources[i].dateAdded).format('l')%></td>
+            <td><img class="img-responsive" src = "<%=resources[i].resourceImageURL %>"></td>
+            <td><a href ="../resource/<%=resources[i]['_id'] %>"><%=resources[i].title %></a></td>
+            <td><%=resources[i].resourceCategory %></td>
+            <td><%=resources[i].resourceSubCategory %></td>
+            <td><%=resources[i].resourceDifficulty %></td>
+            <td><%=moment(resources[i].dateAdded).format('l')%></td>
 
-            <td class = "col-md-1">Coming Soon</td>
-            <td class = "col-md-1"><a href="../edit-resource/<%=resources[i]['_id']%>">Edit</a></td>
+            <td>Coming Soon</td>
+            <td><a href="../edit-resource/<%=resources[i]['_id']%>">Edit</a></td>
 
 
           </tr>

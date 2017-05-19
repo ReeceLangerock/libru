@@ -108,14 +108,14 @@
             <% avg = Number.isInteger(avg) ? avg : avg.toPrecision(3)%>
             <% avg = isNaN(avg) ? " - " : avg %>
           <tr>
-            <td class = "col-md-1"><img class="img-responsive" src = "<%=allResources[i].resourceImageURL %>"></td>
-            <td class = "col-md-1"><span hidden><%-allResources[i].title %></span><a href ="../resource/<%=allResources[i]['_id'] %>"><%=allResources[i].title %></a></td>
-            <td class = "col-md-1"><%=allResources[i].resourceCategory %></td>
-            <td class = "col-md-1"><%=allResources[i].resourceSubCategory %></td>
-            <td class = "col-md-1"><%=allResources[i].resourceDifficulty %></td>
-            <td class = "col-md-1"><%=moment(allResources[i].dateAdded).format('l')%></td>
-            <td class = "col-md-1"><%=avg %></td>
-            <td class = "col-md-1 "id = "<%=i%>">
+            <td><img class="img-responsive" src = "<%=allResources[i].resourceImageURL %>"></td>
+            <td><span hidden><%-allResources[i].title %></span><a href ="../resource/<%=allResources[i]['_id'] %>"><%=allResources[i].title %></a></td>
+            <td><%=allResources[i].resourceCategory %></td>
+            <td><%=allResources[i].resourceSubCategory %></td>
+            <td><%=allResources[i].resourceDifficulty %></td>
+            <td><%=moment(allResources[i].dateAdded).format('l')%></td>
+            <td><%=avg %></td>
+            <td id = "<%=i%>">
               <form method="POST" action="../user/resources/rate">
               <div class="form-group">
 
@@ -125,12 +125,12 @@
               </div>
               </form>
             </td >
-            <td class = "col-md-1">
+            <td>
               <form method="POST" action="../user/resources/status">
               <div class="form-group">
                 <input type = "hidden"  value = "<%=allResources[i].status%>">
                 <input type = "hidden" name = "resourceID" value = "<%=allResources[i]['_id']%>">
-                <select onchange="this.form.submit()" class="form-control mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
+                <select onchange="this.form.submit()" class="table-form-control mb-2 mr-sm-2 mb-sm-0" name = "resourceStatus" id="status-select">
                   <option value = "<%=allResources[i].status%>"selected><%=allResources[i].status%></option>
 
                   <option value="<%=allResources[i].secondStatus%>"><%=allResources[i].secondStatus%></option>
