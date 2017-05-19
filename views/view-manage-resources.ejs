@@ -110,14 +110,13 @@
             <td><%=resources[i].resourceSubCategory %></td>
             <td><%=resources[i].resourceDifficulty %></td>
             <td><%=moment(resources[i].dateAdded).format('l')%></td>
-            if(resources[i].resourceFlaggedBrokenLink.length > 0) { %>
+            <% if(resources[i].resourceFlaggedBrokenLink.length > 0) { %>
               <div class="alert alert-danger">
                 <strong>resources[i].resourceFlaggedBrokenLink.length</strong>
               </div>
             <% } else { %>
               <td> - </td>
-            <% } %>
-            <td><%=numBrokenReported%></td>
+            <% } %>            
             <td><a href="../edit-resource/<%=resources[i]['_id']%>">Edit</a></td>
 
 
