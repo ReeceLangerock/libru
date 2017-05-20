@@ -17,6 +17,7 @@ router.use(
 router.use(bodyParser.json());
 
 router.get("/", function(req, res) {
+  getBadResources();
   getAllResources().then((response, error) => {
     if (req.isAuthenticated()) {
       var resources = updateRating.filterOutCurrentUserRating(
@@ -240,6 +241,22 @@ function getAllResources() {
           console.log(err);
           reject(err);
         } else {
+          resolve(doc);
+        }
+      });
+  });
+}
+
+function getBadResources() {
+  return new Promise(function(resolve, reject) {
+    resource
+      .find({ _id: "" })
+      .exec(function(err, doc) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          console.log(doc);
           resolve(doc);
         }
       });
