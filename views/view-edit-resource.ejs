@@ -56,6 +56,7 @@
       <label class="control-label" for="resource-url">Resource URL</label>
       <input type="url" class="form-control" name = "resourceURL" id="resource-url" value = "<%=resource.resourceURL%>" required>
       <form method = "POST" action = "./clear">
+        <input type = "hidden" name = "id" value = "<%=resource['_id']%>">
         <label class="control-label" for="resource-url">This link isn't broken!</label>
         <button class="btn btn-default" type="submit">Clear</button>
     </div>

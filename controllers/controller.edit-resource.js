@@ -48,7 +48,15 @@ router.post("/delete", function(req, res) {
 });
 
 router.post("/clear", function(req, res) {
-  
+  clearBrokenLinkReport(req.body.id).then((response, error) => {
+    if (response == "CLEARED") {
+      req.flash("success", "Broken link report cleared!\nClick anywhere to close.");
+      res.redirect("./");
+    } else {
+      req.flash("error", "Broken link report was not cleared\nClick anywhere to close.");
+      res.redirect("back");
+    }
+  });
 });
 
 router.post("/edit", function(req, res) {
@@ -121,6 +129,29 @@ function deleteResource(id) {
           reject(err);
         } else {
           resolve("DELETED");
+        }
+      }
+    );
+  });
+}
+
+function clearBrokenLinkReport(id) {
+  return new Promise(function(resolve, reject) {
+    resource.findOneAndUpdate(
+      {
+        _id: id
+      },
+      {
+        $set: {
+          resourceFlaggedBrokenLink: []
+        }
+      },
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(doc);
         }
       }
     );
