@@ -29,7 +29,9 @@ router.get("/:id", function(req, res) {
       });
     } else {
       res.render("view-access-denied", {
-    }
+        isUserAuthenticated: req.isAuthenticated()
+      });
+  }
   });
 });
 
