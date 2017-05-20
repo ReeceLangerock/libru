@@ -1,58 +1,68 @@
-[{
-        "category": "HTML",
-        "subcategories": ["HTML"]
-    },
-    {
-        "category": "CSS",
-        "subcategories": ["CSS", "Flexbox", "LESS", "SASS"]
-    },
-    {
-        "category": "JavaScript",
-        "subcategories": ["JavaScript", "CoffeeScript", "Elm", "TypeScript"]
-    },
-    {
-        "category": "Framework",
-        "subcategories": ["Framework","Angular", "Ember", "React", "Vue"]
-    },
-    {
-        "category": "Node",
-        "subcategories": ["Node","Express"]
-    },
-    {
-        "category": "Database",
-        "subcategories": ["Database", "Firebase","MongoDB", "MySQL", "Redis", "SQL"]
-    },
-    {
-        "category": "Data Visualization",
-        "subcategories": ["Data Visualization", "ChartJS", "D3", "Tableau"]
-    },
-    {
-        "category": "General Programming",
-        "subcategories": ["General Programming", "Algorithms", "Design Patterns"]
-    },
-    {
-        "category": "Testing",
-        "subcategories": ["Chai", "Jasmine", "Karma", "Mocha", "Sinon"]
-    },
-    {
-        "category": "Build Tools",
-        "subcategories": ["Grunt", "Gulp", "Yeoman", "Webpack"]
-    },
-    {
-        "category": "Ruby",
-        "subcategories": ["Ruby", "Ruby on Rails"]
-    },
-    {
-        "category": "Python",
-        "subcategories": ["Python"]
-    },
-    {
-        "category": "Java",
-        "subcategories": ["Java"]
-    },    
-    {
-        "category": "Portfolio",
-        "subcategories": ["Portfolio"]
+[
+  {
+    category: "Build Tools",
+    subcategories: ["Grunt", "Gulp", "Yeoman", "Webpack"]
+  },
+  {
+    category: "CSS",
+    subcategories: ["CSS", "Flexbox", "LESS", "SASS"]
+  },
+  {
+    category: "Database",
+    subcategories: ["Database", "Firebase", "MongoDB", "MySQL", "Redis", "SQL"]
+  },
+  {
+    category: "Data Visualization",
+    subcategories: ["Data Visualization", "ChartJS", "D3", "Tableau"]
+  },
+  {
+    category: "Framework",
+    subcategories: ["Framework", "Angular", "Ember", "Meteor", "React", "Vue"]
+  },
+  {
+    category: "General Programming",
+    subcategories: ["General Programming", "Algorithms", "Design Patterns"]
+  },
+  {
+    category: "HTML",
+    subcategories: ["HTML", "Bootstrap", ""]
+  },
+  {
+    category: "Java",
+    subcategories: ["Java", "Spring"]
+  },
+  {
+    category: "JavaScript",
+    subcategories: ["JavaScript", "CoffeeScript", "Elm", "ES6", "TypeScript"]
+  },
 
-    }
-]
+  {
+    category: "Node",
+    subcategories: ["Node", "Express"]
+  },
+  {
+    category: "Machine Learning",
+    subcategories: ["Machine Learning"]
+  },
+  {
+    category: "PHP",
+    subcategories: ["PHP", "Laravel"]
+  },
+  {
+    category: "Portfolio",
+    subcategories: ["Portfolio"]
+  },
+  {
+    category: "Python",
+    subcategories: ["Python"]
+  },
+  {
+    category: "Ruby",
+    subcategories: ["Ruby", "Ruby on Rails"]
+  },
+
+  {
+    category: "Testing",
+    subcategories: ["Chai", "Jasmine", "Karma", "Mocha", "Sinon"]
+  }
+];
