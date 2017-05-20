@@ -48,6 +48,7 @@ router.post("/delete", function(req, res) {
 });
 
 router.post("/clear", function(req, res) {
+  console.log("clear");
   clearBrokenLinkReport(req.body.id).then((response, error) => {
     if (response == "CLEARED") {
       req.flash("success", "Broken link report cleared!\nClick anywhere to close.");
@@ -79,7 +80,7 @@ router.post("/edit", function(req, res) {
       if (response == "NOT_ADDED") {
         // if the resource url is being changed, clear out the reports of broken link
         resourceFlaggedBy = [];
-        editResource(req.body).then((response, error) => {
+        editResource(req.body, resourceFlaggedBy).then((response, error) => {
           req.flash("success", "Resource edited!\nClick anywhere to close.");
           res.redirect("back");
         });
@@ -94,7 +95,7 @@ router.post("/edit", function(req, res) {
   } else {
     // if the resource url is being changed, leave any reports of broken link or empty array if none existing
     resourceFlaggedBy = req.body.resourceFlaggedBy || [];
-    editResource(req.body).then((response, error) => {
+    editResource(req.body, resourceFlaggedBy).then((response, error) => {
       req.flash("success", "Resource edited!\nClick anywhere to close.");
       res.redirect("back");
     });
