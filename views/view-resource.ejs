@@ -61,6 +61,10 @@
             <option value="<%=value[i]%>"><%=status[i]%></option>
             <% } %>
             <% } %>
+            <% if(resourseStatusForUser != "...") { %>
+            <option value = "clear">Clear</option>
+            <% } %>
+
           </select>
         </div>
       </form>

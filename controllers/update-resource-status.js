@@ -68,4 +68,33 @@ update.updateResourceStatus = function(
   });
 };
 
+update.removeResourceStatus = function(
+  userID,
+  statusToPullFrom,
+  resourceID
+) {
+  return new Promise(function(resolve, reject) {
+    user.findOneAndUpdate(
+      {
+        _id: userID
+      },
+      {
+        $pull: {
+          [statusToPullFrom]: {
+            resourceID: resourceID
+          }
+        }
+      },
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else if (doc) {
+          resolve(doc);
+        }
+      }
+    );
+  });
+};
+
 module.exports = update;
