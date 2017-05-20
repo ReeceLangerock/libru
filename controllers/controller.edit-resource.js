@@ -44,20 +44,45 @@ router.post("/delete", function(req, res) {
 });
 
 router.post("/edit", function(req, res) {
-  checkIfResourceAlreadyAdded(req.body.resourceUrl).then((response, error) => {
-    if (response == "NOT_ADDED") {
-      editResource(req.body).then((response, error) => {
-        req.flash("success", "Resource edited!\nClick anywhere to close.");
-        res.redirect("back");
-      });
+  // if the user changed the url in there edit, make sure it's not to an existing resource url
+  if (req.body.currentURLAddress != req.body.resourceUrl) {
+    // User can enter http or https url, this creates a sting to search if either case has been added previously
+    var re = new RegExp("^(https)://", "i");
+    var isHTTPS = re.test(req.body.resourceUrl);
+    var emptyUrl;
+    if (isHTTPS) {
+      emptyUrl = req.body.resourceUrl.substring(5);
     } else {
-      req.flash(
-        "error",
-        "This resource has already been added!\nClick anywhere to close."
-      );
-      res.redirect("back");
+      emptyUrl = req.body.resourceUrl.substring(4);
     }
-  });
+    var httpUrl = "http" + emptyUrl;
+    var httpsUrl = "https" + emptyUrl;
+    checkIfResourceAlreadyAdded(
+      httpUrl, httpsUrl
+    ).then((response, error) => {
+      if (response == "NOT_ADDED") {
+        // if the resource url is being changed, clear out the reports of broken link
+        resourceFlaggedBy = [];
+        editResource(req.body).then((response, error) => {
+          req.flash("success", "Resource edited!\nClick anywhere to close.");
+          res.redirect("back");
+        });
+      } else {
+        req.flash(
+          "error",
+          "This resource has already been added!\nClick anywhere to close."
+        );
+        res.redirect("back");
+      }
+    });
+  } else {
+    // if the resource url is being changed, leave any reports of broken link or empty array if none existing
+    resourceFlaggedBy = req.body.resourceFlaggedBy || [];
+    editResource(req.body).then((response, error) => {
+      req.flash("success", "Resource edited!\nClick anywhere to close.");
+      res.redirect("back");
+    });
+  }
 });
 
 function getUser(userID) {
@@ -94,7 +119,7 @@ function deleteResource(id) {
   });
 }
 
-function editResource(data) {
+function editResource(data, resourceFlaggedBy) {
   return new Promise(function(resolve, reject) {
     resource.findOneAndUpdate(
       {
@@ -110,7 +135,8 @@ function editResource(data) {
           resourceCategory: data.resourceCategory,
           resourceSubCategory: data.resourceSubCategory,
           resourceCost: data.resourceCost,
-          resourceGoesOnSale: data.resourceGoesOnSale
+          resourceGoesOnSale: data.resourceGoesOnSale,
+          resourceFlaggedBy: resourceFlaggedBy
         }
       },
       function(err, doc) {
@@ -125,11 +151,11 @@ function editResource(data) {
   });
 }
 
-function checkIfResourceAlreadyAdded(url) {
+function checkIfResourceAlreadyAdded(httpUrl, httpsUrl) {
   return new Promise(function(resolve, reject) {
     resource.findOne(
       {
-        resourceURL: url
+        $or: [{ resourceURL: httpUrl }, { resourceURL: httpsUrl }]
       },
       function(err, doc) {
         if (err) {
