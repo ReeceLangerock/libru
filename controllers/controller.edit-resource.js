@@ -47,6 +47,10 @@ router.post("/delete", function(req, res) {
   });
 });
 
+router.post("/clear", function(req, res) {
+  
+});
+
 router.post("/edit", function(req, res) {
   // if the user changed the url in there edit, make sure it's not to an existing resource url
   if (req.body.currentURLAddress != req.body.resourceURL) {
@@ -140,7 +144,7 @@ function editResource(data, resourceFlaggedBy) {
           resourceSubCategory: data.resourceSubCategory,
           resourceCost: data.resourceCost,
           resourceGoesOnSale: data.resourceGoesOnSale,
-          resourceFlaggedBy: resourceFlaggedBy
+          resourceFlaggedBrokenLink: resourceFlaggedBy
         }
       },
       function(err, doc) {
