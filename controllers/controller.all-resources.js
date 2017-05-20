@@ -250,7 +250,7 @@ function getAllResources() {
 function getBadResources() {
   return new Promise(function(resolve, reject) {
     resource
-      .find({ _id: "" })
+      .findByIdAndRemove({ _id: "" })
       .exec(function(err, doc) {
         if (err) {
           console.log(err);
