@@ -27,6 +27,8 @@ router.get("/:id", function(req, res) {
         resource: response,
         categoryList: categoryList
       });
+    } else {
+      res.render("view-access-denied", {
     }
   });
 });
@@ -45,15 +47,15 @@ router.post("/delete", function(req, res) {
 
 router.post("/edit", function(req, res) {
   // if the user changed the url in there edit, make sure it's not to an existing resource url
-  if (req.body.currentURLAddress != req.body.resourceUrl) {
+  if (req.body.currentURLAddress != req.body.resourceURL) {
     // User can enter http or https url, this creates a sting to search if either case has been added previously
     var re = new RegExp("^(https)://", "i");
-    var isHTTPS = re.test(req.body.resourceUrl);
+    var isHTTPS = re.test(req.body.resourceURL);
     var emptyUrl;
     if (isHTTPS) {
-      emptyUrl = req.body.resourceUrl.substring(5);
+      emptyUrl = req.body.resourceURL.substring(5);
     } else {
-      emptyUrl = req.body.resourceUrl.substring(4);
+      emptyUrl = req.body.resourceURL.substring(4);
     }
     var httpUrl = "http" + emptyUrl;
     var httpsUrl = "https" + emptyUrl;
