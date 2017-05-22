@@ -158,6 +158,7 @@ router.post("/status", function(req, res) {
         } else if (oldResourceStatus == "In Progress") {
           oldResourceStatus = "resourcesInProgress";
         }
+          if(newResourceStatus != "clear") {
         updateStatus
           .updateResourceStatus(
             req.user.mongoID,
@@ -169,6 +170,17 @@ router.post("/status", function(req, res) {
           .then((response, error) => {
             res.redirect("back");
           });
+        } else if(newResourceStatus == "clear") {
+          updateStatus
+            .removeResourceStatus(
+              req.user.mongoID,
+              oldResourceStatus,
+              req.body.resourceID
+            )
+            .then((response, error) => {
+              res.redirect("back");
+            });
+        }
       }
     }
   });

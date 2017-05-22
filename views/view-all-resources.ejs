@@ -140,10 +140,12 @@
                     <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
                     <option value="<%=resources[i].status[2]%>"><%=resources[i].status[2]%></option>
                     <option value="<%=resources[i].status[3]%>"><%=resources[i].status[3]%></option>
+                    <option value="clear">clear</option>
                   <% } else { %>
                   <option value = "<%=resources[i].status[0]%>"selected><%=resources[i].status[0]%></option>
                   <option value="<%=resources[i].status[1]%>"><%=resources[i].status[1]%></option>
                   <option value="<%=resources[i].status[2]%>"><%=resources[i].status[2]%></option>
+                  
                   <% } %>
                 </select>
                 <input type = "hidden" name = "resourceID" value = "<%=resources[i]['_id']%>">
