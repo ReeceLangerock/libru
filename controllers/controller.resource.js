@@ -167,7 +167,7 @@ router.post("/change", function(req, res) {
 });
 
 router.post("/link", function(req, res) {
-  reportBrokenLink(req.body.resourceID, "user").then((response, error) => {
+  reportBrokenLink(req.body.resourceID, req.user.mongoID).then((response, error) => {
     if (response == "DUPLICATE") {
       req.flash(
         "error",
@@ -188,9 +188,24 @@ router.post("/link", function(req, res) {
 });
 
 router.post("/inappropriate", function(req, res) {
-  console.log("inappropriate");
-  req.flash("error", "Resource was not deleted\nClick anywhere to close.");
-  res.redirect("back");
+  reportInappropriateLink(req.body.resourceID, req.user.mongoID).then((response, error) => {
+    if (response == "DUPLICATE") {
+      req.flash(
+        "error",
+        "You already reported this link as inappropriate!\nClick anywhere to close."
+      );
+      res.redirect("back");
+    } else if (response == "REPORTED") {
+      req.flash(
+        "success",
+        "Success!\nThanks for reporting the inappropriate link.\nClick anywhere to close."
+      );
+      res.redirect("back");
+    } else {
+      req.flash("error", "Report was not saved, please try again later.\nClick anywhere to close.");
+      res.redirect("back");
+    }
+  });
 });
 
 function findResourceStatus(data, id) {
@@ -311,6 +326,43 @@ function reportBrokenLink(id, user) {
               {
                 $push: {
                   resourceFlaggedBrokenLink: user
+                }
+              },
+              function(err, doc) {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve("REPORTED");
+                }
+              }
+            );
+          }
+        }
+      }
+    );
+  });
+}
+
+function reportBrokenLink(id, user) {
+  return new Promise(function(resolve, reject) {
+    resource.findOne(
+      {
+        _id: id
+      },
+      function(err, doc) {
+        if (err) {
+          reject(err);
+        } else {
+          if (doc.resourceFlaggedInappropriate.includes(user)) {
+            resolve("DUPLICATE");
+          } else {
+            resource.findOneAndUpdate(
+              {
+                _id: id
+              },
+              {
+                $push: {
+                  resourceFlaggedInappropriate: user
                 }
               },
               function(err, doc) {
