@@ -181,13 +181,12 @@
         <div class="panel panel-default">
         <div class="panel-heading">Tattle-Tail Territory</div>
         <div class = "panel-body">
-        <div class = "d-inline">
+        <div class = "form-inline">
           <form method = "POST" action = "/resource/link">
             <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
         <button type="submit" class="btn btn-danger">Report Broken Link</button>
       </form>
-    </div>
-      <div class = "d-inline">
+
       <form method = "POST" action = "/resource/inappropriate">
         <input type = "hidden" name = "resourceID" value = "<%=resource['_id']%>">
     <button type="submit" class="btn btn-danger">Report Inappropriate</button>

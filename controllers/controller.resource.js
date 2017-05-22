@@ -343,7 +343,7 @@ function reportBrokenLink(id, user) {
   });
 }
 
-function reportBrokenLink(id, user) {
+function reportInappropriateLink(id, user) {
   return new Promise(function(resolve, reject) {
     resource.findOne(
       {
