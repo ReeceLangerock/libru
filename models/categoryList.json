@@ -33,7 +33,11 @@
   },
   {
     "category": "JavaScript",
-    "subcategories": ["JavaScript", "CoffeeScript", "Elm", "ES6", "TypeScript"]
+    "subcategories": ["JavaScript", "Ajax", "CoffeeScript", "Elm", "ES6", "TypeScript"]
+  },
+  {
+    "category": "Jquery",
+    "subcategories": ["Jquery"]
   },
 
   {
