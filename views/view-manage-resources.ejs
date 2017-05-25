@@ -76,7 +76,11 @@
 
         </div>
 <div class = "col-md-10">
+  <% if(resources.length == 0) { %>
+    <h1>Empty Table???</h1>
+    <p>If you're seeing an empty table then you haven't added a resource to the archives yet. Once you add one <a href = "../resources">here</a> they'll be added to the table!</p>
 
+  <% } %>
       <table data-toggle="table"
       data-page-list="[10, 25, 50, 100, ALL]"
         data-search="true"

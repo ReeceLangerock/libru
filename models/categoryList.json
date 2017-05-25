@@ -1,7 +1,11 @@
 [
   {
     "category": "Build Tools",
-    "subcategories": ["Grunt", "Gulp", "Yeoman", "Webpack"]
+    "subcategories": ["Build Tools", "Grunt", "Gulp", "Yeoman", "Webpack"]
+  },
+  {
+    "category": "Cloud Platform",
+    "subcategories": ["Amazon Web Services", "Azure", "Digital Ocean", "Docker", "Heroku", "Kubernetes", "LiNode", "Surge"]
   },
   {
     "category": "CSS",
@@ -58,7 +62,7 @@
   },
   {
     "category": "Python",
-    "subcategories": ["Python"]
+    "subcategories": ["Python", "Django", "Flask"]
   },
   {
     "category": "Ruby",
