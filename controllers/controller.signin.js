@@ -96,7 +96,7 @@ router.get(
     if (!req.user) {
       throw new Error("user null");
     }
-    res.redirect("/");
+    res.redirect("back");
   }
 );
 
