@@ -39,7 +39,7 @@ router.post("/delete", function(req, res) {
   deleteResource(req.body.id).then((response, error) => {
     if (response == "DELETED") {
       req.flash("success", "Resource deleted!\nClick anywhere to close.");
-      res.redirect("./");
+      res.redirect("/user/profile");
     } else {
       req.flash("error", "Resource was not deleted\nClick anywhere to close.");
       res.redirect("back");
