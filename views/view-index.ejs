@@ -37,7 +37,7 @@
   <div class="row">
         <div class="col-lg-4">
           <h2>Share</h2>
-          <%if(isUserAuthenticated) { %>
+          <%if(!isUserAuthenticated) { %>
           <p>Did you find a great resource that you <i>know</i> everyone will appreciate? Want to share your rating of the YDKJS book you just finished? <b>Sign in and share it here!</b></p>
           <% } else { %>
           <p>Did you find a great resource that you <i>know</i> everyone will appreciate? Want to share your rating of the YDKJS book you just finished? <b><a href = "/add-resource">Share it!</a></b></p>
@@ -49,7 +49,7 @@
        </div>
         <div class="col-lg-4">
           <h2>Learn</h2>
-          <%if(isUserAuthenticated) { %>
+          <%if(!isUserAuthenticated) { %>
           <p>Struggling to keep track of the list of resources you're working on, have completed or are on your to-do list? <b>Sign in to keep track!</b> </p>
           <% } else { %>
           <p>Struggling to keep track of the list of resources you're working on, have completed or are on your to-do list? <b><a href = "/user/resources">Track your resources!</a></b> </p>
@@ -106,7 +106,7 @@
         <div class = "well carousel-resource-item">
 
 
-          <a href="/resource/<%=popularResources[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=popularResources[i].resourceImageURL%>"></a>
+          <a href="/resource/<%=popularResources[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=popularResources[i].resourceImageURL%>" onerror="if (this.src != './images/NoPicAvailable.png') this.src = './images/NoPicAvailable.png';"></a>
           <% avg = Number.isInteger(popularResources[i].avgRating) ? popularResources[i].avgRating : popularResources[i].avgRating.toPrecision(3)%>
           <legend><a href="/resource/<%=popularResources[i]['_id']%>"><%=popularResources[i].title%> (<%=avg%>/5)</a></legend>
 
@@ -133,9 +133,7 @@
           <% for(let i = 0; i < recentResources.length; i++) { %>
         <div class = "well carousel-resource-item">
 
-          <img class="img-responsive resourceItem" src="<%=recentResources[i].resourceImageURL%>" onerror="if (this.src != './images/NoPicAvailable.png') this.src = './images/NoPicAvailable.png';">
-
-          <a href="/resource/<%=recentResources[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=recentResources[i].resourceImageURL%>"></a>
+          <a href="/resource/<%=recentResources[i]['_id']%>"><img class="img-responsive resourceItem" src="<%=recentResources[i].resourceImageURL%>" onerror="if (this.src != './images/NoPicAvailable.png') this.src = './images/NoPicAvailable.png';"></a>
           <div class = "legend-container">
           <legend><a href="/resource/<%=recentResources[i]['_id']%>"><%=recentResources[i].title%></a></legend>
         </div>
@@ -163,7 +161,7 @@
       <% for(let i = 0; i < portfolios.length; i++) { %>
     <div class = "well carousel-portfolio-item">
 
-      <a href="/resource/<%=portfolios[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=portfolios[i].resourceImageURL%>"></a>
+      <a href="/resource/<%=portfolios[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=portfolios[i].resourceImageURL%>" onerror="if (this.src != './images/NoPicAvailable.png') this.src = './images/NoPicAvailable.png';"></a>
       <legend><a href="/resource/<%=portfolios[i]['_id']%>"><%=portfolios[i].title%></a></legend>
       <p><a class="btn btn-default" href="/resource/<%=portfolios[i]['_id']%>" role="button">Check it Out &raquo;</a></p>
     </div>
