@@ -247,7 +247,7 @@ function getResourceCategory(category, categoryQuery) {
 function getAllResources() {
   return new Promise(function(resolve, reject) {
     resource
-      .find({ resourceCategory: { $ne: "Portfolios" } })
+      .find({ resourceCategory: { $ne: "Portfolio" } })
       .exec(function(err, doc) {
         if (err) {
           console.log(err);

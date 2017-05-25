@@ -18,10 +18,6 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/>
     <link rel="stylesheet" type="text/css" href="./style.css">
 
-
-
-
-
 </head>
 
 <body>
@@ -41,7 +37,11 @@
   <div class="row">
         <div class="col-lg-4">
           <h2>Share</h2>
+          <%if(isUserAuthenticated) { %>
           <p>Did you find a great resource that you <i>know</i> everyone will appreciate? Want to share your rating of the YDKJS book you just finished? <b>Sign in and share it here!</b></p>
+          <% } else { %>
+          <p>Did you find a great resource that you <i>know</i> everyone will appreciate? Want to share your rating of the YDKJS book you just finished? <b><a href = "/add-resource">Share it!</a></b></p>
+          <% } %>
         </div>
         <div class="col-lg-4">
           <h2>Discover</h2>
@@ -49,7 +49,11 @@
        </div>
         <div class="col-lg-4">
           <h2>Learn</h2>
+          <%if(isUserAuthenticated) { %>
           <p>Struggling to keep track of the list of resources you're working on, have completed or are on your to-do list? <b>Sign in to keep track!</b> </p>
+          <% } else { %>
+          <p>Struggling to keep track of the list of resources you're working on, have completed or are on your to-do list? <b><a href = "/user/resources">Track your resources!</a></b> </p>
+          <% } %>
         </div>
       </div>
       <%if(!isUserAuthenticated) { %>
@@ -129,6 +133,7 @@
           <% for(let i = 0; i < recentResources.length; i++) { %>
         <div class = "well carousel-resource-item">
 
+          <img class="img-responsive resourceItem" src="<%=recentResources[i].resourceImageURL%>" onerror="if (this.src != './images/NoPicAvailable.png') this.src = './images/NoPicAvailable.png';">
 
           <a href="/resource/<%=recentResources[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=recentResources[i].resourceImageURL%>"></a>
           <div class = "legend-container">
@@ -157,8 +162,6 @@
     <div class="carousel" >
       <% for(let i = 0; i < portfolios.length; i++) { %>
     <div class = "well carousel-portfolio-item">
-
-
 
       <a href="/resource/<%=portfolios[i]['_id']%>"><img class="img-responsive resourceItem" src = "<%=portfolios[i].resourceImageURL%>"></a>
       <legend><a href="/resource/<%=portfolios[i]['_id']%>"><%=portfolios[i].title%></a></legend>
@@ -189,15 +192,6 @@
 </script>
 
 </div><!--/.container-->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-99625079-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
 
 </body>
