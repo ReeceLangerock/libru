@@ -46,7 +46,7 @@
 
   {
     "category": "Node",
-    "subcategories": ["Node", "Express"]
+    "subcategories": ["Node", "Express", "NPM", "Passport", "Socket.io"]
   },
   {
     "category": "Machine Learning",
