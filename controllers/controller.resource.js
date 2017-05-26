@@ -50,6 +50,7 @@ router.get("/:id", function(req, res) {
         isUserAuthenticated: req.isAuthenticated(),
         resource: response,
         user: null,
+        userID: null,
         moment: moment
       });
     });
