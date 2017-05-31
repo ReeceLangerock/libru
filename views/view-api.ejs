@@ -30,11 +30,14 @@
             <div class="panel panel-default">
               <div class="panel-heading">API Documentation</div>
                 <div class="panel-body">
-                    <h1>Getting Started</h1>
+                    <h2>Getting Started</h2>
                     <p>The Libru API can be accessed by sending a request to https://www.libru1.herokuapp.com/api/ and including at least one search parameter, like so:</p>
                     <code>https://www.libru1.herokuapp.com/api/difficulty=Beginner</code>
+                    <br>
+
                     <p>The request can be combined with multiple parameters, seperated by <i>&</i> to create a more specific search, like so:</p>
                     <code>https://www.libru1.herokuapp.com/api/difficulty=Beginner&Category=JavaScript&Cost=Free</code>
+                    <br>
                     <p>Parameters available to search on are:</p>
                     <ul>
                       <li>Category</li>
@@ -45,14 +48,15 @@
                       <li>URL</li>
                     </ul>
 
-                    <p>To get a current list of Category and SubCategories to search on go <a href="https://www.libru1.herokuapp.com/api/category-list">here</a>. Difficulty options are <code>["Beginner, Intermediate", "Advanced", "Master", "Not Applicable"]</code>Cost options are <code>["Free, $10 - 25", "$25 - $50", "$50 - $100", "$100+"]</code></p>
+                    <p>To get a current list of Category and SubCategories to search on go <a href="../api/category-list">here</a>.</p>
+                    <p> Difficulty options are <code>[Beginner, Intermediate, Advanced, Master, Not Applicable]</code>Cost options are <code>[Free, $10 - 25, $25 - $50, $50 - $100, $100+]</code></p>
 
-                    <p>The search conditions available for the parameters
+
                     <p>Search modifiers available are count and date. Maximum (and default) count is 50. Date defaults to newest resources first, but can be reversed as seen here:</p>
                     <code>https://www.libru1.herokuapp.com/api/Category=JavaScript&date=desc&count=10</code>
 
-                    <h5>Tips and "Tricks"<h5>
-                      <p>For now, the parameters are case in-sensitive, but the search queries <i>are</i> case sensitive. So, this will work: <code>cost=Free</code> but this won't: <code>cost=free</code> I hope to make both work regardless of case sometime soon.</p>
+                    <h2>Tips and "Tricks"<h2>
+                      <p>For now, the parameters are case in-sensitive, but the search queries <i>are</i> case sensitive. So, this will work: <code>cost=Free</code> but this won't: <code>cost=free</code> <br>I hope to make both work regardless of case sometime soon.</p>
                       <p>For a search to be successful the query needs to be exact, which means if you're searching for <code>Category=Machine Learning</code>the whitespace between Machine and Learning needs to be included.</p>
                 </div>
               </div>
