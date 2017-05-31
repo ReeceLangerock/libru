@@ -51,7 +51,7 @@ router.get("/:query", function(req, res) {
   query.split("&").forEach(function(part) {
     var item = part.split("=");
     if (item[0] === "count") {
-      numResourcesToGet = (parseInt(item[1] <= 50 ? parseInt(item[1]) : 50);
+      numResourcesToGet = (parseInt(item[1] <= 50) ? parseInt(item[1]) : 50);
     } else if (item[0] === "date" && item[1] === "desc") {
       sorting = -1;
     } else {
