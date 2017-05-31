@@ -58,6 +58,7 @@ app.use("/studyguides", require("./controllers/controller.study-guides"));
 app.use("/portfolios", require("./controllers/controller.all-portfolios"));
 app.use("/help", require("./controllers/controller.help"));
 app.use("/about", require("./controllers/controller.about"));
+app.use("/api", require("./controllers/controller.api"));
 
 app.use("/user/resources", require("./controllers/controller.user-resources"));
 app.use("/user/studyguides", require("./controllers/controller.user-study-guides"));
