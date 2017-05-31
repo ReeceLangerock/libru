@@ -33,15 +33,25 @@ var queryResponses = [
   "resourceCost"
 ];
 
+router.get("/", function(req, res) {
+  res.render("view-api", {
+    isUserAuthenticated: req.isAuthenticated()
+  });
+});
+
+router.get("/category-list", function(req, res) {
+  res.send(categoryList);
+});
+
 router.get("/:query", function(req, res) {
   var query = req.params.query;
   var result = {};
-  var numResourcesToGet = 100;
+  var numResourcesToGet = 50;
   var sorting = 1;
   query.split("&").forEach(function(part) {
     var item = part.split("=");
     if (item[0] === "count") {
-      numResourcesToGet = parseInt(item[1]);
+      numResourcesToGet = (parseInt(item[1] <= 50 ? parseInt(item[1]) : 50);
     } else if (item[0] === "date" && item[1] === "desc") {
       sorting = -1;
     } else {
@@ -55,12 +65,13 @@ router.get("/:query", function(req, res) {
     sorting
   ).then((response, error) => {
     for (var i = 0; i < response.length; i++) {
+      response[i]["libruResourceURL"] =
+        "http://libru1.herokuapp.com/resource/" + response[i]["_id"];
       delete response[i]["_id"];
       delete response[i]["resourceFlaggedBrokenLink"];
       delete response[i]["resourceFlaggedInappropriate"];
       delete response[i]["resourceAddedBy"];
-      response[i]["libruResourceURL"] =
-        "http://libru1.herokuapp.com/resource/" + response[i]["_id"];
+
     }
     res.send(response);
   });
