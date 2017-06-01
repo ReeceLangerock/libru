@@ -31,12 +31,12 @@
               <div class="panel-heading">API Documentation</div>
                 <div class="panel-body">
                     <h2>Getting Started</h2>
-                    <p>The Libru API can be accessed by sending a request to https://www.libru1.herokuapp.com/api/ and including at least one search parameter, like so:</p>
-                    <code>https://www.libru1.herokuapp.com/api/difficulty=Beginner</code>
+                    <p>The Libru API can be accessed by sending a request to libru1.herokuapp.com/api/ and including at least one search parameter, like so:</p>
+                    <code>libru1.herokuapp.com/api/difficulty=Beginner</code>
                     <br>
 
                     <p>The request can be combined with multiple parameters, seperated by <i>&</i> to create a more specific search, like so:</p>
-                    <code>https://www.libru1.herokuapp.com/api/difficulty=Beginner&Category=JavaScript&Cost=Free</code>
+                    <code>libru1.herokuapp.com/api/difficulty=Beginner&Category=JavaScript&Cost=Free</code>
                     <br>
                     <p>Parameters available to search on are:</p>
                     <ul>
@@ -53,7 +53,7 @@
 
 
                     <p>Search modifiers available are count and date. Maximum (and default) count is 50. Date defaults to newest resources first, but can be reversed as seen here:</p>
-                    <code>https://www.libru1.herokuapp.com/api/Category=JavaScript&date=desc&count=10</code>
+                    <code>libru1.herokuapp.com/api/Category=JavaScript&date=desc&count=10</code>
 
                     <h2>Tips and "Tricks"<h2>
                       <p>For now, the parameters are case in-sensitive, but the search queries <i>are</i> case sensitive. So, this will work: <code>cost=Free</code> but this won't: <code>cost=free</code> <br>I hope to make both work regardless of case sometime soon.</p>
